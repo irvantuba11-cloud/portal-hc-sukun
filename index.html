@@ -117,13 +117,18 @@
                     <button onclick="switchTab('dokumen')" id="tab-btn-dokumen" class="flex-1 min-w-[140px] py-2.5 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition text-center">6. Dokumen</button>
                 </div>
 
-                <!-- 1. DATA PRIBADI & KELUARGA -->
+                <!-- 1. DATA PRIBADI, AKUN, KENDARAAN & SIM -->
                 <div id="tab-pribadi" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full">
-                    <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">1. Informasi Pribadi, Keluarga & Legalitas</h3>
+                    <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">1. Informasi Pribadi, Akun, Kendaraan & SIM</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
                         <div><label class="font-medium text-slate-600 block mb-1">Nama Lengkap</label><input type="text" id="p-nama" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                         <div><label class="font-medium text-slate-600 block mb-1">Nama Panggilan</label><input type="text" id="p-panggilan" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                         <div><label class="font-medium text-slate-600 block mb-1">NIK / ID Karyawan</label><input type="text" id="p-nik" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        
+                        <!-- Akun Android Manual -->
+                        <div><label class="font-medium text-slate-600 block mb-1">Username Akun Android</label><input type="text" id="p-androiduser" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="Username HP"></div>
+                        <div><label class="font-medium text-slate-600 block mb-1">Password Akun Android</label><input type="text" id="p-androidpass" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="Password HP"></div>
+
                         <div><label class="font-medium text-slate-600 block mb-1">Tempat Lahir</label><input type="text" id="p-tmptlahir" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                         <div><label class="font-medium text-slate-600 block mb-1">Tanggal Lahir</label><input type="date" id="p-tgllahir" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                         <div>
@@ -138,6 +143,61 @@
                         <div><label class="font-medium text-slate-600 block mb-1">Nomor NPWP</label><input type="text" id="p-npwp" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                         <div><label class="font-medium text-slate-600 block mb-1">BPJS Kesehatan</label><input type="text" id="p-bpjskesehatan" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                         <div><label class="font-medium text-slate-600 block mb-1">BPJS Ketenagakerjaan</label><input type="text" id="p-bpjsketenagakerjaan" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+
+                        <!-- Data Kendaraan & SIM -->
+                        <div>
+                            <label class="font-medium text-slate-600 block mb-1">Jenis Kendaraan</label>
+                            <select id="v-jenis" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                                <option value="Motor">Motor</option>
+                                <option value="Mobil">Mobil</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="font-medium text-slate-600 block mb-1">Merek Kendaraan</label>
+                            <select id="v-merek" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                                <option value="Honda">Honda</option>
+                                <option value="Yamaha">Yamaha</option>
+                                <option value="Suzuki">Suzuki</option>
+                                <option value="Kawasaki">Kawasaki</option>
+                                <option value="Toyota">Toyota</option>
+                                <option value="Daihatsu">Daihatsu</option>
+                                <option value="Mitsubishi">Mitsubishi</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="font-medium text-slate-600 block mb-1">Model / Tipe Kendaraan</label>
+                            <select id="v-model" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                                <option value="Beat">Beat</option>
+                                <option value="Vario">Vario</option>
+                                <option value="Scoopy">Scoopy</option>
+                                <option value="PCX">PCX</option>
+                                <option value="Mio">Mio</option>
+                                <option value="NMax">NMax</option>
+                                <option value="AeroX">AeroX</option>
+                                <option value="Grand Max">Grand Max</option>
+                                <option value="Carry">Carry</option>
+                                <option value="Avanza">Avanza</option>
+                                <option value="Xenia">Xenia</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <div><label class="font-medium text-slate-600 block mb-1">Tahun Kendaraan</label><input type="text" id="v-tahun" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="Contoh: 2022"></div>
+                        <div><label class="font-medium text-slate-600 block mb-1">Nomor Plat Kendaraan</label><input type="text" id="v-plat" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="B 1234 XYZ"></div>
+                        <div><label class="font-medium text-slate-600 block mb-1">Nomor STNK</label><input type="text" id="v-stnk" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="No. STNK Manual"></div>
+
+                        <div>
+                            <label class="font-medium text-slate-600 block mb-1">Jenis SIM</label>
+                            <select id="v-simjenis" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                                <option value="SIM C">SIM C</option>
+                                <option value="SIM A">SIM A</option>
+                                <option value="SIM A & C">SIM A & C</option>
+                                <option value="SIM B1">SIM B1</option>
+                                <option value="SIM B2">SIM B2</option>
+                            </select>
+                        </div>
+                        <div><label class="font-medium text-slate-600 block mb-1">Nomor SIM</label><input type="text" id="v-simno" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="No. SIM Manual"></div>
+
                         <div><label class="font-medium text-slate-600 block mb-1">Kontak Darurat (Nama & Hubungan)</label><input type="text" id="p-dnama" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                         <div><label class="font-medium text-slate-600 block mb-1">No. Telp Kontak Darurat</label><input type="text" id="p-dinfo" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                         <div class="sm:col-span-2 lg:col-span-3"><label class="font-medium text-slate-600 block mb-1">Alamat KTP / Domisili</label><textarea id="p-aktp" rows="2" class="w-full p-2.5 border rounded-lg bg-slate-50"></textarea></div>
@@ -257,16 +317,16 @@
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let dbHC = {
-            "irvantuba": { pass: "admin123", role: "Admin", nama: "Irvan Tuba Jati, S.E.", panggilan: "Irvan", nik: "SKN-TL01", tmptlahir: "Jakarta", tgllahir: "1990-01-01", gender: "Laki-laki", kontak: "081380000000", email: "irvantuba11@gmail.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jl. Raya Pramuka Kav 60-61, Jakarta Pusat", ktp: "3173xxxxxxxx", npwp: "09.xxx", bpjskesehatan: "00011122xx", bpjsketenagakerjaan: "888222xx", dnama: "Keluarga Utama", dinfo: "Istri - 0813xxxxxxxx", jabatan: "Team Leader Sales", divisi: "Sales & Distribusi", area: "Jakarta Pusat", atasan: "Rais Musthofa", status: "Karyawan Tetap (PKWTT)", tglgabung: "2020-01-01", namabank: "BCA", norek: "88887777xx", namarek: "Irvan Tuba Jati", spList: [], dailyAttendance: {}, jenjang: "D4/S1", institusi: "Universitas Indonesia - Manajemen", skills: "Team Supervision, Spreadsheet", files: {} },
-            "kikinurawaludin": { pass: "kiki123", role: "Sales", nama: "Kiki Nurawaludin", panggilan: "Kiki", nik: "SKN-S01", tmptlahir: "Jakarta", tgllahir: "1998-05-12", gender: "Laki-laki", kontak: "081234567890", email: "kiki@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta Pusat", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta Pusat", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "123456xx", namarek: "Kiki Nurawaludin", spList: [], dailyAttendance: {}, jenjang: "D4/S1", institusi: "Universitas", skills: "Sales", files: {} },
-            "bagusramandhika": { pass: "bagus123", role: "Sales", nama: "Bagus Ramandhika", panggilan: "Bagus", nik: "SKN-S02", tmptlahir: "Jakarta", tgllahir: "1999-06-15", gender: "Laki-laki", kontak: "081200000002", email: "bagus@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "222333xx", namarek: "Bagus Ramandhika", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
-            "malfainasshidiqi": { pass: "diki123", role: "Sales", nama: "M Alfain Asshidiqi", panggilan: "Alfain", nik: "SKN-S03", tmptlahir: "Jakarta", tgllahir: "1998-03-10", gender: "Laki-laki", kontak: "081200000003", email: "alfain@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "333444xx", namarek: "M Alfain Asshidiqi", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
-            "andiwirmanto": { pass: "andi123", role: "Sales", nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
-            "dhanitriharto": { pass: "dhani123", role: "Sales", nama: "Dhani Triharto", panggilan: "Dhani", nik: "SKN-S05", tmptlahir: "Jakarta", tgllahir: "1997-07-18", gender: "Laki-laki", kontak: "081200000005", email: "dhani@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "555666xx", namarek: "Dhani Triharto", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
-            "mohammaddenisp": { pass: "denis123", role: "Sales", nama: "Mohammad Denis P", panggilan: "Denis", nik: "SKN-S06", tmptlahir: "Jakarta", tgllahir: "1998-09-22", gender: "Laki-laki", kontak: "081200000006", email: "denis@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "666777xx", namarek: "Mohammad Denis P", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
-            "rafisuandi": { pass: "rafi123", role: "Sales", nama: "Rafi Suandi", panggilan: "Rafi", nik: "SKN-S07", tmptlahir: "Bekasi", tgllahir: "1999-08-20", gender: "Laki-laki", kontak: "081298765432", email: "rafi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3172xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta Utara", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-03-15", namabank: "Mandiri", norek: "777888xx", namarek: "Rafi Suandi", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Bekasi", skills: "Sales", files: {} },
-            "sarifudin": { pass: "sarif123", role: "Sales", nama: "Sarifudin", panggilan: "Sarif", nik: "SKN-S08", tmptlahir: "Jakarta", tgllahir: "1996-02-14", gender: "Laki-laki", kontak: "081200000008", email: "sarif@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "888999xx", namarek: "Sarifudin", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
-            "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", nama: "Bachtiar Syahputra", panggilan: "Bachtiar", nik: "SKN-S09", tmptlahir: "Jakarta", tgllahir: "1994-11-30", gender: "Laki-laki", kontak: "081200000009", email: "bachtiar@sukun.com", nikah: "Menikah", tanggungan: "2 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "999000xx", namarek: "Bachtiar Syahputra", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} }
+            "irvantuba": { pass: "admin123", role: "Admin", nama: "Irvan Tuba Jati, S.E.", panggilan: "Irvan", nik: "SKN-TL01", androiduser: "irvan_tl", androidpass: "sukun2026", tmptlahir: "Jakarta", tgllahir: "1990-01-01", gender: "Laki-laki", kontak: "081380000000", email: "irvantuba11@gmail.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jl. Raya Pramuka Kav 60-61, Jakarta Pusat", ktp: "3173xxxxxxxx", npwp: "09.xxx", bpjskesehatan: "00011122xx", bpjsketenagakerjaan: "888222xx", vjenis: "Mobil", vmerek: "Toyota", vmodel: "Avanza", vtahun: "2023", vplat: "B 1234 TL", vstnk: "STNK123456", vsimjenis: "SIM A & C", vsimno: "SIM987654", dnama: "Keluarga Utama", dinfo: "Istri - 0813xxxxxxxx", jabatan: "Team Leader Sales", divisi: "Sales & Distribusi", area: "Jakarta Pusat", atasan: "Rais Musthofa", status: "Karyawan Tetap (PKWTT)", tglgabung: "2020-01-01", namabank: "BCA", norek: "88887777xx", namarek: "Irvan Tuba Jati", spList: [], dailyAttendance: {}, jenjang: "D4/S1", institusi: "Universitas Indonesia - Manajemen", skills: "Team Supervision, Spreadsheet", files: {} },
+            "kikinurawaludin": { pass: "kiki123", role: "Sales", nama: "Kiki Nurawaludin", panggilan: "Kiki", nik: "SKN-S01", androiduser: "kiki_sukun", androidpass: "kiki123", tmptlahir: "Jakarta", tgllahir: "1998-05-12", gender: "Laki-laki", kontak: "081234567890", email: "kiki@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta Pusat", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 5678 KIK", vstnk: "STNK111", vsimjenis: "SIM C", vsimno: "SIM111", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta Pusat", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "123456xx", namarek: "Kiki Nurawaludin", spList: [], dailyAttendance: {}, jenjang: "D4/S1", institusi: "Universitas", skills: "Sales", files: {} },
+            "bagusramandhika": { pass: "bagus123", role: "Sales", nama: "Bagus Ramandhika", panggilan: "Bagus", nik: "SKN-S02", androiduser: "bagus_sukun", androidpass: "bagus123", tmptlahir: "Jakarta", tgllahir: "1999-06-15", gender: "Laki-laki", kontak: "081200000002", email: "bagus@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 9876 BAG", vstnk: "STNK222", vsimjenis: "SIM C", vsimno: "SIM222", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "222333xx", namarek: "Bagus Ramandhika", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
+            "malfainasshidiqi": { pass: "diki123", role: "Sales", nama: "M Alfain Asshidiqi", panggilan: "Alfain", nik: "SKN-S03", androiduser: "alfain_sukun", androidpass: "diki123", tmptlahir: "Jakarta", tgllahir: "1998-03-10", gender: "Laki-laki", kontak: "081200000003", email: "alfain@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2020", vplat: "B 1111 ALF", vstnk: "STNK333", vsimjenis: "SIM C", vsimno: "SIM333", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "333444xx", namarek: "M Alfain Asshidiqi", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
+            "andiwirmanto": { pass: "andi123", role: "Sales", nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", androiduser: "andi_sukun", androidpass: "andi123", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 2222 AND", vstnk: "STNK444", vsimjenis: "SIM C", vsimno: "SIM444", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
+            "dhanitriharto": { pass: "dhani123", role: "Sales", nama: "Dhani Triharto", panggilan: "Dhani", nik: "SKN-S05", androiduser: "dhani_sukun", androidpass: "dhani123", tmptlahir: "Jakarta", tgllahir: "1997-07-18", gender: "Laki-laki", kontak: "081200000005", email: "dhani@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "Mio", vtahun: "2022", vplat: "B 3333 DHA", vstnk: "STNK555", vsimjenis: "SIM C", vsimno: "SIM555", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "555666xx", namarek: "Dhani Triharto", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
+            "mohammaddenisp": { pass: "denis123", role: "Sales", nama: "Mohammad Denis P", panggilan: "Denis", nik: "SKN-S06", androiduser: "denis_sukun", androidpass: "denis123", tmptlahir: "Jakarta", tgllahir: "1998-09-22", gender: "Laki-laki", kontak: "081200000006", email: "denis@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Scoopy", vtahun: "2023", vplat: "B 4444 DEN", vstnk: "STNK666", vsimjenis: "SIM C", vsimno: "SIM666", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "666777xx", namarek: "Mohammad Denis P", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
+            "rafisuandi": { pass: "rafi123", role: "Sales", nama: "Rafi Suandi", panggilan: "Rafi", nik: "SKN-S07", androiduser: "rafi_sukun", androidpass: "rafi123", tmptlahir: "Bekasi", tgllahir: "1999-08-20", gender: "Laki-laki", kontak: "081298765432", email: "rafi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3172xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2023", vplat: "B 5555 RAF", vstnk: "STNK777", vsimjenis: "SIM C", vsimno: "SIM777", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta Utara", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-03-15", namabank: "Mandiri", norek: "777888xx", namarek: "Rafi Suandi", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Bekasi", skills: "Sales", files: {} },
+            "sarifudin": { pass: "sarif123", role: "Sales", nama: "Sarifudin", panggilan: "Sarif", nik: "SKN-S08", androiduser: "sarif_sukun", androidpass: "sarif123", tmptlahir: "Jakarta", tgllahir: "1996-02-14", gender: "Laki-laki", kontak: "081200000008", email: "sarif@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 6666 SAR", vstnk: "STNK888", vsimjenis: "SIM C", vsimno: "SIM888", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "888999xx", namarek: "Sarifudin", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} },
+            "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", nama: "Bachtiar Syahputra", panggilan: "Bachtiar", nik: "SKN-S09", androiduser: "bachtiar_sukun", androidpass: "bachtiar123", tmptlahir: "Jakarta", tgllahir: "1994-11-30", gender: "Laki-laki", kontak: "081200000009", email: "bachtiar@sukun.com", nikah: "Menikah", tanggungan: "2 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 7777 BAC", vstnk: "STNK999", vsimjenis: "SIM C", vsimno: "SIM999", dnama: "-", dinfo: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", namabank: "BCA", norek: "999000xx", namarek: "Bachtiar Syahputra", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", skills: "Sales", files: {} }
         };
 
         let activeUser = localStorage.getItem('hc_active_user_cloud') || null;
@@ -471,6 +531,8 @@
             document.getElementById('p-nama').value = u.nama || '';
             document.getElementById('p-panggilan').value = u.panggilan || '';
             document.getElementById('p-nik').value = u.nik || '';
+            document.getElementById('p-androiduser').value = u.androiduser || '';
+            document.getElementById('p-androidpass').value = u.androidpass || '';
             document.getElementById('p-tmptlahir').value = u.tmptlahir || '';
             document.getElementById('p-tgllahir').value = u.tgllahir || '';
             document.getElementById('p-gender').value = u.gender || 'Laki-laki';
@@ -482,6 +544,16 @@
             document.getElementById('p-npwp').value = u.npwp || '';
             document.getElementById('p-bpjskesehatan').value = u.bpjskesehatan || '';
             document.getElementById('p-bpjsketenagakerjaan').value = u.bpjsketenagakerjaan || '';
+            
+            document.getElementById('v-jenis').value = u.vjenis || 'Motor';
+            document.getElementById('v-merek').value = u.vmerek || 'Honda';
+            document.getElementById('v-model').value = u.vmodel || 'Beat';
+            document.getElementById('v-tahun').value = u.vtahun || '';
+            document.getElementById('v-plat').value = u.vplat || '';
+            document.getElementById('v-stnk').value = u.vstnk || '';
+            document.getElementById('v-simjenis').value = u.vsimjenis || 'SIM C';
+            document.getElementById('v-simno').value = u.vsimno || '';
+
             document.getElementById('p-dnama').value = u.dnama || '';
             document.getElementById('p-dinfo').value = u.dinfo || '';
             document.getElementById('p-aktp').value = u.aktp || '';
@@ -569,6 +641,8 @@
             u.nama = document.getElementById('p-nama').value;
             u.panggilan = document.getElementById('p-panggilan').value;
             u.nik = document.getElementById('p-nik').value;
+            u.androiduser = document.getElementById('p-androiduser').value;
+            u.androidpass = document.getElementById('p-androidpass').value;
             u.tmptlahir = document.getElementById('p-tmptlahir').value;
             u.tgllahir = document.getElementById('p-tgllahir').value;
             u.gender = document.getElementById('p-gender').value;
@@ -580,6 +654,16 @@
             u.npwp = document.getElementById('p-npwp').value;
             u.bpjskesehatan = document.getElementById('p-bpjskesehatan').value;
             u.bpjsketenagakerjaan = document.getElementById('p-bpjsketenagakerjaan').value;
+            
+            u.vjenis = document.getElementById('v-jenis').value;
+            u.vmerek = document.getElementById('v-merek').value;
+            u.vmodel = document.getElementById('v-model').value;
+            u.vtahun = document.getElementById('v-tahun').value;
+            u.vplat = document.getElementById('v-plat').value;
+            u.vstnk = document.getElementById('v-stnk').value;
+            u.vsimjenis = document.getElementById('v-simjenis').value;
+            u.vsimno = document.getElementById('v-simno').value;
+
             u.dnama = document.getElementById('p-dnama').value;
             u.dinfo = document.getElementById('p-dinfo').value;
             u.aktp = document.getElementById('p-aktp').value;
