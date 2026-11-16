@@ -151,9 +151,20 @@
                 <div id="tab-kompensasi" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">3. Kompensasi & Payroll</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-                        <div><label class="font-medium text-slate-600 block mb-1">Nama Bank</label><input type="text" id="c-namabank" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        <div>
+                            <label class="font-medium text-slate-600 block mb-1">Nama Bank</label>
+                            <select id="c-namabank" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                                <option value="BCA">BCA</option>
+                                <option value="Mandiri">Mandiri</option>
+                                <option value="BNI">BNI</option>
+                                <option value="BRI">BRI</option>
+                                <option value="CIMB Niaga">CIMB Niaga</option>
+                                <option value="Bank Mega">Bank Mega</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
                         <div><label class="font-medium text-slate-600 block mb-1">Nomor Rekening</label><input type="text" id="c-norek" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Atas Nama</label><input type="text" id="c-namarek" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        <div><label class="font-medium text-slate-600 block mb-1">Atas Nama (Sesuai Rekening)</label><input type="text" id="c-namarek" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                     </div>
                 </div>
 
@@ -185,8 +196,18 @@
                 <div id="tab-pendidikan" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">5. Pendidikan & Keterampilan</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-                        <div><label class="font-medium text-slate-600 block mb-1">Jenjang</label><input type="text" id="e-jenjang" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Institusi</label><input type="text" id="e-institusi" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        <div>
+                            <label class="font-medium text-slate-600 block mb-1">Jenjang Pendidikan</label>
+                            <select id="e-jenjang" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                                <option value="SD">SD</option>
+                                <option value="SMP">SMP</option>
+                                <option value="SMA/SMK">SMA/SMK</option>
+                                <option value="D3">D3</option>
+                                <option value="D4/S1">D4/S1</option>
+                                <option value="S2">S2</option>
+                            </select>
+                        </div>
+                        <div><label class="font-medium text-slate-600 block mb-1">Institusi / Sekolah</label><input type="text" id="e-institusi" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                         <div><label class="font-medium text-slate-600 block mb-1">Keahlian (Skills)</label><input type="text" id="e-skills" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                     </div>
                 </div>
@@ -194,7 +215,19 @@
                 <!-- 6. DOKUMEN -->
                 <div id="tab-dokumen" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">6. Dokumen Pendukung</h3>
-                    <p class="text-xs text-slate-500">Unggah dokumen kepegawaian Anda di sini.</p>
+                    <p class="text-xs text-slate-500 mb-4">Unggah dokumen kepegawaian Anda (KTP, Ijazah, NPWP, dll).</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div class="p-4 border rounded-xl bg-slate-50 space-y-2">
+                            <label class="font-bold text-navy-900 block">Scan / Foto KTP</label>
+                            <input type="file" id="file-ktp" accept="image/*,.pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-navy-900 file:text-white hover:file:bg-navy-800">
+                            <span id="status-file-ktp" class="text-[10px] text-emerald-600 font-semibold block"></span>
+                        </div>
+                        <div class="p-4 border rounded-xl bg-slate-50 space-y-2">
+                            <label class="font-bold text-navy-900 block">Scan / Foto Ijazah</label>
+                            <input type="file" id="file-ijazah" accept="image/*,.pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-navy-900 file:text-white hover:file:bg-navy-800">
+                            <span id="status-file-ijazah" class="text-[10px] text-emerald-600 font-semibold block"></span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="flex justify-end pt-4">
@@ -214,16 +247,16 @@
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let dbHC = {
-            "irvantuba": { pass: "admin123", role: "Admin", nama: "Irvan Tuba Jati, S.E.", spList: [], dailyAttendance: {} },
-            "kikinurawaludin": { pass: "kiki123", role: "Sales", nama: "Kiki Nurawaludin", spList: [], dailyAttendance: {} },
-            "bagusramandhika": { pass: "bagus123", role: "Sales", nama: "Bagus Ramandhika", spList: [], dailyAttendance: {} },
-            "malfainasshidiqi": { pass: "diki123", role: "Sales", nama: "M Alfain Asshidiqi", spList: [], dailyAttendance: {} },
-            "andiwirmanto": { pass: "andi123", role: "Sales", nama: "Andi Wirmanto", spList: [], dailyAttendance: {} },
-            "dhanitriharto": { pass: "dhani123", role: "Sales", nama: "Dhani Triharto", spList: [], dailyAttendance: {} },
-            "mohammaddenisp": { pass: "denis123", role: "Sales", nama: "Mohammad Denis P", spList: [], dailyAttendance: {} },
-            "rafisuandi": { pass: "rafi123", role: "Sales", nama: "Rafi Suandi", spList: [], dailyAttendance: {} },
-            "sarifudin": { pass: "sarif123", role: "Sales", nama: "Sarifudin", spList: [], dailyAttendance: {} },
-            "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", nama: "Bachtiar Syahputra", spList: [], dailyAttendance: {} }
+            "irvantuba": { pass: "admin123", role: "Admin", nama: "Irvan Tuba Jati, S.E.", spList: [], dailyAttendance: {}, files: {} },
+            "kikinurawaludin": { pass: "kiki123", role: "Sales", nama: "Kiki Nurawaludin", spList: [], dailyAttendance: {}, files: {} },
+            "bagusramandhika": { pass: "bagus123", role: "Sales", nama: "Bagus Ramandhika", spList: [], dailyAttendance: {}, files: {} },
+            "malfainasshidiqi": { pass: "diki123", role: "Sales", nama: "M Alfain Asshidiqi", spList: [], dailyAttendance: {}, files: {} },
+            "andiwirmanto": { pass: "andi123", role: "Sales", nama: "Andi Wirmanto", spList: [], dailyAttendance: {}, files: {} },
+            "dhanitriharto": { pass: "dhani123", role: "Sales", nama: "Dhani Triharto", spList: [], dailyAttendance: {}, files: {} },
+            "mohammaddenisp": { pass: "denis123", role: "Sales", nama: "Mohammad Denis P", spList: [], dailyAttendance: {}, files: {} },
+            "rafisuandi": { pass: "rafi123", role: "Sales", nama: "Rafi Suandi", spList: [], dailyAttendance: {}, files: {} },
+            "sarifudin": { pass: "sarif123", role: "Sales", nama: "Sarifudin", spList: [], dailyAttendance: {}, files: {} },
+            "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", nama: "Bachtiar Syahputra", spList: [], dailyAttendance: {}, files: {} }
         };
 
         let activeUser = localStorage.getItem('hc_active_user_cloud') || null;
@@ -440,13 +473,18 @@
             document.getElementById('w-area').value = u.area || '';
             document.getElementById('w-atasan').value = u.atasan || '';
 
-            document.getElementById('c-namabank').value = u.namabank || '';
+            document.getElementById('c-namabank').value = u.namabank || 'BCA';
             document.getElementById('c-norek').value = u.norek || '';
             document.getElementById('c-namarek').value = u.namarek || '';
 
-            document.getElementById('e-jenjang').value = u.jenjang || '';
+            document.getElementById('e-jenjang').value = u.jenjang || 'D4/S1';
             document.getElementById('e-institusi').value = u.institusi || '';
             document.getElementById('e-skills').value = u.skills || '';
+
+            if(u.files) {
+                document.getElementById('status-file-ktp').innerText = u.files.ktp ? `✔️ Terunggah: ${u.files.ktp}` : '';
+                document.getElementById('status-file-ijazah').innerText = u.files.ijazah ? `✔️ Terunggah: ${u.files.ijazah}` : '';
+            }
 
             renderSalesCalendar(u);
             renderSalesSPTable(u);
@@ -530,6 +568,13 @@
             u.jenjang = document.getElementById('e-jenjang').value;
             u.institusi = document.getElementById('e-institusi').value;
             u.skills = document.getElementById('e-skills').value;
+
+            // Tangkap file upload jika ada
+            if(!u.files) u.files = {};
+            let fileKtp = document.getElementById('file-ktp').files[0];
+            let fileIjazah = document.getElementById('file-ijazah').files[0];
+            if(fileKtp) u.files.ktp = fileKtp.name;
+            if(fileIjazah) u.files.ijazah = fileIjazah.name;
 
             await syncToCloud(activeUser);
             loadDataToForm();
