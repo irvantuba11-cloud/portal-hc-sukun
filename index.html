@@ -261,14 +261,14 @@
             let u = document.getElementById('input-username').value.trim().toLowerCase();
             let p = document.getElementById('input-password').value.trim();
 
-            // Refresh data terbaru dari cloud saat login
-            let { data } = await _supabase.from('hc_database').select('*');
+            // AMBIL DATA TERBARU DARI CLOUD SEBELUM CEK LOGIN
+            let { data, error } = await _supabase.from('hc_database').select('*');
             if (data && data.length > 0) {
                 dbHC = {};
                 data.forEach(row => { dbHC[row.id] = row.data; });
             }
 
-            if (dbHC[u] && dbHC[u].pass === p) {
+            if (dbHC[u] && String(dbHC[u].pass).trim() === String(p)) {
                 activeUser = u;
                 localStorage.setItem('hc_active_user_cloud', u);
                 initApp();
