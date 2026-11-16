@@ -5,24 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Human Capital - PT. Sukun Wartono Jakarta</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- SDK Supabase Real-Time -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        navy: { 800: '#1e293b', 900: '#0f172a' }
-                    }
+                    colors: { navy: { 800: '#1e293b', 900: '#0f172a' } }
                 }
             }
         }
     </script>
 </head>
 <body class="bg-slate-100 font-sans antialiased text-slate-800">
-
     <div class="min-h-screen flex flex-col justify-between">
-        
         <header class="bg-navy-900 text-white px-6 py-4 shadow-md flex justify-between items-center w-full">
             <div class="flex items-center space-x-3">
                 <span class="bg-emerald-500 text-xs px-2.5 py-1 rounded-full font-bold">PWK JAKARTA</span>
@@ -35,7 +30,6 @@
         </header>
 
         <main class="flex-grow p-6 w-full">
-            <!-- HALAMAN LOGIN -->
             <div id="section-login" class="bg-white p-8 rounded-2xl shadow-xl max-w-md mx-auto mt-16">
                 <div class="flex flex-col items-center justify-center mb-6">
                     <div class="w-16 h-16 bg-navy-900 text-white rounded-2xl flex items-center justify-center shadow-lg mb-3 border-2 border-slate-700">
@@ -43,10 +37,8 @@
                     </div>
                     <span class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full">Cloud Real-Time System</span>
                 </div>
-
                 <h2 class="text-xl font-bold text-navy-900 mb-1 text-center">Masuk ke Portal HC</h2>
                 <p class="text-xs text-slate-500 mb-6 text-center">Masukkan ID dan Password akun Anda.</p>
-                
                 <div class="space-y-4">
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1">ID Pengguna (Username)</label>
@@ -60,7 +52,7 @@
                 </div>
             </div>
 
-            <!-- HALAMAN PANEL ADMIN -->
+            <!-- ADMIN PANEL -->
             <div id="section-admin" class="hidden space-y-6 w-full">
                 <div class="bg-white p-6 rounded-2xl shadow-md space-y-6 w-full">
                     <div class="flex justify-between items-center border-b pb-3">
@@ -70,7 +62,6 @@
                         </div>
                         <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700">Kembali ke Profil Saya</button>
                     </div>
-
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="space-y-4">
                             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
@@ -78,48 +69,28 @@
                                 <select id="admin-select-sales" onchange="renderAdminModules()" class="w-full p-2.5 border rounded-lg text-xs bg-white font-semibold"></select>
                             </div>
                         </div>
-
                         <div class="lg:col-span-2 space-y-6">
                             <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4">
                                 <h3 class="text-xs font-bold text-navy-900 uppercase">2. Tambah Catatan Riwayat SP / Cut Off</h3>
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                                    <div>
-                                        <label class="font-medium text-slate-600 block mb-1">Tanggal Kejadian</label>
-                                        <input type="date" id="admin-sp-date" class="w-full p-2 border rounded bg-white">
-                                    </div>
+                                    <div><label class="font-medium text-slate-600 block mb-1">Tanggal</label><input type="date" id="admin-sp-date" class="w-full p-2 border rounded bg-white"></div>
                                     <div>
                                         <label class="font-medium text-slate-600 block mb-1">Jenis Sanksi / SP</label>
                                         <select id="admin-sp-type" class="w-full p-2 border rounded bg-white font-semibold">
                                             <option value="Internal">Internal (Peringatan Lisan)</option>
-                                            <option value="SP1">SP 1</option>
-                                            <option value="SP2">SP 2</option>
-                                            <option value="SP3">SP 3</option>
-                                            <option value="Cut Off">Cut Off</option>
+                                            <option value="SP1">SP 1</option><option value="SP2">SP 2</option><option value="SP3">SP 3</option><option value="Cut Off">Cut Off</option>
                                         </select>
                                     </div>
-                                    <div>
-                                        <label class="font-medium text-slate-600 block mb-1">Keterangan / Pelanggaran</label>
-                                        <input type="text" id="admin-sp-desc" class="w-full p-2 border rounded bg-white" placeholder="Keterangan...">
-                                    </div>
+                                    <div><label class="font-medium text-slate-600 block mb-1">Keterangan</label><input type="text" id="admin-sp-desc" class="w-full p-2 border rounded bg-white" placeholder="Keterangan..."></div>
                                 </div>
-                                <div class="flex justify-end">
-                                    <button onclick="addAdminSP()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow">+ Terbitkan SP / Cut Off</button>
-                                </div>
+                                <div class="flex justify-end"><button onclick="addAdminSP()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow">+ Terbitkan SP / Cut Off</button></div>
                                 <div class="overflow-x-auto pt-2">
                                     <table class="w-full text-xs text-left border bg-white rounded-lg overflow-hidden">
-                                        <thead>
-                                            <tr class="bg-slate-200 text-slate-700">
-                                                <th class="p-2">Tanggal</th>
-                                                <th class="p-2">Jenis SP</th>
-                                                <th class="p-2">Keterangan</th>
-                                                <th class="p-2 text-center">Aksi</th>
-                                            </tr>
-                                        </thead>
+                                        <thead><tr class="bg-slate-200 text-slate-700"><th class="p-2">Tanggal</th><th class="p-2">Jenis SP</th><th class="p-2">Keterangan</th><th class="p-2 text-center">Aksi</th></tr></thead>
                                         <tbody id="admin-sp-table-body"></tbody>
                                     </table>
                                 </div>
                             </div>
-
                             <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
                                 <h3 id="admin-cal-title" class="text-xs font-bold text-navy-900 uppercase">3. Atur Status Absen Harian</h3>
                                 <div id="admin-calendar-grid" class="grid grid-cols-7 gap-1.5 text-center text-xs"></div>
@@ -156,10 +127,7 @@
                         <div><label class="font-medium text-slate-600 block mb-1">Tanggal Lahir</label><input type="date" id="p-tgllahir" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                         <div>
                             <label class="font-medium text-slate-600 block mb-1">Jenis Kelamin</label>
-                            <select id="p-gender" class="w-full p-2.5 border rounded-lg bg-slate-50">
-                                <option value="Laki-laki">Laki-laki</option>
-                                <option value="Perempuan">Perempuan</option>
-                            </select>
+                            <select id="p-gender" class="w-full p-2.5 border rounded-lg bg-slate-50"><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select>
                         </div>
                         <div><label class="font-medium text-slate-600 block mb-1">Nomor Kontak (WhatsApp)</label><input type="text" id="p-kontak" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
                         <div><label class="font-medium text-slate-600 block mb-1">Alamat Email</label><input type="email" id="p-email" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
@@ -188,26 +156,14 @@
                     </div>
                 </div>
 
-                <!-- 4. KINERJA & ABSENSI -->
+                <!-- 4. KINERJA -->
                 <div id="tab-kinerja" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">4. Kinerja, Kehadiran & Riwayat SP</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
-                            <span class="block text-xs text-emerald-700 font-semibold mb-1">Hadir</span>
-                            <span id="stat-hadir" class="text-xl font-bold text-emerald-800">0</span>
-                        </div>
-                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
-                            <span class="block text-xs text-amber-700 font-semibold mb-1">Izin</span>
-                            <span id="stat-izin" class="text-xl font-bold text-amber-800">0</span>
-                        </div>
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
-                            <span class="block text-xs text-blue-700 font-semibold mb-1">Sakit</span>
-                            <span id="stat-sakit" class="text-xl font-bold text-blue-800">0</span>
-                        </div>
-                        <div class="bg-red-50 p-4 rounded-xl border border-red-200">
-                            <span class="block text-xs text-red-700 font-semibold mb-1">Alpha</span>
-                            <span id="stat-alpha" class="text-xl font-bold text-red-800">0</span>
-                        </div>
+                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200"><span class="block text-xs text-emerald-700 font-semibold mb-1">Hadir</span><span id="stat-hadir" class="text-xl font-bold text-emerald-800">0</span></div>
+                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200"><span class="block text-xs text-amber-700 font-semibold mb-1">Izin</span><span id="stat-izin" class="text-xl font-bold text-amber-800">0</span></div>
+                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200"><span class="block text-xs text-blue-700 font-semibold mb-1">Sakit</span><span id="stat-sakit" class="text-xl font-bold text-blue-800">0</span></div>
+                        <div class="bg-red-50 p-4 rounded-xl border border-red-200"><span class="block text-xs text-red-700 font-semibold mb-1">Alpha</span><span id="stat-alpha" class="text-xl font-bold text-red-800">0</span></div>
                     </div>
                     <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
                         <h4 id="sales-cal-title" class="text-xs font-bold text-navy-900 uppercase">Kalender Kehadiran</h4>
@@ -217,16 +173,8 @@
                         <h4 class="text-xs font-bold text-navy-900 uppercase">Riwayat Surat Peringatan (SP)</h4>
                         <div class="overflow-x-auto">
                             <table class="w-full text-xs text-left border bg-white rounded-lg">
-                                <thead>
-                                    <tr class="bg-slate-200 text-slate-700">
-                                        <th class="p-2.5">Tanggal</th>
-                                        <th class="p-2.5">Jenis SP</th>
-                                        <th class="p-2.5">Keterangan</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="sales-sp-table-body">
-                                    <tr><td colspan="3" class="p-3 text-center text-slate-400">Belum ada catatan riwayat SP.</td></tr>
-                                </tbody>
+                                <thead><tr class="bg-slate-200 text-slate-700"><th class="p-2.5">Tanggal</th><th class="p-2.5">Jenis SP</th><th class="p-2.5">Keterangan</th></tr></thead>
+                                <tbody id="sales-sp-table-body"><tr><td colspan="3" class="p-3 text-center text-slate-400">Belum ada catatan riwayat SP.</td></tr></tbody>
                             </table>
                         </div>
                     </div>
@@ -248,7 +196,6 @@
                     <p class="text-xs text-slate-500">Unggah dokumen kepegawaian Anda di sini.</p>
                 </div>
 
-                <!-- TOMBOL SIMPAN -->
                 <div class="flex justify-end pt-4">
                     <button onclick="simpanData()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl text-xs font-bold transition shadow-lg">
                         💾 Simpan Perubahan Data Saya
@@ -256,57 +203,14 @@
                 </div>
             </div>
         </main>
-
-        <footer class="bg-slate-200 text-center p-4 text-xs text-slate-500 w-full">
-            PT. Sukun Wartono Indonesia Perwakilan Jakarta © 2026
-        </footer>
+        <footer class="bg-slate-200 text-center p-4 text-xs text-slate-500 w-full">PT. Sukun Wartono Indonesia Perwakilan Jakarta © 2026</footer>
     </div>
 
-    <!-- SCRIPT KONEKSI SUPABASE CLOUD -->
+    <!-- SCRIPT SUPABASE REAL-TIME CLOUD -->
     <script>
         const SUPABASE_URL = "https://zmnnbvctrqawceyuedey.supabase.co";
         const SUPABASE_KEY = "sb_publishable_iUy-pkdnbQDPjk757XG6Xw_8Va1Vw0j";
-        
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        let defaultDatabase = {
-            "irvantuba": {
-                pass: "admin123", role: "Admin",
-                nama: "Irvan Tuba Jati, S.E.", panggilan: "Irvan", nik: "SKN-TL01", tmptlahir: "Jakarta", tgllahir: "1990-01-01", gender: "Laki-laki", kontak: "081380000000", email: "irvantuba11@gmail.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jl. Raya Pramuka Kav 60-61, Jakarta Pusat", adomisili: "Jakarta, Indonesia", ktp: "3173xxxxxxxx", npwp: "09.xxx", bpjskesehatan: "00011122xx", bpjsketenagakerjaan: "888222xx", dnama: "Keluarga Utama", dinfo: "Istri - 0813xxxxxxxx",
-                jabatan: "Team Leader Sales", divisi: "Sales & Distribusi", area: "Jakarta Pusat", atasan: "Rais Musthofa", status: "Karyawan Tetap (PKWTT)", tglgabung: "2020-01-01", riwayatmutasi: "Team Leader PWK Jakarta",
-                namabank: "BCA", norek: "88887777xx", namarek: "Irvan Tuba Jati", gajipokok: "Struktural Team Leader", tunjangan: "Tunjangan Jabatan", insentif: "Insentif Tim Sales", riwayatgaji: "Penyesuaian Tahunan",
-                dailyAttendance: {}, spList: [], kpi: "Sangat Baik",
-                jenjang: "D4/S1", institusi: "Universitas Indonesia - Manajemen", thnlulus: "2012", sertifikasi: "Leadership & Management", pelatihan: "Regional Product Launch", skills: "Team Supervision, Spreadsheet",
-                files: {}
-            },
-            "kikinurawaludin": {
-                pass: "kiki123", role: "Sales", nama: "Kiki Nurawaludin", panggilan: "Kiki", nik: "SKN-S01", tmptlahir: "Jakarta", tgllahir: "1998-05-12", gender: "Laki-laki", kontak: "081234567890", email: "kiki@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta Pusat", adomisili: "Jakarta Pusat", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta Pusat", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", riwayatmutasi: "Sales Regular", namabank: "BCA", norek: "123456xx", namarek: "Kiki Nurawaludin", gajipokok: "UMP", tunjangan: "Standar", insentif: "Bonus Sales", riwayatgaji: "Standar", dailyAttendance: {}, spList: [], kpi: "Baik", jenjang: "D4/S1", institusi: "Universitas", thnlulus: "2020", sertifikasi: "-", pelatihan: "-", skills: "Sales", files: {}
-            },
-            "bagusramandhika": {
-                pass: "bagus123", role: "Sales", nama: "Bagus Ramandhika", panggilan: "Bagus", nik: "SKN-S02", tmptlahir: "Jakarta", tgllahir: "1999-06-15", gender: "Laki-laki", kontak: "081200000002", email: "bagus@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", adomisili: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", riwayatmutasi: "Sales Area", namabank: "BCA", norek: "222333xx", namarek: "Bagus Ramandhika", gajipokok: "Standar", tunjangan: "Standar", insentif: "Bonus Sales", riwayatgaji: "Standar", dailyAttendance: {}, spList: [], kpi: "Baik", jenjang: "SMA/SMK", institusi: "SMAN Jakarta", thnlulus: "2017", sertifikasi: "-", pelatihan: "-", skills: "Sales", files: {}
-            },
-            "malfainasshidiqi": {
-                pass: "diki123", role: "Sales", nama: "M Alfain Asshidiqi", panggilan: "Alfain", nik: "SKN-S03", tmptlahir: "Jakarta", tgllahir: "1998-03-10", gender: "Laki-laki", kontak: "081200000003", email: "alfain@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", adomisili: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", riwayatmutasi: "Sales Area", namabank: "BCA", norek: "333444xx", namarek: "M Alfain Asshidiqi", gajipokok: "Standar", tunjangan: "Standar", insentif: "Bonus Sales", riwayatgaji: "Standar", dailyAttendance: {}, spList: [], kpi: "Baik", jenjang: "SMA/SMK", institusi: "SMAN Jakarta", thnlulus: "2016", sertifikasi: "-", pelatihan: "-", skills: "Sales", files: {}
-            },
-            "andiwirmanto": {
-                pass: "andi123", role: "Sales", nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", adomisili: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", riwayatmutasi: "Sales Area", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", gajipokok: "Standar", tunjangan: "Standar", insentif: "Bonus Sales", riwayatgaji: "Standar", dailyAttendance: {}, spList: [], kpi: "Baik", jenjang: "SMA/SMK", institusi: "SMAN Jakarta", thnlulus: "2013", sertifikasi: "-", pelatihan: "-", skills: "Sales", files: {}
-            },
-            "dhanitriharto": {
-                pass: "dhani123", role: "Sales", nama: "Dhani Triharto", panggilan: "Dhani", nik: "SKN-S05", tmptlahir: "Jakarta", tgllahir: "1997-07-18", gender: "Laki-laki", kontak: "081200000005", email: "dhani@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", adomisili: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", riwayatmutasi: "Sales Area", namabank: "BCA", norek: "555666xx", namarek: "Dhani Triharto", gajipokok: "Standar", tunjangan: "Standar", insentif: "Bonus Sales", riwayatgaji: "Standar", dailyAttendance: {}, spList: [], kpi: "Baik", jenjang: "SMA/SMK", institusi: "SMAN Jakarta", thnlulus: "2015", sertifikasi: "-", pelatihan: "-", skills: "Sales", files: {}
-            },
-            "mohammaddenisp": {
-                pass: "denis123", role: "Sales", nama: "Mohammad Denis P", panggilan: "Denis", nik: "SKN-S06", tmptlahir: "Jakarta", tgllahir: "1998-09-22", gender: "Laki-laki", kontak: "081200000006", email: "denis@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", adomisili: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", riwayatmutasi: "Sales Area", namabank: "BCA", norek: "666777xx", namarek: "Mohammad Denis P", gajipokok: "Standar", tunjangan: "Standar", insentif: "Bonus Sales", riwayatgaji: "Standar", dailyAttendance: {}, spList: [], kpi: "Baik", jenjang: "SMA/SMK", institusi: "SMAN Jakarta", thnlulus: "2016", sertifikasi: "-", pelatihan: "-", skills: "Sales", files: {}
-            },
-            "rafisuandi": {
-                pass: "rafi123", role: "Sales", nama: "Rafi Suandi", panggilan: "Rafi", nik: "SKN-S07", tmptlahir: "Bekasi", tgllahir: "1999-08-20", gender: "Laki-laki", kontak: "081298765432", email: "rafi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", adomisili: "Jakarta", ktp: "3172xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta Utara", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-03-15", riwayatmutasi: "Sales Area", namabank: "Mandiri", norek: "777888xx", namarek: "Rafi Suandi", gajipokok: "Standar", tunjangan: "Standar", insentif: "Bonus Sales", riwayatgaji: "Standar", dailyAttendance: {}, spList: [], kpi: "Baik", jenjang: "SMA/SMK", institusi: "SMAN Bekasi", thnlulus: "2017", sertifikasi: "-", pelatihan: "-", skills: "Sales", files: {}
-            },
-            "sarifudin": {
-                pass: "sarif123", role: "Sales", nama: "Sarifudin", panggilan: "Sarif", nik: "SKN-S08", tmptlahir: "Jakarta", tgllahir: "1996-02-14", gender: "Laki-laki", kontak: "081200000008", email: "sarif@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", adomisili: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", riwayatmutasi: "Sales Area", namabank: "BCA", norek: "888999xx", namarek: "Sarifudin", gajipokok: "Standar", tunjangan: "Standar", insentif: "Bonus Sales", riwayatgaji: "Standar", dailyAttendance: {}, spList: [], kpi: "Baik", jenjang: "SMA/SMK", institusi: "SMAN Jakarta", thnlulus: "2014", sertifikasi: "-", pelatihan: "-", skills: "Sales", files: {}
-            },
-            "bachtiarsyahputra": {
-                pass: "bachtiar123", role: "Sales", nama: "Bachtiar Syahputra", panggilan: "Bachtiar", nik: "SKN-S09", tmptlahir: "Jakarta", tgllahir: "1994-11-30", gender: "Laki-laki", kontak: "081200000009", email: "bachtiar@sukun.com", nikah: "Menikah", tanggungan: "2 Anak", aktp: "Jakarta", adomisili: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", jabatan: "Sales Representative", divisi: "Sales & Distribusi", area: "Jakarta", atasan: "Irvan Tuba Jati", status: "Karyawan Tetap (PKWTT)", tglgabung: "2024-01-01", riwayatmutasi: "Sales Area", namabank: "BCA", norek: "999000xx", namarek: "Bachtiar Syahputra", gajipokok: "Standar", tunjangan: "Standar", insentif: "Bonus Sales", riwayatgaji: "Standar", dailyAttendance: {}, spList: [], kpi: "Baik", jenjang: "SMA/SMK", institusi: "SMAN Jakarta", thnlulus: "2012", sertifikasi: "-", pelatihan: "-", skills: "Sales", files: {}
-            }
-        };
 
         let dbHC = {};
         let activeUser = localStorage.getItem('hc_active_user_cloud') || null;
@@ -317,14 +221,9 @@
                 if (data && data.length > 0) {
                     dbHC = {};
                     data.forEach(row => { dbHC[row.id] = row.data; });
-                } else {
-                    dbHC = defaultDatabase;
-                    for (let key in defaultDatabase) {
-                        await _supabase.from('hc_database').upsert({ id: key, data: defaultDatabase[key] });
-                    }
                 }
             } catch (err) {
-                dbHC = defaultDatabase;
+                console.error("Gagal memuat dari Cloud", err);
             }
 
             if (activeUser && dbHC[activeUser]) {
@@ -350,15 +249,24 @@
 
         async function syncToCloud(userId) {
             try {
-                await _supabase.from('hc_database').upsert({ id: userId, data: dbHC[userId] });
+                let { error } = await _supabase.from('hc_database').upsert({ id: userId, data: dbHC[userId] });
+                if (error) alert("Gagal menyimpan ke cloud: " + error.message);
+                else alert("Data berhasil tersimpan dan sinkron ke Cloud!");
             } catch (e) {
                 console.error("Sync error", e);
             }
         }
 
-        function login() {
+        async function login() {
             let u = document.getElementById('input-username').value.trim().toLowerCase();
             let p = document.getElementById('input-password').value.trim();
+
+            // Refresh data terbaru dari cloud saat login
+            let { data } = await _supabase.from('hc_database').select('*');
+            if (data && data.length > 0) {
+                dbHC = {};
+                data.forEach(row => { dbHC[row.id] = row.data; });
+            }
 
             if (dbHC[u] && dbHC[u].pass === p) {
                 activeUser = u;
@@ -424,7 +332,6 @@
             if (!newPass) return alert("Password kosong!");
             dbHC[username].pass = newPass;
             await syncToCloud(username);
-            alert(`Password untuk ${username} berhasil diperbarui di Cloud!`);
         }
 
         function renderAdminModules() {
@@ -445,7 +352,6 @@
             await syncToCloud(salesId);
             document.getElementById('admin-sp-desc').value = '';
             renderAdminSPTable();
-            alert("SP berhasil diterbitkan dan tersinkronisasi ke Cloud!");
         }
 
         async function deleteAdminSP(index) {
@@ -635,7 +541,6 @@
             u.skills = document.getElementById('e-skills').value;
 
             await syncToCloud(activeUser);
-            alert("Data Anda berhasil disimpan ke Cloud secara real-time!");
             loadDataToForm();
         }
 
