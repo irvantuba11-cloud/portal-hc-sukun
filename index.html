@@ -264,7 +264,6 @@
 
     <!-- SCRIPT KONEKSI SUPABASE CLOUD -->
     <script>
-        // ⚙️ URL & Publishable Key Supabase Anda sudah terkonfigurasi otomatis:
         const SUPABASE_URL = "https://zmnnbvctrqawceyuedey.supabase.co";
         const SUPABASE_KEY = "sb_publishable_iUy-pkdnbQDPjk757XG6Xw_8Va1Vw0j";
         
@@ -389,27 +388,32 @@
 
         function renderAdminPanel() {
             let tbody = document.getElementById('admin-password-table');
-            tbody.innerHTML = '';
-            for (let username in dbHC) {
-                let user = dbHC[username];
-                let tr = document.createElement('tr');
-                tr.className = "border-b";
-                tr.innerHTML = `
-                    <td class="p-2 font-medium">${user.nama}</td>
-                    <td class="p-2"><input type="text" id="pass-${username}" value="${user.pass}" class="p-1 border rounded text-xs w-16"></td>
-                    <td class="p-2"><button onclick="updatePassword('${username}')" class="bg-blue-600 text-white px-2 py-1 rounded text-[10px]">Ubah</button></td>
-                `;
-                tbody.appendChild(tr);
+            if (tbody) {
+                tbody.innerHTML = '';
+                for (let username in dbHC) {
+                    let user = dbHC[username];
+                    let tr = document.createElement('tr');
+                    tr.className = "border-b";
+                    tr.innerHTML = `
+                        <td class="p-2 font-medium">${user.nama}</td>
+                        <td class="p-2"><input type="text" id="pass-${username}" value="${user.pass}" class="p-1 border rounded text-xs w-16"></td>
+                        <td class="p-2"><button onclick="updatePassword('${username}')" class="bg-blue-600 text-white px-2 py-1 rounded text-[10px]">Ubah</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                }
             }
 
             let select = document.getElementById('admin-select-sales');
-            select.innerHTML = '';
-            for (let username in dbHC) {
-                if (dbHC[username].role === 'Sales') {
-                    let opt = document.createElement('option');
-                    opt.value = username;
-                    opt.text = `${dbHC[username].nama}`;
-                    select.appendChild(opt);
+            if (select) {
+                select.innerHTML = '';
+                for (let username in dbHC) {
+                    let user = dbHC[username];
+                    if (username !== 'irvantuba') {
+                        let opt = document.createElement('option');
+                        opt.value = username;
+                        opt.text = `${user.nama}`;
+                        select.appendChild(opt);
+                    }
                 }
             }
             renderAdminModules();
@@ -453,8 +457,9 @@
 
         function renderAdminSPTable() {
             let salesId = document.getElementById('admin-select-sales').value;
-            if (!salesId) return;
+            if (!salesId || !dbHC[salesId]) return;
             let tbody = document.getElementById('admin-sp-table-body');
+            if (!tbody) return;
             tbody.innerHTML = '';
             let spList = dbHC[salesId].spList || [];
             
@@ -478,13 +483,15 @@
 
         function renderAdminCalendar() {
             let salesId = document.getElementById('admin-select-sales').value;
-            if (!salesId) return;
+            if (!salesId || !dbHC[salesId]) return;
             let grid = document.getElementById('admin-calendar-grid');
+            if (!grid) return;
             grid.innerHTML = '';
 
             let now = new Date(), year = now.getFullYear(), month = now.getMonth();
             let monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            document.getElementById('admin-cal-title').innerText = `3. Atur Absen: ${dbHC[salesId].nama} (${monthNames[month]} ${year})`;
+            let calTitle = document.getElementById('admin-cal-title');
+            if(calTitle) calTitle.innerText = `3. Atur Absen: ${dbHC[salesId].nama} (${monthNames[month]} ${year})`;
 
             ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].forEach(d => {
                 let h = document.createElement('div'); h.className = "font-bold text-[10px] text-slate-500 py-1"; h.innerText = d;
@@ -520,6 +527,7 @@
 
         function loadDataToForm() {
             let u = dbHC[activeUser];
+            if (!u) return;
             document.getElementById('p-nama').value = u.nama || '';
             document.getElementById('p-panggilan').value = u.panggilan || '';
             document.getElementById('p-nik').value = u.nik || '';
@@ -549,10 +557,12 @@
 
         function renderSalesCalendar(u) {
             let grid = document.getElementById('sales-calendar-grid');
+            if (!grid) return;
             grid.innerHTML = '';
             let now = new Date(), year = now.getFullYear(), month = now.getMonth();
             let monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            document.getElementById('sales-cal-title').innerText = `Kalender Kehadiran: ${monthNames[month]} ${year}`;
+            let salesCalTitle = document.getElementById('sales-cal-title');
+            if(salesCalTitle) salesCalTitle.innerText = `Kalender Kehadiran: ${monthNames[month]} ${year}`;
 
             ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].forEach(d => {
                 let h = document.createElement('div'); h.className = "font-bold text-[10px] text-slate-500 py-1"; h.innerText = d;
@@ -583,6 +593,7 @@
 
         function renderSalesSPTable(u) {
             let tbody = document.getElementById('sales-sp-table-body');
+            if (!tbody) return;
             tbody.innerHTML = '';
             let spList = u.spList || [];
             if (spList.length === 0) {
@@ -630,13 +641,21 @@
 
         function switchTab(tabName) {
             ['pribadi', 'pekerjaan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen'].forEach(t => {
-                document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`tab-btn-${t}`).classList.remove('bg-navy-900', 'text-white', 'shadow');
-                document.getElementById(`tab-btn-${t}`).classList.add('text-slate-600', 'hover:bg-slate-100');
+                let tabEl = document.getElementById(`tab-${t}`);
+                let btnEl = document.getElementById(`tab-btn-${t}`);
+                if(tabEl) tabEl.classList.add('hidden');
+                if(btnEl) {
+                    btnEl.classList.remove('bg-navy-900', 'text-white', 'shadow');
+                    btnEl.classList.add('text-slate-600', 'hover:bg-slate-100');
+                }
             });
-            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-            document.getElementById(`tab-btn-${tabName}`).classList.remove('text-slate-600', 'hover:bg-slate-100');
-            document.getElementById(`tab-btn-${tabName}`).classList.add('bg-navy-900', 'text-white', 'shadow');
+            let targetTab = document.getElementById(`tab-${tabName}`);
+            let targetBtn = document.getElementById(`tab-btn-${tabName}`);
+            if(targetTab) targetTab.classList.remove('hidden');
+            if(targetBtn) {
+                targetBtn.classList.remove('text-slate-600', 'hover:bg-slate-100');
+                targetBtn.classList.add('bg-navy-900', 'text-white', 'shadow');
+            }
         }
 
         initApp();
