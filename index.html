@@ -16,7 +16,7 @@
         }
     </script>
 </head>
-<body class="bg-slate-100 font-sans antialiased text-slate-800">
+<body class="bg-slate-100 font-sans antialiased text-slate-800" onload="preloadDatabase()">
     <div class="min-h-screen flex flex-col justify-between">
         <header class="bg-navy-900 text-white px-6 py-4 shadow-md flex justify-between items-center w-full">
             <div class="flex items-center space-x-3">
@@ -30,6 +30,7 @@
         </header>
 
         <main class="flex-grow p-6 w-full">
+            <!-- HALAMAN LOGIN -->
             <div id="section-login" class="bg-white p-8 rounded-2xl shadow-xl max-w-md mx-auto mt-16">
                 <div class="flex flex-col items-center justify-center mb-6">
                     <div class="w-16 h-16 bg-navy-900 text-white rounded-2xl flex items-center justify-center shadow-lg mb-3 border-2 border-slate-700">
@@ -215,7 +216,7 @@
         let dbHC = {};
         let activeUser = localStorage.getItem('hc_active_user_cloud') || null;
 
-        async function initApp() {
+        async function preloadDatabase() {
             try {
                 let { data, error } = await _supabase.from('hc_database').select('*');
                 if (data && data.length > 0) {
@@ -223,9 +224,12 @@
                     data.forEach(row => { dbHC[row.id] = row.data; });
                 }
             } catch (err) {
-                console.error("Gagal memuat dari Cloud", err);
+                console.error("Gagal preload database", err);
             }
+            initApp();
+        }
 
+        async function initApp() {
             if (activeUser && dbHC[activeUser]) {
                 document.getElementById('section-login').classList.add('hidden');
                 document.getElementById('section-admin').classList.add('hidden');
@@ -261,11 +265,15 @@
             let u = document.getElementById('input-username').value.trim().toLowerCase();
             let p = document.getElementById('input-password').value.trim();
 
-            // AMBIL DATA TERBARU DARI CLOUD SEBELUM CEK LOGIN
-            let { data, error } = await _supabase.from('hc_database').select('*');
-            if (data && data.length > 0) {
-                dbHC = {};
-                data.forEach(row => { dbHC[row.id] = row.data; });
+            // Tarik ulang data terbaru dari Supabase saat tombol login diklik
+            try {
+                let { data, error } = await _supabase.from('hc_database').select('*');
+                if (data && data.length > 0) {
+                    dbHC = {};
+                    data.forEach(row => { dbHC[row.id] = row.data; });
+                }
+            } catch (err) {
+                console.error("Gagal sinkronisasi login", err);
             }
 
             if (dbHC[u] && String(dbHC[u].pass).trim() === String(p)) {
@@ -562,8 +570,6 @@
                 targetBtn.classList.add('bg-navy-900', 'text-white', 'shadow');
             }
         }
-
-        initApp();
     </script>
 </body>
 </html>
