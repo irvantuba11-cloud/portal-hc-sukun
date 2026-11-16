@@ -1,0 +1,15 @@
+{
+  "name": "Human Capital - PT. Sukun Wartono Jakarta",
+  "short_name": "Human Capital",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "https://placehold.co/512x512/0f172a/ffffff/png?text=HC",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
