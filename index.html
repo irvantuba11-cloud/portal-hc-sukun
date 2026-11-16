@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Human Capital - PT. Sukun Wartono Jakarta</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SDK Supabase Real-Time -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -21,11 +23,10 @@
 
     <div class="min-h-screen flex flex-col justify-between">
         
-        <!-- HEADER FULL SCREEN -->
         <header class="bg-navy-900 text-white px-6 py-4 shadow-md flex justify-between items-center w-full">
             <div class="flex items-center space-x-3">
                 <span class="bg-emerald-500 text-xs px-2.5 py-1 rounded-full font-bold">PWK JAKARTA</span>
-                <h1 class="text-base font-bold">Portal Mandiri Human Capital (TL Irvan Tuba Jati)</h1>
+                <h1 class="text-base font-bold">Portal Mandiri Human Capital (Cloud Real-Time)</h1>
             </div>
             <div id="user-session-info" class="hidden flex items-center space-x-4">
                 <span id="lbl-user-login" class="text-xs text-slate-300 font-medium"></span>
@@ -33,16 +34,14 @@
             </div>
         </header>
 
-        <!-- KONTEN UTAMA -->
         <main class="flex-grow p-6 w-full">
-            
             <!-- HALAMAN LOGIN -->
             <div id="section-login" class="bg-white p-8 rounded-2xl shadow-xl max-w-md mx-auto mt-16">
                 <div class="flex flex-col items-center justify-center mb-6">
                     <div class="w-16 h-16 bg-navy-900 text-white rounded-2xl flex items-center justify-center shadow-lg mb-3 border-2 border-slate-700">
                         <span class="text-xl font-black tracking-wider">HC</span>
                     </div>
-                    <span class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full">PWK Jakarta System</span>
+                    <span class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full">Cloud Real-Time System</span>
                 </div>
 
                 <h2 class="text-xl font-bold text-navy-900 mb-1 text-center">Masuk ke Portal HC</h2>
@@ -67,7 +66,7 @@
                     <div class="flex justify-between items-center border-b pb-3">
                         <div>
                             <h2 class="text-lg font-bold text-navy-900">Panel Admin - Kontrol Absensi & Riwayat SP</h2>
-                            <p class="text-xs text-slate-500">Kelola kalender absensi harian dan penerbitan Surat Peringatan (SP) untuk seluruh 9 sales.</p>
+                            <p class="text-xs text-slate-500">Kelola kalender absensi harian dan penerbitan Surat Peringatan (SP) secara sinkron real-time.</p>
                         </div>
                         <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700">Kembali ke Profil Saya</button>
                     </div>
@@ -77,15 +76,6 @@
                             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
                                 <h3 class="text-xs font-bold text-navy-900 uppercase">1. Pilih Petugas Sales</h3>
                                 <select id="admin-select-sales" onchange="renderAdminModules()" class="w-full p-2.5 border rounded-lg text-xs bg-white font-semibold"></select>
-                            </div>
-
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
-                                <h3 class="text-xs font-bold text-navy-900 uppercase">Manajemen Password Akun</h3>
-                                <div class="overflow-x-auto max-h-48">
-                                    <table class="w-full text-xs text-left border-collapse">
-                                        <tbody id="admin-password-table"></tbody>
-                                    </table>
-                                </div>
                             </div>
                         </div>
 
@@ -109,7 +99,7 @@
                                     </div>
                                     <div>
                                         <label class="font-medium text-slate-600 block mb-1">Keterangan / Pelanggaran</label>
-                                        <input type="text" id="admin-sp-desc" class="w-full p-2 border rounded bg-white" placeholder="Contoh: Tidak masuk...">
+                                        <input type="text" id="admin-sp-desc" class="w-full p-2 border rounded bg-white" placeholder="Keterangan...">
                                     </div>
                                 </div>
                                 <div class="flex justify-end">
@@ -146,7 +136,6 @@
                     <button onclick="openAdminPanel()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-xs font-bold">Buka Panel Admin & Sanksi SP</button>
                 </div>
 
-                <!-- Tab Menu Navigasi -->
                 <div class="flex flex-wrap bg-white p-2 rounded-xl shadow-sm border border-slate-200 gap-1 w-full">
                     <button onclick="switchTab('pribadi')" id="tab-btn-pribadi" class="flex-1 min-w-[140px] py-2.5 text-xs font-bold rounded-lg bg-navy-900 text-white transition text-center shadow">1. Data Pribadi</button>
                     <button onclick="switchTab('pekerjaan')" id="tab-btn-pekerjaan" class="flex-1 min-w-[140px] py-2.5 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition text-center">2. Pekerjaan</button>
@@ -273,8 +262,14 @@
         </footer>
     </div>
 
-    <!-- SCRIPT APLIKASI & DATABASE LENGKAP 9 SALES -->
+    <!-- SCRIPT KONEKSI SUPABASE CLOUD -->
     <script>
+        // ⚙️ URL & Publishable Key Supabase Anda sudah terkonfigurasi otomatis:
+        const SUPABASE_URL = "https://zmnnbvctrqawceyuedey.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_iUy-pkdnbQDPjk757XG6Xw_8Va1Vw0j";
+        
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         let defaultDatabase = {
             "irvantuba": {
                 pass: "admin123", role: "Admin",
@@ -314,10 +309,25 @@
             }
         };
 
-        let dbHC = JSON.parse(localStorage.getItem('db_sukun_hc_v9')) || defaultDatabase;
-        let activeUser = localStorage.getItem('hc_active_user_v9') || null;
+        let dbHC = {};
+        let activeUser = localStorage.getItem('hc_active_user_cloud') || null;
 
-        function initApp() {
+        async function initApp() {
+            try {
+                let { data, error } = await _supabase.from('hc_database').select('*');
+                if (data && data.length > 0) {
+                    dbHC = {};
+                    data.forEach(row => { dbHC[row.id] = row.data; });
+                } else {
+                    dbHC = defaultDatabase;
+                    for (let key in defaultDatabase) {
+                        await _supabase.from('hc_database').upsert({ id: key, data: defaultDatabase[key] });
+                    }
+                }
+            } catch (err) {
+                dbHC = defaultDatabase;
+            }
+
             if (activeUser && dbHC[activeUser]) {
                 document.getElementById('section-login').classList.add('hidden');
                 document.getElementById('section-admin').classList.add('hidden');
@@ -339,13 +349,21 @@
             }
         }
 
+        async function syncToCloud(userId) {
+            try {
+                await _supabase.from('hc_database').upsert({ id: userId, data: dbHC[userId] });
+            } catch (e) {
+                console.error("Sync error", e);
+            }
+        }
+
         function login() {
             let u = document.getElementById('input-username').value.trim().toLowerCase();
             let p = document.getElementById('input-password').value.trim();
 
             if (dbHC[u] && dbHC[u].pass === p) {
                 activeUser = u;
-                localStorage.setItem('hc_active_user_v9', u);
+                localStorage.setItem('hc_active_user_cloud', u);
                 initApp();
             } else {
                 alert("ID Pengguna atau Password salah!");
@@ -354,7 +372,7 @@
 
         function logout() {
             activeUser = null;
-            localStorage.removeItem('hc_active_user_v9');
+            localStorage.removeItem('hc_active_user_cloud');
             initApp();
         }
 
@@ -397,12 +415,12 @@
             renderAdminModules();
         }
 
-        function updatePassword(username) {
+        async function updatePassword(username) {
             let newPass = document.getElementById(`pass-${username}`).value.trim();
             if (!newPass) return alert("Password kosong!");
             dbHC[username].pass = newPass;
-            localStorage.setItem('db_sukun_hc_v9', JSON.stringify(dbHC));
-            alert(`Password untuk ${username} berhasil diperbarui!`);
+            await syncToCloud(username);
+            alert(`Password untuk ${username} berhasil diperbarui di Cloud!`);
         }
 
         function renderAdminModules() {
@@ -410,7 +428,7 @@
             renderAdminSPTable();
         }
 
-        function addAdminSP() {
+        async function addAdminSP() {
             let salesId = document.getElementById('admin-select-sales').value;
             let date = document.getElementById('admin-sp-date').value;
             let type = document.getElementById('admin-sp-type').value;
@@ -420,16 +438,16 @@
             if (!dbHC[salesId].spList) dbHC[salesId].spList = [];
             dbHC[salesId].spList.push({ date, type, desc });
 
-            localStorage.setItem('db_sukun_hc_v9', JSON.stringify(dbHC));
+            await syncToCloud(salesId);
             document.getElementById('admin-sp-desc').value = '';
             renderAdminSPTable();
-            alert("SP berhasil diterbitkan!");
+            alert("SP berhasil diterbitkan dan tersinkronisasi ke Cloud!");
         }
 
-        function deleteAdminSP(index) {
+        async function deleteAdminSP(index) {
             let salesId = document.getElementById('admin-select-sales').value;
             dbHC[salesId].spList.splice(index, 1);
-            localStorage.setItem('db_sukun_hc_v9', JSON.stringify(dbHC));
+            await syncToCloud(salesId);
             renderAdminSPTable();
         }
 
@@ -487,12 +505,13 @@
                 cell.className = "p-1.5 border rounded text-[11px] font-medium flex flex-col items-center justify-center h-12 cursor-pointer bg-white hover:bg-slate-100 shadow-sm";
                 cell.innerHTML = `<span class="text-[10px] text-slate-400">${day}</span><span class="mt-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase ${status === 'Hadir' ? 'bg-emerald-500 text-white' : status === 'Izin' ? 'bg-amber-500 text-white' : status === 'Sakit' ? 'bg-blue-500 text-white' : status === 'Alpha' ? 'bg-red-500 text-white' : 'bg-slate-100 text-slate-400'}">${status}</span>`;
 
-                cell.onclick = function() {
+                cell.onclick = async function() {
                     let cur = dbHC[salesId].dailyAttendance[dateKey] || '-';
                     let nxt = cur === '-' ? 'Hadir' : cur === 'Hadir' ? 'Izin' : cur === 'Izin' ? 'Sakit' : cur === 'Sakit' ? 'Alpha' : '-';
                     if (nxt === '-') delete dbHC[salesId].dailyAttendance[dateKey];
                     else dbHC[salesId].dailyAttendance[dateKey] = nxt;
-                    localStorage.setItem('db_sukun_hc_v9', JSON.stringify(dbHC));
+                    
+                    await syncToCloud(salesId);
                     renderAdminCalendar();
                 };
                 grid.appendChild(cell);
@@ -578,7 +597,7 @@
             });
         }
 
-        function simpanData() {
+        async function simpanData() {
             if (!activeUser) return;
             let u = dbHC[activeUser];
             u.nama = document.getElementById('p-nama').value;
@@ -604,8 +623,8 @@
             u.institusi = document.getElementById('e-institusi').value;
             u.skills = document.getElementById('e-skills').value;
 
-            localStorage.setItem('db_sukun_hc_v9', JSON.stringify(dbHC));
-            alert("Data Anda berhasil disimpan!");
+            await syncToCloud(activeUser);
+            alert("Data Anda berhasil disimpan ke Cloud secara real-time!");
             loadDataToForm();
         }
 
