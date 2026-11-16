@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Human Capital - PT. Sukun Wartono Jakarta</title>
+    <link rel="manifest" href="manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -232,7 +233,7 @@
                     </div>
                 </div>
 
-                <!-- 3. DATA KENDARAAN & SIM (DENGAN LOGIKA KENDARAAN LISTRIK) -->
+                <!-- 3. DATA KENDARAAN & SIM -->
                 <div id="tab-kendaraan" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">3. Data Kendaraan Operasional & SIM</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
@@ -386,11 +387,11 @@
                 "Suzuki": ["Carry", "Ertiga"]
             },
             "Listrik": {
-                "Wuling": ["Air EV", "Binguo EV", "Cloud EV"],
-                "Hyundai": ["Ioniq 5", "Kona Electric"],
-                "Gesits": ["Gesits G1", "Gesits Raya"],
-                "Alva": ["Alva One", "Alva Cervo"],
-                "Polytron": ["Polytron Fox-R", "Polytron T-Rex"]
+                "Gesits (Motor)": ["Gesits G1", "Gesits Raya"],
+                "Alva (Motor)": ["Alva One", "Alva Cervo"],
+                "Polytron (Motor)": ["Polytron Fox-R", "Polytron T-Rex"],
+                "Wuling (Mobil)": ["Air EV", "Binguo EV", "Cloud EV"],
+                "Hyundai (Mobil)": ["Ioniq 5", "Kona Electric"]
             }
         };
 
