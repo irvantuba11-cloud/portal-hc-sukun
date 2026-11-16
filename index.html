@@ -210,10 +210,9 @@
     <!-- SCRIPT SUPABASE REAL-TIME CLOUD -->
     <script>
         const SUPABASE_URL = "https://zmnnbvctrqawceyuedey.supabase.co";
-        const SUPABASE_KEY = "sb_publishable_iUy-pkdnbQDPjk757XG6Xw_8Va1Vw0j";
+        const SUPABASE_KEY = "sb_publishable_IuY-pkdnbQDPjk757XG6Xw_8Va1VQhW";
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // DATA CADANGAN LOKAL (FALLBACK) AGAR LOGIN LANGSUNG BISA
         let dbHC = {
             "irvantuba": { pass: "admin123", role: "Admin", nama: "Irvan Tuba Jati, S.E.", spList: [], dailyAttendance: {} },
             "kikinurawaludin": { pass: "kiki123", role: "Sales", nama: "Kiki Nurawaludin", spList: [], dailyAttendance: {} },
@@ -274,7 +273,6 @@
             let u = document.getElementById('input-username').value.trim().toLowerCase();
             let p = document.getElementById('input-password').value.trim();
 
-            // Coba ambil data terbaru dari cloud sebelum verifikasi
             try {
                 let { data, error } = await _supabase.from('hc_database').select('*');
                 if (data && data.length > 0) {
