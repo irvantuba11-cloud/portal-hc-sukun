@@ -16,7 +16,7 @@
         }
     </script>
 </head>
-<body class="bg-slate-100 font-sans antialiased text-slate-800" onload="preloadDatabase()">
+<body class="bg-slate-100 font-sans antialiased text-slate-800">
     <div class="min-h-screen flex flex-col justify-between">
         <header class="bg-navy-900 text-white px-6 py-4 shadow-md flex justify-between items-center w-full">
             <div class="flex items-center space-x-3">
@@ -213,23 +213,32 @@
         const SUPABASE_KEY = "sb_publishable_iUy-pkdnbQDPjk757XG6Xw_8Va1Vw0j";
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        let dbHC = {};
+        // DATA CADANGAN LOKAL (FALLBACK) AGAR LOGIN LANGSUNG BISA
+        let dbHC = {
+            "irvantuba": { pass: "admin123", role: "Admin", nama: "Irvan Tuba Jati, S.E.", spList: [], dailyAttendance: {} },
+            "kikinurawaludin": { pass: "kiki123", role: "Sales", nama: "Kiki Nurawaludin", spList: [], dailyAttendance: {} },
+            "bagusramandhika": { pass: "bagus123", role: "Sales", nama: "Bagus Ramandhika", spList: [], dailyAttendance: {} },
+            "malfainasshidiqi": { pass: "diki123", role: "Sales", nama: "M Alfain Asshidiqi", spList: [], dailyAttendance: {} },
+            "andiwirmanto": { pass: "andi123", role: "Sales", nama: "Andi Wirmanto", spList: [], dailyAttendance: {} },
+            "dhanitriharto": { pass: "dhani123", role: "Sales", nama: "Dhani Triharto", spList: [], dailyAttendance: {} },
+            "mohammaddenisp": { pass: "denis123", role: "Sales", nama: "Mohammad Denis P", spList: [], dailyAttendance: {} },
+            "rafisuandi": { pass: "rafi123", role: "Sales", nama: "Rafi Suandi", spList: [], dailyAttendance: {} },
+            "sarifudin": { pass: "sarif123", role: "Sales", nama: "Sarifudin", spList: [], dailyAttendance: {} },
+            "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", nama: "Bachtiar Syahputra", spList: [], dailyAttendance: {} }
+        };
+
         let activeUser = localStorage.getItem('hc_active_user_cloud') || null;
 
-        async function preloadDatabase() {
+        async function initApp() {
             try {
                 let { data, error } = await _supabase.from('hc_database').select('*');
                 if (data && data.length > 0) {
-                    dbHC = {};
                     data.forEach(row => { dbHC[row.id] = row.data; });
                 }
             } catch (err) {
-                console.error("Gagal preload database", err);
+                console.error("Gagal memuat dari Cloud", err);
             }
-            initApp();
-        }
 
-        async function initApp() {
             if (activeUser && dbHC[activeUser]) {
                 document.getElementById('section-login').classList.add('hidden');
                 document.getElementById('section-admin').classList.add('hidden');
@@ -265,15 +274,14 @@
             let u = document.getElementById('input-username').value.trim().toLowerCase();
             let p = document.getElementById('input-password').value.trim();
 
-            // Tarik ulang data terbaru dari Supabase saat tombol login diklik
+            // Coba ambil data terbaru dari cloud sebelum verifikasi
             try {
                 let { data, error } = await _supabase.from('hc_database').select('*');
                 if (data && data.length > 0) {
-                    dbHC = {};
                     data.forEach(row => { dbHC[row.id] = row.data; });
                 }
             } catch (err) {
-                console.error("Gagal sinkronisasi login", err);
+                console.log("Menggunakan data lokal");
             }
 
             if (dbHC[u] && String(dbHC[u].pass).trim() === String(p)) {
@@ -303,22 +311,6 @@
         }
 
         function renderAdminPanel() {
-            let tbody = document.getElementById('admin-password-table');
-            if (tbody) {
-                tbody.innerHTML = '';
-                for (let username in dbHC) {
-                    let user = dbHC[username];
-                    let tr = document.createElement('tr');
-                    tr.className = "border-b";
-                    tr.innerHTML = `
-                        <td class="p-2 font-medium">${user.nama}</td>
-                        <td class="p-2"><input type="text" id="pass-${username}" value="${user.pass}" class="p-1 border rounded text-xs w-16"></td>
-                        <td class="p-2"><button onclick="updatePassword('${username}')" class="bg-blue-600 text-white px-2 py-1 rounded text-[10px]">Ubah</button></td>
-                    `;
-                    tbody.appendChild(tr);
-                }
-            }
-
             let select = document.getElementById('admin-select-sales');
             if (select) {
                 select.innerHTML = '';
@@ -333,13 +325,6 @@
                 }
             }
             renderAdminModules();
-        }
-
-        async function updatePassword(username) {
-            let newPass = document.getElementById(`pass-${username}`).value.trim();
-            if (!newPass) return alert("Password kosong!");
-            dbHC[username].pass = newPass;
-            await syncToCloud(username);
         }
 
         function renderAdminModules() {
@@ -570,6 +555,8 @@
                 targetBtn.classList.add('bg-navy-900', 'text-white', 'shadow');
             }
         }
+
+        initApp();
     </script>
 </body>
 </html>
