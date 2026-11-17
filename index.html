@@ -144,7 +144,7 @@
                         <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700 cursor-pointer">Kembali ke Profil Saya</button>
                     </div>
 
-                    <!-- KONTROL PERSETUJUAN CUTI ADMIN (DENGAN TOMBOL HAPUS/BATALKAN) -->
+                    <!-- KONTROL PERSETUJUAN CUTI ADMIN -->
                     <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
                         <h3 class="text-xs font-bold text-navy-900 uppercase">Daftar Pengajuan & Riwayat Cuti Sales</h3>
                         <div class="overflow-x-auto">
@@ -1287,13 +1287,13 @@
                 return alert("Pengajuan cuti minimal dilakukan 7 hari (H-7) dari tanggal pelaksanaan.");
             }
 
-            // Validasi Maksimal 1 Hari per Bulan
+            // Validasi Maksimal 1 Hari per Bulan (Pemberitahuan tegas sesuai instruksi)
             let selMonth = dateVal.substring(0, 7); // Format: YYYY-MM
             if (!u.leaveList) u.leaveList = [];
             
-            let alreadyTakenInMonth = u.leaveList.some(l => l.date.startsWith(selMonth) && (l.status === 'ACC' || l.status === 'Pending'));
+            let alreadyTakenInMonth = u.leaveList.some(l => l.date.startsWith(selMonth) && (l.status === 'ACC' || l.status === 'Pending' || l.status === 'Tolak'));
             if (alreadyTakenInMonth) {
-                return alert("Anda hanya berhak mengambil maksimal 1 hari cuti dalam bulan yang sama!");
+                return alert("Tidak bisa cuti lebih dari 1x dalam 1 bulan! Anda sudah memiliki riwayat atau pengajuan cuti di bulan ini, wajib memilih 1 tanggal saja.");
             }
 
             u.leaveList.push({ date: dateVal, purpose: purposeVal, status: 'Pending' });
