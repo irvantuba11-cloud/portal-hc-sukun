@@ -652,7 +652,7 @@
         </div>
     </div>
 
-    <!-- AREA CETAK FORM PENGAJUAN CUTI / IZIN (A4) - NAMA DIKOSONGKAN -->
+    <!-- AREA CETAK FORM PENGAJUAN CUTI / IZIN (A4) - NAMA KOSONG MANUAL -->
     <div id="printLeaveSection" class="hidden">
         <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 30px; color: #000;">
             <div style="text-align: center; border-bottom: 3px double #000; padding-bottom: 12px; margin-bottom: 25px;">
@@ -965,7 +965,7 @@
             document.getElementById('section-dashboard').classList.add('hidden');
             document.getElementById('section-admin').classList.remove('hidden');
             
-            // Otomatis tarik data terbaru dari Supabase Cloud saat Admin membuka Panel Admin
+            // Otomatis unduh data terbaru dari Supabase Cloud setiap kali Panel Admin dibuka
             try {
                 let { data, error } = await _supabase.from('hc_database').select('*');
                 if (data && data.length > 0) {
