@@ -652,7 +652,7 @@
         </div>
     </div>
 
-    <!-- AREA CETAK FORM PENGAJUAN CUTI / IZIN (A4) - NAMA DIKOSONGKAN UNTUK DIISI MANUAL -->
+    <!-- AREA CETAK FORM PENGAJUAN CUTI / IZIN (A4) - NAMA DIKOSONGKAN -->
     <div id="printLeaveSection" class="hidden">
         <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 30px; color: #000;">
             <div style="text-align: center; border-bottom: 3px double #000; padding-bottom: 12px; margin-bottom: 25px;">
@@ -688,11 +688,11 @@
                     <td style="padding: 6px 0; font-weight: bold;" id="print-leave-type-val">: -</td>
                 </tr>
                 <tr>
-                    <td style="padding: 6px 0; font-weight: bold;">Tanggal Pelaksanaan</td>
+                    <td style="width: 160px; padding: 6px 0; font-weight: bold;">Tanggal Pelaksanaan</td>
                     <td style="padding: 6px 0;" id="print-leave-date-val">: -</td>
                 </tr>
                 <tr>
-                    <td style="padding: 6px 0; font-weight: bold; vertical-align: top;">Tujuan / Keperluan</td>
+                    <td style="width: 160px; padding: 6px 0; font-weight: bold; vertical-align: top;">Tujuan / Keperluan</td>
                     <td style="padding: 6px 0;" id="print-leave-purpose-val">: -</td>
                 </tr>
             </table>
@@ -961,9 +961,26 @@
             initApp();
         }
 
-        function openAdminPanel() {
+        async function openAdminPanel() {
             document.getElementById('section-dashboard').classList.add('hidden');
             document.getElementById('section-admin').classList.remove('hidden');
+            
+            // Otomatis tarik data terbaru dari Supabase Cloud saat Admin membuka Panel Admin
+            try {
+                let { data, error } = await _supabase.from('hc_database').select('*');
+                if (data && data.length > 0) {
+                    data.forEach(row => { 
+                        if (row.id && row.data) {
+                            if (!row.data.leaveList) row.data.leaveList = [];
+                            if (row.data.approvedLeaveCount === undefined) row.data.approvedLeaveCount = 0;
+                            dbHC[row.id] = row.data; 
+                        }
+                    });
+                }
+            } catch (e) {
+                console.error("Auto-fetch error", e);
+            }
+
             renderAdminPanel();
         }
 
