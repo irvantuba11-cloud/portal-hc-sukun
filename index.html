@@ -139,14 +139,14 @@
                     <div class="flex justify-between items-center border-b pb-3">
                         <div>
                             <h2 class="text-lg font-bold text-navy-900">Panel Admin - Kontrol Absensi, Riwayat SP & Persetujuan Cuti</h2>
-                            <p class="text-xs text-slate-500">Kelola absensi harian, terbitkan SP, serta ACC/Tolak pengajuan cuti sales.</p>
+                            <p class="text-xs text-slate-500">Kelola absensi harian, terbitkan SP, serta ACC / Tolak / Hapus pengajuan cuti sales.</p>
                         </div>
                         <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700 cursor-pointer">Kembali ke Profil Saya</button>
                     </div>
 
-                    <!-- KONTROL PERSETUJUAN CUTI ADMIN -->
+                    <!-- KONTROL PERSETUJUAN CUTI ADMIN (DENGAN TOMBOL HAPUS/BATALKAN) -->
                     <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
-                        <h3 class="text-xs font-bold text-navy-900 uppercase">Daftar Pengajuan Cuti Masuk (Approval)</h3>
+                        <h3 class="text-xs font-bold text-navy-900 uppercase">Daftar Pengajuan & Riwayat Cuti Sales</h3>
                         <div class="overflow-x-auto">
                             <table class="w-full text-xs text-left border bg-white rounded-lg overflow-hidden">
                                 <thead>
@@ -155,11 +155,11 @@
                                         <th class="p-2.5">Tanggal Cuti</th>
                                         <th class="p-2.5">Tujuan / Keperluan</th>
                                         <th class="p-2.5">Status</th>
-                                        <th class="p-2.5 text-center">Aksi (ACC / Tolak)</th>
+                                        <th class="p-2.5 text-center">Aksi (ACC / Tolak / Hapus)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="admin-leave-approval-body">
-                                    <tr><td colspan="5" class="p-3 text-center text-slate-400 font-semibold">Tidak ada pengajuan cuti tertunda.</td></tr>
+                                    <tr><td colspan="5" class="p-3 text-center text-slate-400 font-semibold">Tidak ada data cuti.</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1041,51 +1041,71 @@
             let tbody = document.getElementById('admin-leave-approval-body');
             if(!tbody) return;
             tbody.innerHTML = '';
-            let hasPending = false;
+            let hasData = false;
 
             for (let username in dbHC) {
                 if (username === 'irvantuba') continue;
                 let user = dbHC[username];
                 if (user.leaveList && user.leaveList.length > 0) {
                     user.leaveList.forEach((leave, idx) => {
-                        if (leave.status === 'Pending') {
-                            hasPending = true;
-                            let tr = document.createElement('tr');
-                            tr.className = "border-b";
-                            tr.innerHTML = `
-                                <td class="p-2 font-bold">${user.nama}</td>
-                                <td class="p-2">${leave.date}</td>
-                                <td class="p-2 font-medium">${leave.purpose}</td>
-                                <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] bg-amber-100 text-amber-800 font-bold">Menunggu ACC</span></td>
-                                <td class="p-2 text-center space-x-1">
+                        hasData = true;
+                        let badgeColor = leave.status === 'ACC' ? 'bg-emerald-100 text-emerald-800' : leave.status === 'Tolak' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800';
+                        let tr = document.createElement('tr');
+                        tr.className = "border-b";
+                        tr.innerHTML = `
+                            <td class="p-2 font-bold">${user.nama}</td>
+                            <td class="p-2">${leave.date}</td>
+                            <td class="p-2 font-medium">${leave.purpose}</td>
+                            <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] ${badgeColor} font-bold">${leave.status}</span></td>
+                            <td class="p-2 text-center space-x-1">
+                                ${leave.status === 'Pending' ? `
                                     <button onclick="processLeave('${username}', ${idx}, 'ACC')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">ACC</button>
                                     <button onclick="processLeave('${username}', ${idx}, 'Tolak')" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">Tolak</button>
-                                </td>
-                            `;
-                            tbody.appendChild(tr);
-                        }
+                                ` : ''}
+                                <button onclick="deleteLeaveRecord('${username}', ${idx})" class="bg-slate-600 hover:bg-slate-700 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer" title="Hapus / Batalkan Cuti">Hapus</button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
                     });
                 }
             }
 
-            if (!hasPending) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400 font-semibold">Tidak ada pengajuan cuti tertunda.</td></tr>`;
+            if (!hasData) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400 font-semibold">Tidak ada data cuti.</td></tr>`;
             }
         }
 
         async function processLeave(username, idx, decision) {
             let user = dbHC[username];
             if (!user.leaveList[idx]) return;
+            let oldStatus = user.leaveList[idx].status;
             user.leaveList[idx].status = decision;
 
-            if (decision === 'ACC') {
+            if (decision === 'ACC' && oldStatus !== 'ACC') {
                 if (user.approvedLeaveCount === undefined) user.approvedLeaveCount = 0;
                 user.approvedLeaveCount++;
+            } else if (oldStatus === 'ACC' && decision !== 'ACC') {
+                if (user.approvedLeaveCount > 0) user.approvedLeaveCount--;
             }
 
             await syncToCloud(username);
             renderAdminLeaveApprovals();
             alert(`Pengajuan cuti berhasil di-${decision}!`);
+        }
+
+        async function deleteLeaveRecord(username, idx) {
+            if (!confirm("Apakah Anda yakin ingin menghapus / membatalkan riwayat cuti ini?")) return;
+            let user = dbHC[username];
+            if (!user.leaveList[idx]) return;
+
+            let removed = user.leaveList.splice(idx, 1)[0];
+            if (removed.status === 'ACC') {
+                if (user.approvedLeaveCount > 0) user.approvedLeaveCount--;
+            }
+
+            await syncToCloud(username);
+            renderAdminLeaveApprovals();
+            alert("Riwayat cuti berhasil dihapus.");
         }
 
         function loadDataToForm() {
