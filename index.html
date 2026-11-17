@@ -139,7 +139,7 @@
                     <div class="flex justify-between items-center border-b pb-3">
                         <div>
                             <h2 class="text-lg font-bold text-navy-900">Panel Admin - Kontrol Absensi, Riwayat SP & Persetujuan Cuti/Izin</h2>
-                            <p class="text-xs text-slate-500">Kelola absensi harian, terbitkan SP, serta ACC / Tolak / Hapus pengajuan cuti & izin sales.</p>
+                            <p class="text-xs text-slate-500">Kelola absensi harian, terbitkan SP, serta ACC / Tolak / Cetak / Hapus pengajuan cuti & izin sales.</p>
                         </div>
                         <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700 cursor-pointer">Kembali ke Profil Saya</button>
                     </div>
@@ -156,7 +156,7 @@
                                         <th class="p-2.5">Tanggal</th>
                                         <th class="p-2.5">Tujuan / Keperluan</th>
                                         <th class="p-2.5">Status</th>
-                                        <th class="p-2.5 text-center">Aksi (ACC / Tolak / Hapus)</th>
+                                        <th class="p-2.5 text-center">Aksi (ACC / Tolak / Cetak / Hapus)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="admin-leave-approval-body">
@@ -531,7 +531,7 @@
                             </div>
                             <div>
                                 <label class="font-bold text-slate-800 block mb-1">Tujuan / Keperluan</label>
-                                <input type="text" id="leave-input-purpose" class="w-full p-2.5 border rounded-lg bg-white font-semibold text-slate-950" placeholder="Keterangan keperluan...">
+                                <input type="text" id="leave-input-purpose" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-950" placeholder="Keterangan keperluan...">
                             </div>
                         </div>
                         <div class="flex justify-end">
@@ -541,7 +541,7 @@
                         </div>
                     </div>
 
-                    <!-- Kalender & Riwayat Pengajuan Cuti/Izin -->
+                    <!-- Kalender & Riwayat Pengajuan Cuti / Izin -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
                             <h4 id="leave-cal-title" class="text-xs font-bold text-navy-900 uppercase">Kalender Cuti & Izin Bulan Ini</h4>
@@ -641,6 +641,69 @@
                         <p style="margin-bottom: 15px;">Jakarta, <span id="print-today-date"></span></p>
                         <p style="margin-bottom: 65px; font-weight: bold;">Petugas / Karyawan</p>
                         <p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- AREA CETAK FORM PENGAJUAN CUTI / IZIN (A4) -->
+    <div id="printLeaveSection" class="hidden">
+        <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 30px; color: #000;">
+            <div style="text-align: center; border-bottom: 3px double #000; padding-bottom: 12px; margin-bottom: 25px;">
+                <h2 style="margin: 0; font-size: 16px; font-weight: bold; text-transform: uppercase;">PT. Sukun Wartono Indonesia Perwakilan Jakarta</h2>
+                <p style="margin: 3px 0 0; font-size: 11px;">Jl. Raya Pramuka Kav 60-61, Rawasari, Cempaka Putih, Jakarta Pusat</p>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 25px;">
+                <h3 style="margin: 0; font-size: 14px; font-weight: bold; text-decoration: underline;" id="print-leave-title">FORMULIR PENGAJUAN CUTI / IZIN</h3>
+                <p style="margin: 5px 0 0; font-size: 12px;" id="print-leave-nomor">Nomor: CUTI / ... / 2026</p>
+            </div>
+
+            <p style="font-size: 12px; line-height: 1.6; margin-bottom: 15px;">Yang bertanda tangan di bawah ini mengajukan permohonan <span id="print-leave-type-label">Cuti</span> kepada Team Leader PT. Sukun Wartono Indonesia Perwakilan Jakarta, dengan rincian sebagai berikut:</p>
+
+            <table style="width: 100%; font-size: 12px; margin-bottom: 20px; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 160px; padding: 4px 0; font-weight: bold;">Nama Karyawan</td>
+                    <td style="padding: 4px 0;" id="print-leave-nama">: -</td>
+                </tr>
+                <tr>
+                    <td style="padding: 4px 0; font-weight: bold;">NIK / ID Karyawan</td>
+                    <td style="padding: 4px 0;" id="print-leave-nik">: -</td>
+                </tr>
+                <tr>
+                    <td style="padding: 4px 0; font-weight: bold;">Jabatan / Area</td>
+                    <td style="padding: 4px 0;" id="print-leave-jabatan">: -</td>
+                </tr>
+            </table>
+
+            <table style="width: 100%; font-size: 12px; margin-bottom: 25px; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 160px; padding: 6px 0; font-weight: bold;">Jenis Pengajuan</td>
+                    <td style="padding: 6px 0; font-weight: bold;" id="print-leave-type-val">: -</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 0; font-weight: bold;">Tanggal Pelaksanaan</td>
+                    <td style="padding: 6px 0;" id="print-leave-date-val">: -</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 0; font-weight: bold; vertical-align: top;">Tujuan / Keperluan</td>
+                    <td style="padding: 6px 0;" id="print-leave-purpose-val">: -</td>
+                </tr>
+            </table>
+
+            <p style="font-size: 12px; line-height: 1.6; margin-bottom: 40px;">Demikian permohonan ini diajukan untuk dapat diperiksa dan mendapat persetujuan lebih lanjut.</p>
+
+            <table style="width: 100%; margin-top: 40px; font-size: 12px; border-collapse: collapse;">
+                <tr>
+                    <td style="text-align: center; width: 50%;">
+                        <p style="margin-bottom: 65px; font-weight: bold;">Pemohon,<br>Petugas Sales</p>
+                        <p style="margin: 0; font-weight: bold; text-decoration: underline;" id="print-leave-pemohon">( ........................................ )</p>
+                    </td>
+                    <td style="text-align: center; width: 50%;">
+                        <p style="margin-bottom: 15px;">Jakarta, <span id="print-leave-today"></span></p>
+                        <p style="margin-bottom: 65px; font-weight: bold;">Mengetahui,<br>Team Leader</p>
+                        <p style="margin: 0; font-weight: bold; text-decoration: underline;">( Irvan Tuba Jati, S.E. )</p>
                     </td>
                 </tr>
             </table>
@@ -972,6 +1035,32 @@
             printSec.classList.add('hidden');
         }
 
+        function printLeaveDocument(username, idx) {
+            let user = dbHC[username];
+            let leave = user.leaveList[idx];
+            if (!leave) return;
+
+            let typeName = leave.type || 'Cuti';
+            document.getElementById('print-leave-title').innerText = `FORMULIR PENGAJUAN ${typeName.toUpperCase()}`;
+            document.getElementById('print-leave-nomor').innerText = `Nomor: ${typeName.toUpperCase()} / ${leave.date} / 2026`;
+            document.getElementById('print-leave-type-label').innerText = typeName;
+            document.getElementById('print-leave-nama').innerText = `: ${user.nama}`;
+            document.getElementById('print-leave-nik').innerText = `: ${user.nik || '-'}`;
+            document.getElementById('print-leave-jabatan').innerText = `: ${user.jabatan || '-'} / ${user.area || '-'}`;
+            document.getElementById('print-leave-type-val').innerText = `: ${typeName}`;
+            document.getElementById('print-leave-date-val').innerText = `: ${leave.date}`;
+            document.getElementById('print-leave-purpose-val').innerText = `: ${leave.purpose}`;
+            document.getElementById('print-leave-pemohon').innerText = `( ${user.nama} )`;
+
+            let today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            document.getElementById('print-leave-today').innerText = today;
+
+            let printSec = document.getElementById('printLeaveSection');
+            printSec.classList.remove('hidden');
+            window.print();
+            printSec.classList.add('hidden');
+        }
+
         function renderAdminSPTable() {
             let salesId = document.getElementById('admin-select-sales').value;
             if (!salesId || !dbHC[salesId]) return;
@@ -1002,50 +1091,6 @@
             });
         }
 
-        function renderAdminCalendar() {
-            let salesId = document.getElementById('admin-select-sales').value;
-            if (!salesId || !dbHC[salesId]) return;
-            let grid = document.getElementById('admin-calendar-grid');
-            if (!grid) return;
-            grid.innerHTML = '';
-
-            let now = new Date(), year = now.getFullYear(), month = now.getMonth();
-            let monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            let calTitle = document.getElementById('admin-cal-title');
-            if(calTitle) calTitle.innerText = `3. Atur Absen: ${dbHC[salesId].nama} (${monthNames[month]} ${year})`;
-
-            ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].forEach(d => {
-                let h = document.createElement('div'); h.className = "font-bold text-[10px] text-slate-700 py-1"; h.innerText = d;
-                grid.appendChild(h);
-            });
-
-            let firstDay = new Date(year, month, 1).getDay();
-            let totalDays = new Date(year, month + 1, 0).getDate();
-
-            for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
-            if (!dbHC[salesId].dailyAttendance) dbHC[salesId].dailyAttendance = {};
-
-            for (let day = 1; day <= totalDays; day++) {
-                let dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                let status = dbHC[salesId].dailyAttendance[dateKey] || '-';
-
-                let cell = document.createElement('div');
-                cell.className = "p-1.5 border rounded text-[11px] font-bold flex flex-col items-center justify-center h-12 cursor-pointer bg-white hover:bg-slate-100 shadow-sm";
-                cell.innerHTML = `<span class="text-[10px] text-slate-500 font-bold">${day}</span><span class="mt-0.5 px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${status === 'Hadir' ? 'bg-emerald-600 text-white' : status === 'Izin' ? 'bg-amber-600 text-white' : status === 'Sakit' ? 'bg-blue-600 text-white' : status === 'Alpha' ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-400'}">${status}</span>`;
-
-                cell.onclick = async function() {
-                    let cur = dbHC[salesId].dailyAttendance[dateKey] || '-';
-                    let nxt = cur === '-' ? 'Hadir' : cur === 'Hadir' ? 'Izin' : cur === 'Izin' ? 'Sakit' : cur === 'Sakit' ? 'Alpha' : '-';
-                    if (nxt === '-') delete dbHC[salesId].dailyAttendance[dateKey];
-                    else dbHC[salesId].dailyAttendance[dateKey] = nxt;
-                    
-                    await syncToCloud(salesId);
-                    renderAdminCalendar();
-                };
-                grid.appendChild(cell);
-            }
-        }
-
         function renderAdminLeaveApprovals() {
             let tbody = document.getElementById('admin-leave-approval-body');
             if(!tbody) return;
@@ -1073,6 +1118,7 @@
                                     <button onclick="processLeave('${username}', ${idx}, 'ACC')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">ACC</button>
                                     <button onclick="processLeave('${username}', ${idx}, 'Tolak')" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">Tolak</button>
                                 ` : ''}
+                                <button onclick="printLeaveDocument('${username}', ${idx})" class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer" title="Cetak Form A4">Cetak</button>
                                 <button onclick="deleteLeaveRecord('${username}', ${idx})" class="bg-slate-600 hover:bg-slate-700 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer" title="Hapus / Batalkan">Hapus</button>
                             </td>
                         `;
@@ -1311,7 +1357,7 @@
                 }
             }
 
-            // Validasi Maksimal 1 Kali (1 Hari) per Bulan untuk masing-masing jenis (atau gabungan)
+            // Validasi Maksimal 1 Kali (1 Hari) per Bulan untuk masing-masing jenis
             let selMonth = dateVal.substring(0, 7); // Format: YYYY-MM
             if (!u.leaveList) u.leaveList = [];
             
