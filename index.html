@@ -104,7 +104,7 @@
                     <i data-lucide="award" class="w-4 h-4 text-teal-400"></i> Rekap KPI
                 </button>
                 <button onclick="switchTab('cuti')" id="tab-btn-cuti" class="nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 cursor-pointer">
-                    <i data-lucide="calendar-days" class="w-4 h-4 text-rose-400"></i> Cuti
+                    <i data-lucide="calendar-days" class="w-4 h-4 text-rose-400"></i> Cuti & Izin
                 </button>
             </div>
         </header>
@@ -138,28 +138,29 @@
                 <div class="bg-white p-6 rounded-2xl shadow-md space-y-6 w-full">
                     <div class="flex justify-between items-center border-b pb-3">
                         <div>
-                            <h2 class="text-lg font-bold text-navy-900">Panel Admin - Kontrol Absensi, Riwayat SP & Persetujuan Cuti</h2>
-                            <p class="text-xs text-slate-500">Kelola absensi harian, terbitkan SP, serta ACC / Tolak / Hapus pengajuan cuti sales.</p>
+                            <h2 class="text-lg font-bold text-navy-900">Panel Admin - Kontrol Absensi, Riwayat SP & Persetujuan Cuti/Izin</h2>
+                            <p class="text-xs text-slate-500">Kelola absensi harian, terbitkan SP, serta ACC / Tolak / Hapus pengajuan cuti & izin sales.</p>
                         </div>
                         <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700 cursor-pointer">Kembali ke Profil Saya</button>
                     </div>
 
-                    <!-- KONTROL PERSETUJUAN CUTI ADMIN -->
+                    <!-- KONTROL PERSETUJUAN CUTI & IZIN ADMIN -->
                     <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
-                        <h3 class="text-xs font-bold text-navy-900 uppercase">Daftar Pengajuan & Riwayat Cuti Sales</h3>
+                        <h3 class="text-xs font-bold text-navy-900 uppercase">Daftar Pengajuan & Riwayat Cuti / Izin Sales</h3>
                         <div class="overflow-x-auto">
                             <table class="w-full text-xs text-left border bg-white rounded-lg overflow-hidden">
                                 <thead>
                                     <tr class="bg-slate-200 text-slate-800 font-bold">
                                         <th class="p-2.5">Nama Sales</th>
-                                        <th class="p-2.5">Tanggal Cuti</th>
+                                        <th class="p-2.5">Jenis</th>
+                                        <th class="p-2.5">Tanggal</th>
                                         <th class="p-2.5">Tujuan / Keperluan</th>
                                         <th class="p-2.5">Status</th>
                                         <th class="p-2.5 text-center">Aksi (ACC / Tolak / Hapus)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="admin-leave-approval-body">
-                                    <tr><td colspan="5" class="p-3 text-center text-slate-400 font-semibold">Tidak ada data cuti.</td></tr>
+                                    <tr><td colspan="6" class="p-3 text-center text-slate-400 font-semibold">Tidak ada data cuti atau izin.</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -500,12 +501,12 @@
                     </div>
                 </div>
 
-                <!-- 9. CUTI -->
+                <!-- 9. CUTI & IZIN -->
                 <div id="tab-cuti" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
                     <div class="flex flex-col sm:flex-row justify-between items-center border-b pb-3 gap-3">
                         <div>
-                            <h3 class="text-sm font-bold text-navy-900 uppercase tracking-wider">9. Modul Cuti</h3>
-                            <p class="text-[11px] text-slate-500 font-medium">Jatah cuti 12 hari/tahun (berlaku setelah masa kerja 1 tahun). Maksimal 1 hari per bulan (Pengajuan H-7).</p>
+                            <h3 class="text-sm font-bold text-navy-900 uppercase tracking-wider">9. Modul Cuti & Izin</h3>
+                            <p class="text-[11px] text-slate-500 font-medium">Cuti: Jatah 12 hari/thn (>1 thn kerja, min H-7, maks 1x/bln). Izin: Tanpa syarat masa kerja, min H-3, maks 1x/bln.</p>
                         </div>
                         <div id="leave-quota-badge" class="px-4 py-2 bg-blue-50 border border-blue-200 rounded-xl text-center">
                             <span class="text-[10px] text-blue-800 font-bold uppercase block">Sisa Jatah Cuti Tahunan</span>
@@ -513,45 +514,53 @@
                         </div>
                     </div>
 
-                    <!-- Kotak Form Pengajuan Cuti -->
+                    <!-- Kotak Form Pengajuan Cuti / Izin -->
                     <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4">
-                        <h4 class="text-xs font-bold text-navy-900 uppercase">Form Pengajuan Cuti Baru</h4>
+                        <h4 class="text-xs font-bold text-navy-900 uppercase">Form Pengajuan Cuti / Izin Baru</h4>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
                             <div>
-                                <label class="font-bold text-slate-800 block mb-1">Tanggal Cuti (Minimal H-7)</label>
+                                <label class="font-bold text-slate-800 block mb-1">Jenis Pengajuan</label>
+                                <select id="leave-input-type" class="w-full p-2.5 border rounded-lg bg-white font-bold text-slate-950">
+                                    <option value="Cuti">Cuti (Min H-7, Jatah 12 Hari/Thn)</option>
+                                    <option value="Izin">Izin (Min H-3, Tanpa Syarat Thn Kerja)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="font-bold text-slate-800 block mb-1">Tanggal Pelaksanaan</label>
                                 <input type="date" id="leave-input-date" class="w-full p-2.5 border rounded-lg bg-white font-semibold text-slate-950">
                             </div>
-                            <div class="sm:col-span-2">
-                                <label class="font-bold text-slate-800 block mb-1">Tujuan / Keperluan Cuti</label>
-                                <input type="text" id="leave-input-purpose" class="w-full p-2.5 border rounded-lg bg-white font-semibold text-slate-950" placeholder="Contoh: Keperluan keluarga mendesak / Istirahat medis">
+                            <div>
+                                <label class="font-bold text-slate-800 block mb-1">Tujuan / Keperluan</label>
+                                <input type="text" id="leave-input-purpose" class="w-full p-2.5 border rounded-lg bg-white font-semibold text-slate-950" placeholder="Keterangan keperluan...">
                             </div>
                         </div>
                         <div class="flex justify-end">
                             <button onclick="submitLeaveRequest()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-xs font-bold shadow cursor-pointer">
-                                📤 Kirim Pengajuan Cuti
+                                📤 Kirim Pengajuan
                             </button>
                         </div>
                     </div>
 
-                    <!-- Kalender & Riwayat Pengajuan Cuti -->
+                    <!-- Kalender & Riwayat Pengajuan Cuti/Izin -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
-                            <h4 id="leave-cal-title" class="text-xs font-bold text-navy-900 uppercase">Kalender Cuti Bulan Ini</h4>
+                            <h4 id="leave-cal-title" class="text-xs font-bold text-navy-900 uppercase">Kalender Cuti & Izin Bulan Ini</h4>
                             <div id="leave-calendar-grid" class="grid grid-cols-7 gap-1.5 text-center text-xs"></div>
                         </div>
                         <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
-                            <h4 class="text-xs font-bold text-navy-900 uppercase">Riwayat & Status Pengajuan Cuti</h4>
+                            <h4 class="text-xs font-bold text-navy-900 uppercase">Riwayat & Status Pengajuan</h4>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-xs text-left border bg-white rounded-lg">
                                     <thead>
                                         <tr class="bg-slate-200 text-slate-800 font-bold">
+                                            <th class="p-2">Jenis</th>
                                             <th class="p-2">Tanggal</th>
                                             <th class="p-2">Tujuan</th>
                                             <th class="p-2 text-center">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody id="leave-history-body">
-                                        <tr><td colspan="3" class="p-3 text-center text-slate-400 font-medium">Belum ada riwayat pengajuan cuti.</td></tr>
+                                        <tr><td colspan="4" class="p-3 text-center text-slate-400 font-medium">Belum ada riwayat pengajuan.</td></tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -811,7 +820,7 @@
         function setFormEditable(isEditable) {
             const inputs = document.querySelectorAll('main input, main select, main textarea');
             inputs.forEach(el => {
-                if (el.id !== 'input-username' && el.id !== 'input-password' && el.id !== 'kpi-filter-year' && el.id !== 'leave-input-date' && el.id !== 'leave-input-purpose') {
+                if (el.id !== 'input-username' && el.id !== 'input-password' && el.id !== 'kpi-filter-year' && el.id !== 'leave-input-date' && el.id !== 'leave-input-purpose' && el.id !== 'leave-input-type') {
                     if (isEditable) {
                         el.removeAttribute('disabled');
                         el.classList.remove('bg-slate-100');
@@ -1050,10 +1059,12 @@
                     user.leaveList.forEach((leave, idx) => {
                         hasData = true;
                         let badgeColor = leave.status === 'ACC' ? 'bg-emerald-100 text-emerald-800' : leave.status === 'Tolak' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800';
+                        let typeBadge = (leave.type || 'Cuti') === 'Izin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800';
                         let tr = document.createElement('tr');
                         tr.className = "border-b";
                         tr.innerHTML = `
                             <td class="p-2 font-bold">${user.nama}</td>
+                            <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] ${typeBadge} font-bold">${leave.type || 'Cuti'}</span></td>
                             <td class="p-2">${leave.date}</td>
                             <td class="p-2 font-medium">${leave.purpose}</td>
                             <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] ${badgeColor} font-bold">${leave.status}</span></td>
@@ -1062,7 +1073,7 @@
                                     <button onclick="processLeave('${username}', ${idx}, 'ACC')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">ACC</button>
                                     <button onclick="processLeave('${username}', ${idx}, 'Tolak')" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">Tolak</button>
                                 ` : ''}
-                                <button onclick="deleteLeaveRecord('${username}', ${idx})" class="bg-slate-600 hover:bg-slate-700 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer" title="Hapus / Batalkan Cuti">Hapus</button>
+                                <button onclick="deleteLeaveRecord('${username}', ${idx})" class="bg-slate-600 hover:bg-slate-700 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer" title="Hapus / Batalkan">Hapus</button>
                             </td>
                         `;
                         tbody.appendChild(tr);
@@ -1071,41 +1082,44 @@
             }
 
             if (!hasData) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400 font-semibold">Tidak ada data cuti.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-3 text-center text-slate-400 font-semibold">Tidak ada data cuti atau izin.</td></tr>`;
             }
         }
 
         async function processLeave(username, idx, decision) {
             let user = dbHC[username];
             if (!user.leaveList[idx]) return;
-            let oldStatus = user.leaveList[idx].status;
-            user.leaveList[idx].status = decision;
+            let record = user.leaveList[idx];
+            let oldStatus = record.status;
+            record.status = decision;
 
-            if (decision === 'ACC' && oldStatus !== 'ACC') {
-                if (user.approvedLeaveCount === undefined) user.approvedLeaveCount = 0;
-                user.approvedLeaveCount++;
-            } else if (oldStatus === 'ACC' && decision !== 'ACC') {
-                if (user.approvedLeaveCount > 0) user.approvedLeaveCount--;
+            if (record.type === 'Cuti' || !record.type) {
+                if (decision === 'ACC' && oldStatus !== 'ACC') {
+                    if (user.approvedLeaveCount === undefined) user.approvedLeaveCount = 0;
+                    user.approvedLeaveCount++;
+                } else if (oldStatus === 'ACC' && decision !== 'ACC') {
+                    if (user.approvedLeaveCount > 0) user.approvedLeaveCount--;
+                }
             }
 
             await syncToCloud(username);
             renderAdminLeaveApprovals();
-            alert(`Pengajuan cuti berhasil di-${decision}!`);
+            alert(`Pengajuan berhasil di-${decision}!`);
         }
 
         async function deleteLeaveRecord(username, idx) {
-            if (!confirm("Apakah Anda yakin ingin menghapus / membatalkan riwayat cuti ini?")) return;
+            if (!confirm("Apakah Anda yakin ingin menghapus / membatalkan pengajuan ini?")) return;
             let user = dbHC[username];
             if (!user.leaveList[idx]) return;
 
             let removed = user.leaveList.splice(idx, 1)[0];
-            if (removed.status === 'ACC') {
+            if ((removed.type === 'Cuti' || !removed.type) && removed.status === 'ACC') {
                 if (user.approvedLeaveCount > 0) user.approvedLeaveCount--;
             }
 
             await syncToCloud(username);
             renderAdminLeaveApprovals();
-            alert("Riwayat cuti berhasil dihapus.");
+            alert("Data berhasil dihapus.");
         }
 
         function loadDataToForm() {
@@ -1183,7 +1197,7 @@
             renderLeaveModule(u);
         }
 
-        // MODUL CUTI LOGIC
+        // MODUL CUTI & IZIN LOGIC
         function renderLeaveModule(u) {
             let joinDateStr = u.tglgabung;
             let quotaEl = document.getElementById('lbl-quota-days');
@@ -1207,17 +1221,19 @@
                 quotaEl.innerText = `${remaining} Hari (Terpakai: ${approvedCount}/12)`;
             }
 
-            // Render Riwayat Cuti
+            // Render Riwayat Cuti & Izin
             historyBody.innerHTML = '';
             let leaveList = u.leaveList || [];
             if (leaveList.length === 0) {
-                historyBody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-400 font-medium">Belum ada riwayat pengajuan cuti.</td></tr>`;
+                historyBody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400 font-medium">Belum ada riwayat pengajuan.</td></tr>`;
             } else {
                 leaveList.forEach(l => {
                     let badgeColor = l.status === 'ACC' ? 'bg-emerald-100 text-emerald-800' : l.status === 'Tolak' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800';
+                    let typeBadge = (l.type || 'Cuti') === 'Izin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800';
                     let tr = document.createElement('tr');
                     tr.className = "border-b";
                     tr.innerHTML = `
+                        <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] ${typeBadge} font-bold">${l.type || 'Cuti'}</span></td>
                         <td class="p-2 font-semibold">${l.date}</td>
                         <td class="p-2">${l.purpose}</td>
                         <td class="p-2 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${badgeColor}">${l.status}</span></td>
@@ -1236,7 +1252,7 @@
             let now = new Date(), year = now.getFullYear(), month = now.getMonth();
             let monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
             let title = document.getElementById('leave-cal-title');
-            if(title) title.innerText = `Kalender Cuti: ${monthNames[month]} ${year}`;
+            if(title) title.innerText = `Kalender Cuti & Izin: ${monthNames[month]} ${year}`;
 
             ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].forEach(d => {
                 let h = document.createElement('div'); h.className = "font-bold text-[10px] text-slate-700 py-1"; h.innerText = d;
@@ -1263,46 +1279,54 @@
 
         async function submitLeaveRequest() {
             let u = dbHC[activeUser];
-            let joinDate = new Date(u.tglgabung || '2020-01-01');
-            let today = new Date();
-            let diffDays = (today - joinDate) / (1000 * 60 * 60 * 24);
-
-            if (diffDays < 365) {
-                return alert("Masa kerja Anda belum mencapai 1 tahun, belum memenuhi syarat pengajuan cuti.");
-            }
-
+            let typeVal = document.getElementById('leave-input-type').value; // 'Cuti' atau 'Izin'
             let dateVal = document.getElementById('leave-input-date').value;
             let purposeVal = document.getElementById('leave-input-purpose').value.trim();
 
             if (!dateVal || !purposeVal) {
-                return alert("Harap isi Tanggal Cuti dan Tujuan Cuti dengan lengkap!");
+                return alert("Harap isi Tanggal Pelaksanaan dan Tujuan / Keperluan dengan lengkap!");
             }
 
-            // Validasi H-7
             let selectedDate = new Date(dateVal);
+            let todayCheck = new Date();
             let minAllowedDate = new Date();
-            minAllowedDate.setDate(minAllowedDate.getDate() + 7);
 
-            if (selectedDate < minAllowedDate) {
-                return alert("Pengajuan cuti minimal dilakukan 7 hari (H-7) dari tanggal pelaksanaan.");
+            if (typeVal === 'Cuti') {
+                // Validasi Cuti: Minimal masa kerja 1 tahun
+                let joinDate = new Date(u.tglgabung || '2020-01-01');
+                let diffDays = (todayCheck - joinDate) / (1000 * 60 * 60 * 24);
+                if (diffDays < 365) {
+                    return alert("Masa kerja Anda belum mencapai 1 tahun, belum memenuhi syarat pengajuan cuti.");
+                }
+                // Validasi Cuti: Min H-7
+                minAllowedDate.setDate(minAllowedDate.getDate() + 7);
+                if (selectedDate < minAllowedDate) {
+                    return alert("Pengajuan cuti minimal dilakukan 7 hari (H-7) dari tanggal pelaksanaan.");
+                }
+            } else {
+                // Validasi Izin: Min H-3 (Tanpa syarat masa kerja 1 tahun)
+                minAllowedDate.setDate(minAllowedDate.getDate() + 3);
+                if (selectedDate < minAllowedDate) {
+                    return alert("Pengajuan izin minimal dilakukan 3 hari (H-3) dari tanggal pelaksanaan.");
+                }
             }
 
-            // Validasi Maksimal 1 Hari per Bulan
+            // Validasi Maksimal 1 Kali (1 Hari) per Bulan untuk masing-masing jenis (atau gabungan)
             let selMonth = dateVal.substring(0, 7); // Format: YYYY-MM
             if (!u.leaveList) u.leaveList = [];
             
-            let alreadyTakenInMonth = u.leaveList.some(l => l.date.startsWith(selMonth) && (l.status === 'ACC' || l.status === 'Pending' || l.status === 'Tolak'));
+            let alreadyTakenInMonth = u.leaveList.some(l => (l.type || 'Cuti') === typeVal && l.date.startsWith(selMonth) && (l.status === 'ACC' || l.status === 'Pending' || l.status === 'Tolak'));
             if (alreadyTakenInMonth) {
-                return alert("Tidak bisa cuti lebih dari 1x dalam 1 bulan! Anda sudah memiliki riwayat atau pengajuan cuti di bulan ini, wajib memilih 1 tanggal saja.");
+                return alert(`Tidak bisa ${typeVal.toLowerCase()} lebih dari 1x dalam 1 bulan! Anda sudah memiliki riwayat atau pengajuan ${typeVal.toLowerCase()} di bulan ini, wajib memilih 1 tanggal saja.`);
             }
 
-            u.leaveList.push({ date: dateVal, purpose: purposeVal, status: 'Pending' });
+            u.leaveList.push({ type: typeVal, date: dateVal, purpose: purposeVal, status: 'Pending' });
             await syncToCloud(activeUser);
             
             document.getElementById('leave-input-date').value = '';
             document.getElementById('leave-input-purpose').value = '';
             loadDataToForm();
-            alert("Pengajuan cuti berhasil dikirim ke Team Leader untuk disetujui.");
+            alert(`Pengajuan ${typeVal} berhasil dikirim ke Team Leader untuk disetujui.`);
         }
 
         const kpiGrades = ["-", "K", "C", "C+", "B", "B+", "A", "A+", "BS"];
