@@ -43,7 +43,7 @@
 </head>
 <body class="bg-slate-100 font-sans antialiased text-slate-800">
     <div class="min-h-screen flex flex-col justify-between">
-        <!-- HEADER UTAMA DENGAN MENU 3D DI ATAS -->
+        <!-- HEADER UTAMA DENGAN MENU 3D & IKON KUNCI DI ATAS -->
         <header class="bg-navy-900 text-white px-6 py-4 shadow-xl w-full border-b border-slate-800 space-y-4">
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center space-x-3">
@@ -59,9 +59,16 @@
                     </div>
                 </div>
 
+                <!-- Bagian Kanan Header: Info Sesi, Ikon Kunci Edit, & Tombol Keluar -->
                 <div id="user-session-info" class="hidden flex items-center space-x-3 bg-slate-800/90 px-3.5 py-2 rounded-xl border border-slate-700 shadow-sm">
                     <span id="lbl-user-login" class="text-xs text-slate-200 font-bold"></span>
-                    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded-lg transition font-bold shadow-xs">Keluar</button>
+                    
+                    <!-- Ikon Kunci Minimalis untuk Minta Izin Edit (Pengganti Kotak Biru) -->
+                    <button id="btn-request-edit-icon" onclick="requestAdminEdit()" title="Minta Izin Edit (Masukkan Password Admin)" class="hidden items-center justify-center w-8 h-8 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-900 transition shadow-sm cursor-pointer">
+                        <i data-lucide="key-round" class="w-4 h-4"></i>
+                    </button>
+
+                    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded-lg transition font-bold shadow-xs cursor-pointer">Keluar</button>
                 </div>
             </div>
 
@@ -172,11 +179,6 @@
                 <div id="admin-shortcut-box" class="hidden bg-amber-50 border border-amber-200 p-4 rounded-xl flex justify-between items-center w-full shadow-sm">
                     <span class="text-xs text-amber-900 font-bold">⚠️ Anda login sebagai Administrator (Team Leader Irvan Tuba Jati).</span>
                     <button onclick="openAdminPanel()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow cursor-pointer">Buka Panel Admin & Sanksi SP</button>
-                </div>
-
-                <div id="sales-notice-box" class="hidden bg-blue-50 border border-blue-200 p-4 rounded-xl flex justify-between items-center w-full shadow-sm">
-                    <span class="text-xs text-blue-900 font-bold">ℹ️ Akun Anda bersifat Lihat Data (View-Only). Hubungi Team Leader Irvan Tuba Jati jika ada pembaruan data.</span>
-                    <button onclick="requestAdminEdit()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow cursor-pointer">Minta Izin Edit (Password Admin)</button>
                 </div>
 
                 <!-- 1. DATA PRIBADI & PAS FOTO KOTAK FORMAL -->
@@ -686,13 +688,18 @@
                 document.getElementById('lbl-user-login').innerText = `Masuk: ${dbHC[activeUser].nama} (${dbHC[activeUser].role})`;
                 
                 let currentUser = dbHC[activeUser];
+                let btnKeyIcon = document.getElementById('btn-request-edit-icon');
+
                 if (currentUser.role === 'Admin') {
                     document.getElementById('admin-shortcut-box').classList.remove('hidden');
-                    document.getElementById('sales-notice-box').classList.add('hidden');
+                    if(btnKeyIcon) btnKeyIcon.classList.add('hidden');
                     setFormEditable(true);
                 } else {
                     document.getElementById('admin-shortcut-box').classList.add('hidden');
-                    document.getElementById('sales-notice-box').classList.remove('hidden');
+                    if(btnKeyIcon) {
+                        btnKeyIcon.classList.remove('hidden');
+                        btnKeyIcon.classList.add('flex');
+                    }
                     setFormEditable(false);
                 }
                 loadDataToForm();
