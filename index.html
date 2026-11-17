@@ -43,14 +43,14 @@
                 <p class="text-xs text-slate-500 mb-6 text-center">Masukkan ID dan Password akun Anda.</p>
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">ID Pengguna (Username)</label>
-                        <input type="text" id="input-username" class="w-full p-3 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none" placeholder="Contoh: irvantuba">
+                        <label class="block text-xs font-bold text-slate-800 mb-1">ID Pengguna (Username)</label>
+                        <input type="text" id="input-username" class="w-full p-3 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none font-semibold text-slate-900" placeholder="Contoh: irvantuba">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
-                        <input type="password" id="input-password" class="w-full p-3 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none" placeholder="••••••••">
+                        <label class="block text-xs font-bold text-slate-800 mb-1">Password</label>
+                        <input type="password" id="input-password" class="w-full p-3 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none font-semibold text-slate-900" placeholder="••••••••">
                     </div>
-                    <button onclick="login()" class="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 rounded-lg text-sm font-semibold transition shadow-md">Masuk Aplikasi</button>
+                    <button onclick="login()" class="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 rounded-lg text-sm font-bold transition shadow-md">Masuk Aplikasi</button>
                 </div>
             </div>
 
@@ -68,27 +68,27 @@
                         <div class="space-y-4">
                             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
                                 <h3 class="text-xs font-bold text-navy-900 uppercase">1. Pilih Petugas Sales</h3>
-                                <select id="admin-select-sales" onchange="renderAdminModules()" class="w-full p-2.5 border rounded-lg text-xs bg-white font-semibold"></select>
+                                <select id="admin-select-sales" onchange="renderAdminModules()" class="w-full p-2.5 border rounded-lg text-xs bg-white font-semibold text-slate-900"></select>
                             </div>
                         </div>
                         <div class="lg:col-span-2 space-y-6">
                             <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4">
                                 <h3 class="text-xs font-bold text-navy-900 uppercase">2. Tambah Catatan Riwayat SP / Cut Off</h3>
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                                    <div><label class="font-medium text-slate-600 block mb-1">Tanggal</label><input type="date" id="admin-sp-date" class="w-full p-2 border rounded bg-white"></div>
+                                    <div><label class="font-bold text-slate-800 block mb-1">Tanggal</label><input type="date" id="admin-sp-date" class="w-full p-2 border rounded bg-white font-semibold text-slate-900"></div>
                                     <div>
-                                        <label class="font-medium text-slate-600 block mb-1">Jenis Sanksi / SP</label>
-                                        <select id="admin-sp-type" class="w-full p-2 border rounded bg-white font-semibold">
+                                        <label class="font-bold text-slate-800 block mb-1">Jenis Sanksi / SP</label>
+                                        <select id="admin-sp-type" class="w-full p-2 border rounded bg-white font-bold text-slate-900">
                                             <option value="Internal">Internal (Peringatan Lisan)</option>
                                             <option value="SP1">SP 1</option><option value="SP2">SP 2</option><option value="SP3">SP 3</option><option value="Cut Off">Cut Off</option>
                                         </select>
                                     </div>
-                                    <div><label class="font-medium text-slate-600 block mb-1">Keterangan</label><input type="text" id="admin-sp-desc" class="w-full p-2 border rounded bg-white" placeholder="Keterangan..."></div>
+                                    <div><label class="font-bold text-slate-800 block mb-1">Keterangan</label><input type="text" id="admin-sp-desc" class="w-full p-2 border rounded bg-white font-semibold text-slate-900" placeholder="Keterangan..."></div>
                                 </div>
                                 <div class="flex justify-end"><button onclick="addAdminSP()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow">+ Terbitkan SP / Cut Off</button></div>
                                 <div class="overflow-x-auto pt-2">
                                     <table class="w-full text-xs text-left border bg-white rounded-lg overflow-hidden">
-                                        <thead><tr class="bg-slate-200 text-slate-700"><th class="p-2">Tanggal</th><th class="p-2">Jenis SP</th><th class="p-2">Keterangan</th><th class="p-2 text-center">Aksi</th></tr></thead>
+                                        <thead><tr class="bg-slate-200 text-slate-800 font-bold"><th class="p-2">Tanggal</th><th class="p-2">Jenis SP</th><th class="p-2">Keterangan</th><th class="p-2 text-center">Aksi</th></tr></thead>
                                         <tbody id="admin-sp-table-body"></tbody>
                                     </table>
                                 </div>
@@ -105,76 +105,77 @@
             <!-- DASHBOARD UTAMA -->
             <div id="section-dashboard" class="hidden space-y-6 w-full">
                 <div id="admin-shortcut-box" class="hidden bg-amber-50 border border-amber-200 p-4 rounded-xl flex justify-between items-center w-full shadow-sm">
-                    <span class="text-xs text-amber-800 font-medium">⚠️ Anda login sebagai Administrator (Team Leader Irvan Tuba Jati).</span>
-                    <button onclick="openAdminPanel()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-xs font-bold">Buka Panel Admin & Sanksi SP</button>
+                    <span class="text-xs text-amber-900 font-bold">⚠️ Anda login sebagai Administrator (Team Leader Irvan Tuba Jati).</span>
+                    <button onclick="openAdminPanel()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow">Buka Panel Admin & Sanksi SP</button>
                 </div>
 
                 <div id="sales-notice-box" class="hidden bg-blue-50 border border-blue-200 p-4 rounded-xl flex justify-between items-center w-full shadow-sm">
-                    <span class="text-xs text-blue-800 font-medium">ℹ️ Akun Anda bersifat Lihat Data (View-Only). Hubungi Team Leader Irvan Tuba Jati jika ada pembaruan data.</span>
-                    <button onclick="requestAdminEdit()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-xs font-bold">Minta Izin Edit (Password Admin)</button>
+                    <span class="text-xs text-blue-900 font-bold">ℹ️ Akun Anda bersifat Lihat Data (View-Only). Hubungi Team Leader Irvan Tuba Jati jika ada pembaruan data.</span>
+                    <button onclick="requestAdminEdit()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow">Minta Izin Edit (Password Admin)</button>
                 </div>
 
                 <div class="flex flex-wrap bg-white p-2 rounded-xl shadow-sm border border-slate-200 gap-1 w-full">
                     <button onclick="switchTab('pribadi')" id="tab-btn-pribadi" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg bg-navy-900 text-white transition text-center shadow">1. Data Pribadi</button>
-                    <button onclick="switchTab('pekerjaan')" id="tab-btn-pekerjaan" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition text-center">2. Pekerjaan</button>
-                    <button onclick="switchTab('kendaraan')" id="tab-btn-kendaraan" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition text-center">3. Data Kendaraan</button>
-                    <button onclick="switchTab('kompensasi')" id="tab-btn-kompensasi" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition text-center">4. Kompensasi</button>
-                    <button onclick="switchTab('kinerja')" id="tab-btn-kinerja" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition text-center">5. Kinerja & Absen</button>
-                    <button onclick="switchTab('pendidikan')" id="tab-btn-pendidikan" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition text-center">6. Pendidikan</button>
-                    <button onclick="switchTab('dokumen')" id="tab-btn-dokumen" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition text-center">7. Dokumen</button>
+                    <button onclick="switchTab('pekerjaan')" id="tab-btn-pekerjaan" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-700 hover:bg-slate-100 transition text-center">2. Pekerjaan</button>
+                    <button onclick="switchTab('kendaraan')" id="tab-btn-kendaraan" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-700 hover:bg-slate-100 transition text-center">3. Data Kendaraan</button>
+                    <button onclick="switchTab('kompensasi')" id="tab-btn-kompensasi" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-700 hover:bg-slate-100 transition text-center">4. Kompensasi</button>
+                    <button onclick="switchTab('kinerja')" id="tab-btn-kinerja" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-700 hover:bg-slate-100 transition text-center">5. Kinerja & Absen</button>
+                    <button onclick="switchTab('pendidikan')" id="tab-btn-pendidikan" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-700 hover:bg-slate-100 transition text-center">6. Pendidikan</button>
+                    <button onclick="switchTab('dokumen')" id="tab-btn-dokumen" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-700 hover:bg-slate-100 transition text-center">7. Dokumen</button>
                 </div>
 
-                <!-- 1. DATA PRIBADI & PAS FOTO -->
+                <!-- 1. DATA PRIBADI & PAS FOTO KOTAK FORMAL -->
                 <div id="tab-pribadi" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full">
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">1. Informasi Pribadi & Pas Foto Formal</h3>
                     
                     <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 p-5 bg-slate-50 border rounded-2xl">
-                        <div class="w-24 h-24 rounded-full bg-slate-200 border-2 border-navy-900 overflow-hidden flex items-center justify-center shadow-inner">
+                        <!-- Perubahan: Menggunakan bentuk kotak bersudut (rounded-xl) ala pas foto formal -->
+                        <div class="w-24 h-32 rounded-xl bg-slate-200 border-2 border-navy-900 overflow-hidden flex items-center justify-center shadow-inner shrink-0">
                             <img id="preview-pasfoto" src="" alt="Pas Foto" class="w-full h-full object-cover hidden">
-                            <span id="placeholder-pasfoto" class="text-xs text-slate-400 font-bold text-center px-2">Belum ada foto</span>
+                            <span id="placeholder-pasfoto" class="text-xs text-slate-500 font-bold text-center px-2">Pas Foto Formal</span>
                         </div>
                         <div class="space-y-2 text-center sm:text-left">
                             <label class="font-bold text-navy-900 block text-xs">Pas Foto Formal Karyawan</label>
-                            <p class="text-[11px] text-slate-500">Unggah foto formal latar belakang bebas/rapi format JPG/PNG.</p>
-                            <input type="file" id="file-pasfoto" accept="image/*" onchange="previewPasFoto(event)" class="text-xs text-slate-500 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-navy-900 file:text-white hover:file:bg-navy-800">
+                            <p class="text-[11px] text-slate-500 font-medium">Unggah foto formal latar belakang bebas/rapi format JPG/PNG.</p>
+                            <input type="file" id="file-pasfoto" accept="image/*" onchange="previewPasFoto(event)" class="text-xs text-slate-600 font-semibold file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-                        <div><label class="font-medium text-slate-600 block mb-1">Nama Lengkap</label><input type="text" id="p-nama" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Nama Panggilan</label><input type="text" id="p-panggilan" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">NIK / ID Karyawan</label><input type="text" id="p-nik" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Nama Lengkap</label><input type="text" id="p-nama" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Nama Panggilan</label><input type="text" id="p-panggilan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">NIK / ID Karyawan</label><input type="text" id="p-nik" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                         
-                        <div><label class="font-medium text-slate-600 block mb-1">Username Akun Android</label><input type="text" id="p-androiduser" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="Username HP"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Password Akun Android</label><input type="text" id="p-androidpass" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="Password HP"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Username Akun Android</label><input type="text" id="p-androiduser" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Username HP"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Password Akun Android</label><input type="text" id="p-androidpass" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Password HP"></div>
 
-                        <div><label class="font-medium text-slate-600 block mb-1">Tempat Lahir</label><input type="text" id="p-tmptlahir" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Tanggal Lahir</label><input type="date" id="p-tgllahir" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Tempat Lahir</label><input type="text" id="p-tmptlahir" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Tanggal Lahir</label><input type="date" id="p-tgllahir" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Jenis Kelamin</label>
-                            <select id="p-gender" class="w-full p-2.5 border rounded-lg bg-slate-50"><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select>
+                            <label class="font-bold text-slate-800 block mb-1">Jenis Kelamin</label>
+                            <select id="p-gender" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select>
                         </div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Nomor Kontak (WhatsApp)</label><input type="text" id="p-kontak" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Alamat Email</label><input type="email" id="p-email" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Nomor Kontak (WhatsApp)</label><input type="text" id="p-kontak" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Alamat Email</label><input type="email" id="p-email" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                         
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Status Pernikahan</label>
-                            <select id="p-nikah" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                            <label class="font-bold text-slate-800 block mb-1">Status Pernikahan</label>
+                            <select id="p-nikah" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="Belum Menikah">Belum Menikah</option>
                                 <option value="Menikah">Menikah</option>
                             </select>
                         </div>
 
-                        <div><label class="font-medium text-slate-600 block mb-1">Jumlah Tanggungan</label><input type="text" id="p-tanggungan" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="0 Anak"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Nomor KTP</label><input type="text" id="p-ktp" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Nomor NPWP</label><input type="text" id="p-npwp" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">BPJS Kesehatan</label><input type="text" id="p-bpjskesehatan" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">BPJS Ketenagakerjaan</label><input type="text" id="p-bpjsketenagakerjaan" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Jumlah Tanggungan</label><input type="text" id="p-tanggungan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="0 Anak"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Nomor KTP</label><input type="text" id="p-ktp" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Nomor NPWP</label><input type="text" id="p-npwp" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">BPJS Kesehatan</label><input type="text" id="p-bpjskesehatan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">BPJS Ketenagakerjaan</label><input type="text" id="p-bpjsketenagakerjaan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                         
-                        <div><label class="font-medium text-slate-600 block mb-1">Nama Kontak Darurat</label><input type="text" id="p-dnama" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="Nama keluarga/kerabat"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Nama Kontak Darurat</label><input type="text" id="p-dnama" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Nama keluarga/kerabat"></div>
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Hubungan Kontak Darurat</label>
-                            <select id="p-dhub" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                            <label class="font-bold text-slate-800 block mb-1">Hubungan Kontak Darurat</label>
+                            <select id="p-dhub" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="Orangtua">Orangtua</option>
                                 <option value="Istri">Istri</option>
                                 <option value="Saudara">Saudara</option>
@@ -182,9 +183,9 @@
                                 <option value="Lainnya">Lainnya</option>
                             </select>
                         </div>
-                        <div><label class="font-medium text-slate-600 block mb-1">No. Telp Kontak Darurat</label><input type="text" id="p-dinfo" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">No. Telp Kontak Darurat</label><input type="text" id="p-dinfo" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
 
-                        <div class="sm:col-span-2 lg:col-span-3"><label class="font-medium text-slate-600 block mb-1">Alamat KTP / Domisili</label><textarea id="p-aktp" rows="2" class="w-full p-2.5 border rounded-lg bg-slate-50"></textarea></div>
+                        <div class="sm:col-span-2 lg:col-span-3"><label class="font-bold text-slate-800 block mb-1">Alamat KTP / Domisili</label><textarea id="p-aktp" rows="2" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></textarea></div>
                     </div>
                 </div>
 
@@ -193,8 +194,8 @@
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">2. Data Pekerjaan & Organisasi</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Jabatan</label>
-                            <select id="w-jabatan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                            <label class="font-bold text-slate-800 block mb-1">Jabatan</label>
+                            <select id="w-jabatan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="OB">OB</option>
                                 <option value="DRIVER">DRIVER</option>
                                 <option value="SPM">SPM</option>
@@ -208,15 +209,15 @@
                             </select>
                         </div>
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Divisi</label>
-                            <select id="w-divisi" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                            <label class="font-bold text-slate-800 block mb-1">Divisi</label>
+                            <select id="w-divisi" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="distribusi">Distribusi</option>
                                 <option value="produksi">Produksi</option>
                             </select>
                         </div>
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Area Penempatan</label>
-                            <select id="w-area" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                            <label class="font-bold text-slate-800 block mb-1">Area Penempatan</label>
+                            <select id="w-area" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="jakarta barat">Jakarta Barat</option>
                                 <option value="jakarta utara">Jakarta Utara</option>
                                 <option value="jakarta timur">Jakarta Timur</option>
@@ -225,16 +226,16 @@
                                 <option value="kota depok">Kota Depok</option>
                             </select>
                         </div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Atasan Langsung</label><input type="text" id="w-atasan" class="w-full p-2.5 border rounded-lg bg-slate-50" value="Rais Musthofa"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Atasan Langsung</label><input type="text" id="w-atasan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" value="Rais Musthofa"></div>
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Status Kepegawaian</label>
-                            <select id="w-status" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                            <label class="font-bold text-slate-800 block mb-1">Status Kepegawaian</label>
+                            <select id="w-status" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="harian">Harian</option>
                                 <option value="kontrak">Kontrak</option>
                                 <option value="tetap">Tetap</option>
                             </select>
                         </div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Tanggal Bergabung</label><input type="date" id="w-tglgabung" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Tanggal Bergabung</label><input type="date" id="w-tglgabung" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                     </div>
                 </div>
 
@@ -243,28 +244,28 @@
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">3. Data Kendaraan Operasional & SIM</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Jenis Kendaraan</label>
-                            <select id="v-jenis" onchange="updateVehicleOptions()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                            <label class="font-bold text-slate-800 block mb-1">Jenis Kendaraan</label>
+                            <select id="v-jenis" onchange="updateVehicleOptions()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="Motor">Motor</option>
                                 <option value="Mobil">Mobil</option>
                                 <option value="Listrik">Listrik</option>
                             </select>
                         </div>
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Merek Kendaraan</label>
-                            <select id="v-merek" onchange="updateModelOptions()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold"></select>
+                            <label class="font-bold text-slate-800 block mb-1">Merek Kendaraan</label>
+                            <select id="v-merek" onchange="updateModelOptions()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900"></select>
                         </div>
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Model / Tipe Kendaraan</label>
-                            <select id="v-model" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold"></select>
+                            <label class="font-bold text-slate-800 block mb-1">Model / Tipe Kendaraan</label>
+                            <select id="v-model" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900"></select>
                         </div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Tahun Kendaraan</label><input type="text" id="v-tahun" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="Contoh: 2022"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Nomor Plat Kendaraan</label><input type="text" id="v-plat" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="B 1234 XYZ"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Nomor STNK</label><input type="text" id="v-stnk" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="No. STNK Manual"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Tahun Kendaraan</label><input type="text" id="v-tahun" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Contoh: 2022"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Nomor Plat Kendaraan</label><input type="text" id="v-plat" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="B 1234 XYZ"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Nomor STNK</label><input type="text" id="v-stnk" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="No. STNK Manual"></div>
 
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Jenis SIM</label>
-                            <select id="v-simjenis" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                            <label class="font-bold text-slate-800 block mb-1">Jenis SIM</label>
+                            <select id="v-simjenis" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="SIM C">SIM C</option>
                                 <option value="SIM A">SIM A</option>
                                 <option value="SIM A & C">SIM A & C</option>
@@ -272,7 +273,7 @@
                                 <option value="SIM B2">SIM B2</option>
                             </select>
                         </div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Nomor SIM</label><input type="text" id="v-simno" class="w-full p-2.5 border rounded-lg bg-slate-50" placeholder="No. SIM Manual"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Nomor SIM</label><input type="text" id="v-simno" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="No. SIM Manual"></div>
                     </div>
                 </div>
 
@@ -281,8 +282,8 @@
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">4. Kompensasi & Payroll</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Nama Bank</label>
-                            <select id="c-namabank" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                            <label class="font-bold text-slate-800 block mb-1">Nama Bank</label>
+                            <select id="c-namabank" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="BCA">BCA</option>
                                 <option value="Mandiri">Mandiri</option>
                                 <option value="BNI">BNI</option>
@@ -292,8 +293,8 @@
                                 <option value="Lainnya">Lainnya</option>
                             </select>
                         </div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Nomor Rekening</label><input type="text" id="c-norek" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Atas Nama (Sesuai Rekening)</label><input type="text" id="c-namarek" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Nomor Rekening</label><input type="text" id="c-norek" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Atas Nama (Sesuai Rekening)</label><input type="text" id="c-namarek" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                     </div>
                 </div>
 
@@ -301,10 +302,10 @@
                 <div id="tab-kinerja" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">5. Kinerja, Kehadiran & Riwayat SP</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200"><span class="block text-xs text-emerald-700 font-semibold mb-1">Hadir</span><span id="stat-hadir" class="text-xl font-bold text-emerald-800">0</span></div>
-                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200"><span class="block text-xs text-amber-700 font-semibold mb-1">Izin</span><span id="stat-izin" class="text-xl font-bold text-amber-800">0</span></div>
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200"><span class="block text-xs text-blue-700 font-semibold mb-1">Sakit</span><span id="stat-sakit" class="text-xl font-bold text-blue-800">0</span></div>
-                        <div class="bg-red-50 p-4 rounded-xl border border-red-200"><span class="block text-xs text-red-700 font-semibold mb-1">Alpha</span><span id="stat-alpha" class="text-xl font-bold text-red-800">0</span></div>
+                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200"><span class="block text-xs text-emerald-800 font-bold mb-1">Hadir</span><span id="stat-hadir" class="text-xl font-black text-emerald-900">0</span></div>
+                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200"><span class="block text-xs text-amber-800 font-bold mb-1">Izin</span><span id="stat-izin" class="text-xl font-black text-amber-900">0</span></div>
+                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200"><span class="block text-xs text-blue-800 font-bold mb-1">Sakit</span><span id="stat-sakit" class="text-xl font-black text-blue-900">0</span></div>
+                        <div class="bg-red-50 p-4 rounded-xl border border-red-200"><span class="block text-xs text-red-800 font-bold mb-1">Alpha</span><span id="stat-alpha" class="text-xl font-black text-red-900">0</span></div>
                     </div>
                     <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
                         <h4 id="sales-cal-title" class="text-xs font-bold text-navy-900 uppercase">Kalender Kehadiran</h4>
@@ -314,8 +315,8 @@
                         <h4 class="text-xs font-bold text-navy-900 uppercase">Riwayat Surat Peringatan (SP)</h4>
                         <div class="overflow-x-auto">
                             <table class="w-full text-xs text-left border bg-white rounded-lg">
-                                <thead><tr class="bg-slate-200 text-slate-700"><th class="p-2.5">Tanggal</th><th class="p-2.5">Jenis SP</th><th class="p-2.5">Keterangan</th></tr></thead>
-                                <tbody id="sales-sp-table-body"><tr><td colspan="3" class="p-3 text-center text-slate-400">Belum ada catatan riwayat SP.</td></tr></tbody>
+                                <thead><tr class="bg-slate-200 text-slate-800 font-bold"><th class="p-2.5">Tanggal</th><th class="p-2.5">Jenis SP</th><th class="p-2.5">Keterangan</th></tr></thead>
+                                <tbody id="sales-sp-table-body"><tr><td colspan="3" class="p-3 text-center text-slate-400 font-medium">Belum ada catatan riwayat SP.</td></tr></tbody>
                             </table>
                         </div>
                     </div>
@@ -326,8 +327,8 @@
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">6. Pendidikan & Jurusan</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Jenjang Pendidikan</label>
-                            <select id="e-jenjang" onchange="updateJurusanOptions()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold">
+                            <label class="font-bold text-slate-800 block mb-1">Jenjang Pendidikan</label>
+                            <select id="e-jenjang" onchange="updateJurusanOptions()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="SD">SD</option>
                                 <option value="SMP">SMP</option>
                                 <option value="SMA/SMK">SMA/SMK</option>
@@ -336,10 +337,10 @@
                                 <option value="S2">S2</option>
                             </select>
                         </div>
-                        <div><label class="font-medium text-slate-600 block mb-1">Institusi / Sekolah</label><input type="text" id="e-institusi" class="w-full p-2.5 border rounded-lg bg-slate-50"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Institusi / Sekolah</label><input type="text" id="e-institusi" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                         <div>
-                            <label class="font-medium text-slate-600 block mb-1">Jurusan</label>
-                            <select id="e-jurusan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold"></select>
+                            <label class="font-bold text-slate-800 block mb-1">Jurusan</label>
+                            <select id="e-jurusan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900"></select>
                         </div>
                     </div>
                 </div>
@@ -347,17 +348,17 @@
                 <!-- 7. DOKUMEN -->
                 <div id="tab-dokumen" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">7. Dokumen Pendukung</h3>
-                    <p class="text-xs text-slate-500 mb-4">Unggah dokumen kepegawaian Anda (KTP, Ijazah, NPWP, dll).</p>
+                    <p class="text-xs text-slate-500 font-medium mb-4">Unggah dokumen kepegawaian Anda (KTP, Ijazah, NPWP, dll).</p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                         <div class="p-4 border rounded-xl bg-slate-50 space-y-2">
                             <label class="font-bold text-navy-900 block">Scan / Foto KTP</label>
-                            <input type="file" id="file-ktp" accept="image/*,.pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-navy-900 file:text-white hover:file:bg-navy-800">
-                            <span id="status-file-ktp" class="text-[10px] text-emerald-600 font-semibold block"></span>
+                            <input type="file" id="file-ktp" accept="image/*,.pdf" class="w-full text-xs text-slate-600 font-semibold file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800">
+                            <span id="status-file-ktp" class="text-[10px] text-emerald-700 font-bold block"></span>
                         </div>
                         <div class="p-4 border rounded-xl bg-slate-50 space-y-2">
                             <label class="font-bold text-navy-900 block">Scan / Foto Ijazah</label>
-                            <input type="file" id="file-ijazah" accept="image/*,.pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-navy-900 file:text-white hover:file:bg-navy-800">
-                            <span id="status-file-ijazah" class="text-[10px] text-emerald-600 font-semibold block"></span>
+                            <input type="file" id="file-ijazah" accept="image/*,.pdf" class="w-full text-xs text-slate-600 font-semibold file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800">
+                            <span id="status-file-ijazah" class="text-[10px] text-emerald-700 font-bold block"></span>
                         </div>
                     </div>
                 </div>
@@ -369,7 +370,7 @@
                 </div>
             </div>
         </main>
-        <footer class="bg-slate-200 text-center p-4 text-xs text-slate-500 w-full">PT. Sukun Wartono Indonesia Perwakilan Jakarta © 2026</footer>
+        <footer class="bg-slate-200 text-center p-4 text-xs text-slate-600 font-bold w-full">PT. Sukun Wartono Indonesia Perwakilan Jakarta © 2026</footer>
     </div>
 
     <!-- SCRIPT SUPABASE REAL-TIME CLOUD -->
@@ -487,7 +488,7 @@
             "sarifudin": { pass: "sarif123", role: "Sales", nama: "Sarifudin", panggilan: "Sarif", nik: "SKN-S08", androiduser: "sarif_sukun", androidpass: "sarif123", tmptlahir: "Jakarta", tgllahir: "1996-02-14", gender: "Laki-laki", kontak: "081200000008", email: "sarif@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 6666 SAR", vstnk: "STNK888", vsimjenis: "SIM C", vsimno: "SIM888", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "888999xx", namarek: "Sarifudin", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", nama: "Bachtiar Syahputra", panggilan: "Bachtiar", nik: "SKN-S09", androiduser: "bachtiar_sukun", androidpass: "bachtiar123", tmptlahir: "Jakarta", tgllahir: "1994-11-30", gender: "Laki-laki", kontak: "081200000009", email: "bachtiar@sukun.com", nikah: "Menikah", tanggungan: "2 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 7777 BAC", vstnk: "STNK999", vsimjenis: "SIM C", vsimno: "SIM999", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "999000xx", namarek: "Bachtiar Syahputra", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "rickyjohanpondri": { pass: "ricky123", role: "Sales", nama: "Ricky Johan Pondri", panggilan: "Ricky", nik: "SKN-S10", androiduser: "ricky_sukun", androidpass: "ricky123", tmptlahir: "Jakarta", tgllahir: "1997-12-05", gender: "Laki-laki", kontak: "081200000010", email: "ricky@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 8888 RIC", vstnk: "STNK100", vsimjenis: "SIM C", vsimno: "SIM100", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "100200xx", namarek: "Ricky Johan Pondri", spList: [], dailyAttendance: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "syaifulbahri": { pass: "bahri123", role: "Sales", nama: "Syaiful Bahri", panggilan: "Syaiful", nik: "SKN-S11", androiduser: "syaiful_sukun", androidpass: "Bahri123", tmptlahir: "Jakarta", tgllahir: "1992-04-10", gender: "Laki-laki", kontak: "081200000011", email: "syaiful@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 9999 SYA", vstnk: "STNK110", vsimjenis: "SIM C", vsimno: "SIM110", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2023-01-01", namabank: "BCA", norek: "110220xx", namarek: "Syaiful Bahri", spList: [], dailyAttendance: {}, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} }
+            "syaifulbahri": { pass: "Bahri123", role: "Sales", nama: "Syaiful Bahri", panggilan: "Syaiful", nik: "SKN-S11", androiduser: "syaiful_sukun", androidpass: "Bahri123", tmptlahir: "Jakarta", tgllahir: "1992-04-10", gender: "Laki-laki", kontak: "081200000011", email: "syaiful@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 9999 SYA", vstnk: "STNK110", vsimjenis: "SIM C", vsimno: "SIM110", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2023-01-01", namabank: "BCA", norek: "110220xx", namarek: "Syaiful Bahri", spList: [], dailyAttendance: {}, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} }
         };
 
         let activeUser = localStorage.getItem('hc_active_user_cloud') || null;
@@ -663,7 +664,7 @@
             let spList = dbHC[salesId].spList || [];
             
             if (spList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400">Belum ada catatan SP.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400 font-medium">Belum ada catatan SP.</td></tr>`;
                 return;
             }
 
@@ -671,10 +672,10 @@
                 let tr = document.createElement('tr');
                 tr.className = "border-b";
                 tr.innerHTML = `
-                    <td class="p-2">${sp.date}</td>
-                    <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] bg-amber-100 text-amber-800">${sp.type}</span></td>
-                    <td class="p-2">${sp.desc}</td>
-                    <td class="p-2 text-center"><button onclick="deleteAdminSP(${idx})" class="bg-red-500 text-white px-2 py-1 rounded text-[10px]">Hapus</button></td>
+                    <td class="p-2 font-semibold">${sp.date}</td>
+                    <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] bg-amber-100 text-amber-800 font-bold">${sp.type}</span></td>
+                    <td class="p-2 font-semibold">${sp.desc}</td>
+                    <td class="p-2 text-center"><button onclick="deleteAdminSP(${idx})" class="bg-red-500 text-white px-2 py-1 rounded text-[10px] font-bold">Hapus</button></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -693,7 +694,7 @@
             if(calTitle) calTitle.innerText = `3. Atur Absen: ${dbHC[salesId].nama} (${monthNames[month]} ${year})`;
 
             ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].forEach(d => {
-                let h = document.createElement('div'); h.className = "font-bold text-[10px] text-slate-500 py-1"; h.innerText = d;
+                let h = document.createElement('div'); h.className = "font-bold text-[10px] text-slate-700 py-1"; h.innerText = d;
                 grid.appendChild(h);
             });
 
@@ -708,8 +709,8 @@
                 let status = dbHC[salesId].dailyAttendance[dateKey] || '-';
 
                 let cell = document.createElement('div');
-                cell.className = "p-1.5 border rounded text-[11px] font-medium flex flex-col items-center justify-center h-12 cursor-pointer bg-white hover:bg-slate-100 shadow-sm";
-                cell.innerHTML = `<span class="text-[10px] text-slate-400">${day}</span><span class="mt-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase ${status === 'Hadir' ? 'bg-emerald-500 text-white' : status === 'Izin' ? 'bg-amber-500 text-white' : status === 'Sakit' ? 'bg-blue-500 text-white' : status === 'Alpha' ? 'bg-red-500 text-white' : 'bg-slate-100 text-slate-400'}">${status}</span>`;
+                cell.className = "p-1.5 border rounded text-[11px] font-bold flex flex-col items-center justify-center h-12 cursor-pointer bg-white hover:bg-slate-100 shadow-sm";
+                cell.innerHTML = `<span class="text-[10px] text-slate-500 font-bold">${day}</span><span class="mt-0.5 px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${status === 'Hadir' ? 'bg-emerald-600 text-white' : status === 'Izin' ? 'bg-amber-600 text-white' : status === 'Sakit' ? 'bg-blue-600 text-white' : status === 'Alpha' ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-400'}">${status}</span>`;
 
                 cell.onclick = async function() {
                     let cur = dbHC[salesId].dailyAttendance[dateKey] || '-';
@@ -778,6 +779,11 @@
                 imgEl.src = u.pasfoto;
                 imgEl.classList.remove('hidden');
                 phEl.classList.add('hidden');
+            } else {
+                let imgEl = document.getElementById('preview-pasfoto');
+                let phEl = document.getElementById('placeholder-pasfoto');
+                imgEl.classList.add('hidden');
+                phEl.classList.remove('hidden');
             }
 
             if(u.files) {
@@ -799,7 +805,7 @@
             if(salesCalTitle) salesCalTitle.innerText = `Kalender Kehadiran: ${monthNames[month]} ${year}`;
 
             ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].forEach(d => {
-                let h = document.createElement('div'); h.className = "font-bold text-[10px] text-slate-500 py-1"; h.innerText = d;
+                let h = document.createElement('div'); h.className = "font-bold text-[10px] text-slate-700 py-1"; h.innerText = d;
                 grid.appendChild(h);
             });
             let firstDay = new Date(year, month, 1).getDay();
@@ -815,8 +821,8 @@
                 if (status !== '-') counts[status] = (counts[status] || 0) + 1;
 
                 let cell = document.createElement('div');
-                cell.className = "p-1.5 border rounded text-[11px] font-medium flex flex-col items-center justify-center h-12 bg-white shadow-sm";
-                cell.innerHTML = `<span class="text-[10px] text-slate-400">${day}</span><span class="mt-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase ${status === 'Hadir' ? 'bg-emerald-500 text-white' : status === 'Izin' ? 'bg-amber-500 text-white' : status === 'Sakit' ? 'bg-blue-500 text-white' : status === 'Alpha' ? 'bg-red-500 text-white' : 'bg-slate-50 text-slate-400'}">${status}</span>`;
+                cell.className = "p-1.5 border rounded text-[11px] font-bold flex flex-col items-center justify-center h-12 bg-white shadow-sm";
+                cell.innerHTML = `<span class="text-[10px] text-slate-500 font-bold">${day}</span><span class="mt-0.5 px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${status === 'Hadir' ? 'bg-emerald-600 text-white' : status === 'Izin' ? 'bg-amber-600 text-white' : status === 'Sakit' ? 'bg-blue-600 text-white' : status === 'Alpha' ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-400'}">${status}</span>`;
                 grid.appendChild(cell);
             }
             document.getElementById('stat-hadir').innerText = counts.Hadir;
@@ -831,13 +837,13 @@
             tbody.innerHTML = '';
             let spList = u.spList || [];
             if (spList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-400">Belum ada catatan riwayat SP.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-500 font-semibold">Belum ada catatan riwayat SP.</td></tr>`;
                 return;
             }
             spList.forEach(sp => {
                 let tr = document.createElement('tr');
                 tr.className = "border-b";
-                tr.innerHTML = `<td class="p-2.5">${sp.date}</td><td class="p-2.5"><span class="px-2.5 py-1 rounded text-[10px] bg-amber-100 text-amber-800">${sp.type}</span></td><td class="p-2.5">${sp.desc}</td>`;
+                tr.innerHTML = `<td class="p-2.5 font-semibold">${sp.date}</td><td class="p-2.5"><span class="px-2.5 py-1 rounded text-[10px] bg-amber-100 text-amber-900 font-bold">${sp.type}</span></td><td class="p-2.5 font-semibold">${sp.desc}</td>`;
                 tbody.appendChild(tr);
             });
         }
@@ -913,14 +919,14 @@
                 if(tabEl) tabEl.classList.add('hidden');
                 if(btnEl) {
                     btnEl.classList.remove('bg-navy-900', 'text-white', 'shadow');
-                    btnEl.classList.add('text-slate-600', 'hover:bg-slate-100');
+                    btnEl.classList.add('text-slate-700', 'hover:bg-slate-100');
                 }
             });
             let targetTab = document.getElementById(`tab-${tabName}`);
             let targetBtn = document.getElementById(`tab-btn-${tabName}`);
             if(targetTab) targetTab.classList.remove('hidden');
             if(targetBtn) {
-                targetBtn.classList.remove('text-slate-600', 'hover:bg-slate-100');
+                targetBtn.classList.remove('text-slate-700', 'hover:bg-slate-100');
                 targetBtn.classList.add('bg-navy-900', 'text-white', 'shadow');
             }
         }
