@@ -39,7 +39,6 @@
             border-color: #60a5fa;
             box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
         }
-        /* Efek 3D Timbul untuk Logo HC */
         .logo-3d {
             background: linear-gradient(145deg, #1e293b, #0f172a);
             border: 1px solid rgba(255, 255, 255, 0.25);
@@ -50,7 +49,7 @@
 </head>
 <body class="bg-slate-100 font-sans antialiased text-slate-800">
     <div class="min-h-screen flex flex-col justify-between">
-        <!-- HEADER UTAMA DENGAN MENU 3D DI ATAS -->
+        <!-- HEADER UTAMA STICKY DENGAN MENU 3D -->
         <header class="bg-navy-900 text-white px-6 py-4 shadow-xl w-full border-b border-slate-800 space-y-4 sticky top-0 z-50 backdrop-blur-md bg-navy-900/95">
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center space-x-3">
@@ -66,9 +65,7 @@
                     </div>
                 </div>
 
-                <!-- Bagian Kanan Header: Ikon Kunci di luar, lalu info sesi & tombol keluar -->
                 <div id="user-session-info" class="hidden flex items-center space-x-3">
-                    <!-- Ikon Kunci Minimalis untuk Minta Izin Edit di Luar Kotak -->
                     <button id="btn-request-edit-icon" onclick="requestAdminEdit()" title="Minta Izin Edit (Masukkan Password Admin)" class="hidden items-center justify-center w-9 h-9 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-900 transition shadow-md cursor-pointer font-bold">
                         <i data-lucide="key-round" class="w-4 h-4"></i>
                     </button>
@@ -80,7 +77,7 @@
                 </div>
             </div>
 
-            <!-- BILAH MENU UTAMA BERBENTUK 3D DI ATAS -->
+            <!-- BILAH MENU UTAMA 3D DI ATAS -->
             <div id="top-nav-menu" class="hidden max-w-7xl mx-auto pt-2 border-t border-slate-800/80 flex flex-wrap gap-2 items-center justify-center md:justify-start">
                 <button onclick="switchTab('pribadi')" id="tab-btn-pribadi" class="nav-3d-btn active px-3.5 py-2 rounded-xl text-xs font-bold text-white flex items-center gap-2 cursor-pointer">
                     <i data-lucide="user" class="w-4 h-4 text-emerald-400"></i> Pribadi
@@ -105,6 +102,9 @@
                 </button>
                 <button onclick="switchTab('kpi')" id="tab-btn-kpi" class="nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 cursor-pointer">
                     <i data-lucide="award" class="w-4 h-4 text-teal-400"></i> Rekap KPI
+                </button>
+                <button onclick="switchTab('cuti')" id="tab-btn-cuti" class="nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="calendar-days" class="w-4 h-4 text-rose-400"></i> Cuti Mandiri
                 </button>
             </div>
         </header>
@@ -138,11 +138,33 @@
                 <div class="bg-white p-6 rounded-2xl shadow-md space-y-6 w-full">
                     <div class="flex justify-between items-center border-b pb-3">
                         <div>
-                            <h2 class="text-lg font-bold text-navy-900">Panel Admin - Kontrol Absensi & Riwayat SP</h2>
-                            <p class="text-xs text-slate-500">Kelola kalender absensi harian dan penerbitan Surat Peringatan (SP) serta cetak dokumen resmi.</p>
+                            <h2 class="text-lg font-bold text-navy-900">Panel Admin - Kontrol Absensi, Riwayat SP & Persetujuan Cuti</h2>
+                            <p class="text-xs text-slate-500">Kelola absensi harian, terbitkan SP, serta ACC/Tolak pengajuan cuti sales.</p>
                         </div>
                         <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700 cursor-pointer">Kembali ke Profil Saya</button>
                     </div>
+
+                    <!-- KONTROL PERSETUJUAN CUTI ADMIN -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                        <h3 class="text-xs font-bold text-navy-900 uppercase">Daftar Pengajuan Cuti Masuk (Approval)</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs text-left border bg-white rounded-lg overflow-hidden">
+                                <thead>
+                                    <tr class="bg-slate-200 text-slate-800 font-bold">
+                                        <th class="p-2.5">Nama Sales</th>
+                                        <th class="p-2.5">Tanggal Cuti</th>
+                                        <th class="p-2.5">Tujuan / Keperluan</th>
+                                        <th class="p-2.5">Status</th>
+                                        <th class="p-2.5 text-center">Aksi (ACC / Tolak)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-leave-approval-body">
+                                    <tr><td colspan="5" class="p-3 text-center text-slate-400 font-semibold">Tidak ada pengajuan cuti tertunda.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="space-y-4">
                             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
@@ -478,6 +500,65 @@
                     </div>
                 </div>
 
+                <!-- 9. CUTI MANDIRI -->
+                <div id="tab-cuti" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
+                    <div class="flex flex-col sm:flex-row justify-between items-center border-b pb-3 gap-3">
+                        <div>
+                            <h3 class="text-sm font-bold text-navy-900 uppercase tracking-wider">9. Modul Cuti Mandiri</h3>
+                            <p class="text-[11px] text-slate-500 font-medium">Jatah cuti 12 hari/tahun (berlaku setelah masa kerja 1 tahun). Maksimal 1 hari per bulan (Pengajuan H-7).</p>
+                        </div>
+                        <div id="leave-quota-badge" class="px-4 py-2 bg-blue-50 border border-blue-200 rounded-xl text-center">
+                            <span class="text-[10px] text-blue-800 font-bold uppercase block">Sisa Jatah Cuti Tahunan</span>
+                            <span id="lbl-quota-days" class="text-base font-black text-blue-900">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Kotak Form Pengajuan Cuti -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4">
+                        <h4 class="text-xs font-bold text-navy-900 uppercase">Form Pengajuan Cuti Baru</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                            <div>
+                                <label class="font-bold text-slate-800 block mb-1">Tanggal Cuti (Minimal H-7)</label>
+                                <input type="date" id="leave-input-date" class="w-full p-2.5 border rounded-lg bg-white font-semibold text-slate-950">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="font-bold text-slate-800 block mb-1">Tujuan / Keperluan Cuti</label>
+                                <input type="text" id="leave-input-purpose" class="w-full p-2.5 border rounded-lg bg-white font-semibold text-slate-950" placeholder="Contoh: Keperluan keluarga mendesak / Istirahat medis">
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button onclick="submitLeaveRequest()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-xs font-bold shadow cursor-pointer">
+                                📤 Kirim Pengajuan Cuti
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Kalender & Riwayat Pengajuan Cuti -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                            <h4 id="leave-cal-title" class="text-xs font-bold text-navy-900 uppercase">Kalender Cuti Bulan Ini</h4>
+                            <div id="leave-calendar-grid" class="grid grid-cols-7 gap-1.5 text-center text-xs"></div>
+                        </div>
+                        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                            <h4 class="text-xs font-bold text-navy-900 uppercase">Riwayat & Status Pengajuan Cuti</h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-xs text-left border bg-white rounded-lg">
+                                    <thead>
+                                        <tr class="bg-slate-200 text-slate-800 font-bold">
+                                            <th class="p-2">Tanggal</th>
+                                            <th class="p-2">Tujuan</th>
+                                            <th class="p-2 text-center">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="leave-history-body">
+                                        <tr><td colspan="3" class="p-3 text-center text-slate-400 font-medium">Belum ada riwayat pengajuan cuti.</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="btn-save-container" class="flex justify-end pt-4 hidden">
                     <button onclick="simpanData()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl text-xs font-bold transition shadow-lg cursor-pointer">
                         💾 Simpan Perubahan Data Saya
@@ -661,18 +742,18 @@
         }
 
         let dbHC = {
-            "irvantuba": { pass: "admin123", role: "Admin", nama: "Irvan Tuba Jati, S.E.", panggilan: "Irvan", nik: "SKN-TL01", androiduser: "irvan_tl", androidpass: "sukun2026", tmptlahir: "Jakarta", tgllahir: "1990-01-01", gender: "Laki-laki", kontak: "081380000000", email: "irvantuba11@gmail.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jl. Raya Pramuka Kav 60-61, Jakarta Pusat", ktp: "3173xxxxxxxx", npwp: "09.xxx", bpjskesehatan: "00011122xx", bpjsketenagakerjaan: "888222xx", vjenis: "Mobil", vmerek: "Toyota", vmodel: "Avanza", vtahun: "2023", vplat: "B 1234 TL", vstnk: "STNK123456", vsimjenis: "SIM A & C", vsimno: "SIM987654", dnama: "Keluarga Utama", dhub: "Istri", dinfo: "0813xxxxxxxx", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2020-01-01", namabank: "BCA", norek: "88887777xx", namarek: "Irvan Tuba Jati", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "D4/S1", institusi: "Universitas Indonesia - Manajemen", jurusan: "Manajemen", pasfoto: "", files: {} },
-            "kikinurawaludin": { pass: "kiki123", role: "Sales", nama: "Kiki Nurawaludin", panggilan: "Kiki", nik: "SKN-S01", androiduser: "kiki_sukun", androidpass: "kiki123", tmptlahir: "Jakarta", tgllahir: "1998-05-12", gender: "Laki-laki", kontak: "081234567890", email: "kiki@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta Pusat", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 5678 KIK", vstnk: "STNK111", vsimjenis: "SIM C", vsimno: "SIM111", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "123456xx", namarek: "Kiki Nurawaludin", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} },
-            "bagusramandhika": { pass: "bagus123", role: "Sales", nama: "Bagus Ramandhika", panggilan: "Bagus", nik: "SKN-S02", androiduser: "bagus_sukun", androidpass: "bagus123", tmptlahir: "Jakarta", tgllahir: "1999-06-15", gender: "Laki-laki", kontak: "081200000002", email: "bagus@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 9876 BAG", vstnk: "STNK222", vsimjenis: "SIM C", vsimno: "SIM222", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "222333xx", namarek: "Bagus Ramandhika", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "malfainasshidiqi": { pass: "diki123", role: "Sales", nama: "M Alfain Asshidiqi", panggilan: "Alfain", nik: "SKN-S03", androiduser: "alfain_sukun", androidpass: "diki123", tmptlahir: "Jakarta", tgllahir: "1998-03-10", gender: "Laki-laki", kontak: "081200000003", email: "alfain@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2020", vplat: "B 1111 ALF", vstnk: "STNK333", vsimjenis: "SIM C", vsimno: "SIM333", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "333444xx", namarek: "M Alfain Asshidiqi", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
-            "andiwirmanto": { pass: "andi123", role: "Sales", nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", androiduser: "andi_sukun", androidpass: "andi123", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 2222 AND", vstnk: "STNK444", vsimjenis: "SIM C", vsimno: "SIM444", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "dhanitriharto": { pass: "dhani123", role: "Sales", nama: "Dhani Triharto", panggilan: "Dhani", nik: "SKN-S05", androiduser: "dhani_sukun", androidpass: "dhani123", tmptlahir: "Jakarta", tgllahir: "1997-07-18", gender: "Laki-laki", kontak: "081200000005", email: "dhani@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "Mio", vtahun: "2022", vplat: "B 3333 DHA", vstnk: "STNK555", vsimjenis: "SIM C", vsimno: "SIM555", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "555666xx", namarek: "Dhani Triharto", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
-            "mohammaddenisp": { pass: "denis123", role: "Sales", nama: "Mohammad Denis P", panggilan: "Denis", nik: "SKN-S06", androiduser: "denis_sukun", androidpass: "denis123", tmptlahir: "Jakarta", tgllahir: "1998-09-22", gender: "Laki-laki", kontak: "081200000006", email: "denis@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Scoopy", vtahun: "2023", vplat: "B 4444 DEN", vstnk: "STNK666", vsimjenis: "SIM C", vsimno: "SIM666", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "666777xx", namarek: "Mohammad Denis P", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "rafisuandi": { pass: "rafi123", role: "Sales", nama: "Rafi Suandi", panggilan: "Rafi", nik: "SKN-S07", androiduser: "rafi_sukun", androidpass: "rafi123", tmptlahir: "Bekasi", tgllahir: "1999-08-20", gender: "Laki-laki", kontak: "081298765432", email: "rafi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3172xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2023", vplat: "B 5555 RAF", vstnk: "STNK777", vsimjenis: "SIM C", vsimno: "SIM777", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta utara", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-03-15", namabank: "Mandiri", norek: "777888xx", namarek: "Rafi Suandi", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "SMA/SMK", institusi: "SMAN Bekasi", jurusan: "IPA", pasfoto: "", files: {} },
-            "sarifudin": { pass: "sarif123", role: "Sales", nama: "Sarifudin", panggilan: "Sarif", nik: "SKN-S08", androiduser: "sarif_sukun", androidpass: "sarif123", tmptlahir: "Jakarta", tgllahir: "1996-02-14", gender: "Laki-laki", kontak: "081200000008", email: "sarif@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 6666 SAR", vstnk: "STNK888", vsimjenis: "SIM C", vsimno: "SIM888", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "888999xx", namarek: "Sarifudin", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", nama: "Bachtiar Syahputra", panggilan: "Bachtiar", nik: "SKN-S09", androiduser: "bachtiar_sukun", androidpass: "bachtiar123", tmptlahir: "Jakarta", tgllahir: "1994-11-30", gender: "Laki-laki", kontak: "081200000009", email: "bachtiar@sukun.com", nikah: "Menikah", tanggungan: "2 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 7777 BAC", vstnk: "STNK999", vsimjenis: "SIM C", vsimno: "SIM999", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "999000xx", namarek: "Bachtiar Syahputra", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "rickyjohanpondri": { pass: "ricky123", role: "Sales", nama: "Ricky Johan Pondri", panggilan: "Ricky", nik: "SKN-S10", androiduser: "ricky_sukun", androidpass: "ricky123", tmptlahir: "Jakarta", tgllahir: "1997-12-05", gender: "Laki-laki", kontak: "081200000010", email: "ricky@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 8888 RIC", vstnk: "STNK100", vsimjenis: "SIM C", vsimno: "SIM100", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "100200xx", namarek: "Ricky Johan Pondri", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "syaifulbahri": { pass: "Bahri123", role: "Sales", nama: "Syaiful Bahri", panggilan: "Syaiful", nik: "SKN-S11", androiduser: "syaiful_sukun", androidpass: "Bahri123", tmptlahir: "Jakarta", tgllahir: "1992-04-10", gender: "Laki-laki", kontak: "081200000011", email: "syaiful@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 9999 SYA", vstnk: "STNK110", vsimjenis: "SIM C", vsimno: "SIM110", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2023-01-01", namabank: "BCA", norek: "110220xx", namarek: "Syaiful Bahri", spList: [], dailyAttendance: {}, kpiData: {}, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} }
+            "irvantuba": { pass: "admin123", role: "Admin", nama: "Irvan Tuba Jati, S.E.", panggilan: "Irvan", nik: "SKN-TL01", androiduser: "irvan_tl", androidpass: "sukun2026", tmptlahir: "Jakarta", tgllahir: "1990-01-01", gender: "Laki-laki", kontak: "081380000000", email: "irvantuba11@gmail.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jl. Raya Pramuka Kav 60-61, Jakarta Pusat", ktp: "3173xxxxxxxx", npwp: "09.xxx", bpjskesehatan: "00011122xx", bpjsketenagakerjaan: "888222xx", vjenis: "Mobil", vmerek: "Toyota", vmodel: "Avanza", vtahun: "2023", vplat: "B 1234 TL", vstnk: "STNK123456", vsimjenis: "SIM A & C", vsimno: "SIM987654", dnama: "Keluarga Utama", dhub: "Istri", dinfo: "0813xxxxxxxx", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2020-01-01", namabank: "BCA", norek: "88887777xx", namarek: "Irvan Tuba Jati", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "D4/S1", institusi: "Universitas Indonesia - Manajemen", jurusan: "Manajemen", pasfoto: "", files: {} },
+            "kikinurawaludin": { pass: "kiki123", role: "Sales", nama: "Kiki Nurawaludin", panggilan: "Kiki", nik: "SKN-S01", androiduser: "kiki_sukun", androidpass: "kiki123", tmptlahir: "Jakarta", tgllahir: "1998-05-12", gender: "Laki-laki", kontak: "081234567890", email: "kiki@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta Pusat", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 5678 KIK", vstnk: "STNK111", vsimjenis: "SIM C", vsimno: "SIM111", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "123456xx", namarek: "Kiki Nurawaludin", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} },
+            "bagusramandhika": { pass: "bagus123", role: "Sales", nama: "Bagus Ramandhika", panggilan: "Bagus", nik: "SKN-S02", androiduser: "bagus_sukun", androidpass: "bagus123", tmptlahir: "Jakarta", tgllahir: "1999-06-15", gender: "Laki-laki", kontak: "081200000002", email: "bagus@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 9876 BAG", vstnk: "STNK222", vsimjenis: "SIM C", vsimno: "SIM222", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "222333xx", namarek: "Bagus Ramandhika", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "malfainasshidiqi": { pass: "diki123", role: "Sales", nama: "M Alfain Asshidiqi", panggilan: "Alfain", nik: "SKN-S03", androiduser: "alfain_sukun", androidpass: "diki123", tmptlahir: "Jakarta", tgllahir: "1998-03-10", gender: "Laki-laki", kontak: "081200000003", email: "alfain@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2020", vplat: "B 1111 ALF", vstnk: "STNK333", vsimjenis: "SIM C", vsimno: "SIM333", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "333444xx", namarek: "M Alfain Asshidiqi", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
+            "andiwirmanto": { pass: "andi123", role: "Sales", nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", androiduser: "andi_sukun", androidpass: "andi123", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 2222 AND", vstnk: "STNK444", vsimjenis: "SIM C", vsimno: "SIM444", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "dhanitriharto": { pass: "dhani123", role: "Sales", nama: "Dhani Triharto", panggilan: "Dhani", nik: "SKN-S05", androiduser: "dhani_sukun", androidpass: "dhani123", tmptlahir: "Jakarta", tgllahir: "1997-07-18", gender: "Laki-laki", kontak: "081200000005", email: "dhani@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "Mio", vtahun: "2022", vplat: "B 3333 DHA", vstnk: "STNK555", vsimjenis: "SIM C", vsimno: "SIM555", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "555666xx", namarek: "Dhani Triharto", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
+            "mohammaddenisp": { pass: "denis123", role: "Sales", nama: "Mohammad Denis P", panggilan: "Denis", nik: "SKN-S06", androiduser: "denis_sukun", androidpass: "denis123", tmptlahir: "Jakarta", tgllahir: "1998-09-22", gender: "Laki-laki", kontak: "081200000006", email: "denis@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Scoopy", vtahun: "2023", vplat: "B 4444 DEN", vstnk: "STNK666", vsimjenis: "SIM C", vsimno: "SIM666", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "666777xx", namarek: "Mohammad Denis P", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "rafisuandi": { pass: "rafi123", role: "Sales", nama: "Rafi Suandi", panggilan: "Rafi", nik: "SKN-S07", androiduser: "rafi_sukun", androidpass: "rafi123", tmptlahir: "Bekasi", tgllahir: "1999-08-20", gender: "Laki-laki", kontak: "081298765432", email: "rafi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3172xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2023", vplat: "B 5555 RAF", vstnk: "STNK777", vsimjenis: "SIM C", vsimno: "SIM777", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta utara", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-03-15", namabank: "Mandiri", norek: "777888xx", namarek: "Rafi Suandi", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "SMA/SMK", institusi: "SMAN Bekasi", jurusan: "IPA", pasfoto: "", files: {} },
+            "sarifudin": { pass: "sarif123", role: "Sales", nama: "Sarifudin", panggilan: "Sarif", nik: "SKN-S08", androiduser: "sarif_sukun", androidpass: "sarif123", tmptlahir: "Jakarta", tgllahir: "1996-02-14", gender: "Laki-laki", kontak: "081200000008", email: "sarif@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 6666 SAR", vstnk: "STNK888", vsimjenis: "SIM C", vsimno: "SIM888", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "888999xx", namarek: "Sarifudin", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", nama: "Bachtiar Syahputra", panggilan: "Bachtiar", nik: "SKN-S09", androiduser: "bachtiar_sukun", androidpass: "bachtiar123", tmptlahir: "Jakarta", tgllahir: "1994-11-30", gender: "Laki-laki", kontak: "081200000009", email: "bachtiar@sukun.com", nikah: "Menikah", tanggungan: "2 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 7777 BAC", vstnk: "STNK999", vsimjenis: "SIM C", vsimno: "SIM999", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "999000xx", namarek: "Bachtiar Syahputra", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "rickyjohanpondri": { pass: "ricky123", role: "Sales", nama: "Ricky Johan Pondri", panggilan: "Ricky", nik: "SKN-S10", androiduser: "ricky_sukun", androidpass: "ricky123", tmptlahir: "Jakarta", tgllahir: "1997-12-05", gender: "Laki-laki", kontak: "081200000010", email: "ricky@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 8888 RIC", vstnk: "STNK100", vsimjenis: "SIM C", vsimno: "SIM100", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "100200xx", namarek: "Ricky Johan Pondri", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "syaifulbahri": { pass: "Bahri123", role: "Sales", nama: "Syaiful Bahri", panggilan: "Syaiful", nik: "SKN-S11", androiduser: "syaiful_sukun", androidpass: "Bahri123", tmptlahir: "Jakarta", tgllahir: "1992-04-10", gender: "Laki-laki", kontak: "081200000011", email: "syaiful@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 9999 SYA", vstnk: "STNK110", vsimjenis: "SIM C", vsimno: "SIM110", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2023-01-01", namabank: "BCA", norek: "110220xx", namarek: "Syaiful Bahri", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} }
         };
 
         let activeUser = localStorage.getItem('hc_active_user_cloud') || null;
@@ -712,7 +793,7 @@
                 }
                 loadDataToForm();
             } else {
-                document.getElementById('section-login').classList.remove('hidden');
+                document.getElementById('section-login').classList.add('hidden');
                 document.getElementById('section-dashboard').classList.add('hidden');
                 document.getElementById('section-admin').classList.add('hidden');
                 document.getElementById('user-session-info').classList.add('hidden');
@@ -724,7 +805,7 @@
         function setFormEditable(isEditable) {
             const inputs = document.querySelectorAll('main input, main select, main textarea');
             inputs.forEach(el => {
-                if (el.id !== 'input-username' && el.id !== 'input-password' && el.id !== 'kpi-filter-year') {
+                if (el.id !== 'input-username' && el.id !== 'input-password' && el.id !== 'kpi-filter-year' && el.id !== 'leave-input-date' && el.id !== 'leave-input-purpose') {
                     if (isEditable) {
                         el.removeAttribute('disabled');
                         el.classList.remove('bg-slate-100');
@@ -818,6 +899,7 @@
                 }
             }
             renderAdminModules();
+            renderAdminLeaveApprovals();
         }
 
         function renderAdminModules() {
@@ -943,6 +1025,57 @@
             }
         }
 
+        function renderAdminLeaveApprovals() {
+            let tbody = document.getElementById('admin-leave-approval-body');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            let hasPending = false;
+
+            for (let username in dbHC) {
+                if (username === 'irvantuba') continue;
+                let user = dbHC[username];
+                if (user.leaveList && user.leaveList.length > 0) {
+                    user.leaveList.forEach((leave, idx) => {
+                        if (leave.status === 'Pending') {
+                            hasPending = true;
+                            let tr = document.createElement('tr');
+                            tr.className = "border-b";
+                            tr.innerHTML = `
+                                <td class="p-2 font-bold">${user.nama}</td>
+                                <td class="p-2">${leave.date}</td>
+                                <td class="p-2 font-medium">${leave.purpose}</td>
+                                <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] bg-amber-100 text-amber-800 font-bold">Menunggu ACC</span></td>
+                                <td class="p-2 text-center space-x-1">
+                                    <button onclick="processLeave('${username}', ${idx}, 'ACC')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">ACC</button>
+                                    <button onclick="processLeave('${username}', ${idx}, 'Tolak')" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">Tolak</button>
+                                </td>
+                            `;
+                            tbody.appendChild(tr);
+                        }
+                    });
+                }
+            }
+
+            if (!hasPending) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400 font-semibold">Tidak ada pengajuan cuti tertunda.</td></tr>`;
+            }
+        }
+
+        async function processLeave(username, idx, decision) {
+            let user = dbHC[username];
+            if (!user.leaveList[idx]) return;
+            user.leaveList[idx].status = decision;
+
+            if (decision === 'ACC') {
+                if (!user.approvedLeaveCount) user.approvedLeaveCount = 0;
+                user.approvedLeaveCount++;
+            }
+
+            await syncToCloud(username);
+            renderAdminLeaveApprovals();
+            alert(`Pengajuan cuti berhasil di-${decision}!`);
+        }
+
         function loadDataToForm() {
             let u = dbHC[activeUser];
             if (!u) return;
@@ -1012,6 +1145,129 @@
             renderSalesCalendar(u);
             renderSalesSPTable(u);
             renderKPITable();
+            renderLeaveModule(u);
+        }
+
+        // MODUL CUTI MANDIRI LOGIC
+        function renderLeaveModule(u) {
+            let joinDateStr = u.tglgabung;
+            let quotaEl = document.getElementById('lbl-quota-days');
+            let historyBody = document.getElementById('leave-history-body');
+
+            if (!joinDateStr) {
+                quotaEl.innerText = "Tanggal Gabung Kosong";
+                return;
+            }
+
+            let joinDate = new Date(joinDateStr);
+            let today = new Date();
+            let diffTime = today - joinDate;
+            let diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+            if (diffDays < 365) {
+                quotaEl.innerText = "Belum 1 Tahun Masa Kerja (0 Hari)";
+            } else {
+                let approvedCount = u.approvedLeaveCount || 0;
+                let remaining = 12 - approvedCount;
+                quotaEl.innerText = `${remaining} Hari (Terpakai: ${approvedCount}/12)`;
+            }
+
+            // Render Riwayat Cuti
+            historyBody.innerHTML = '';
+            let leaveList = u.leaveList || [];
+            if (leaveList.length === 0) {
+                historyBody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-400 font-medium">Belum ada riwayat pengajuan cuti.</td></tr>`;
+            } else {
+                leaveList.forEach(l => {
+                    let badgeColor = l.status === 'ACC' ? 'bg-emerald-100 text-emerald-800' : l.status === 'Tolak' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800';
+                    let tr = document.createElement('tr');
+                    tr.className = "border-b";
+                    tr.innerHTML = `
+                        <td class="p-2 font-semibold">${l.date}</td>
+                        <td class="p-2">${l.purpose}</td>
+                        <td class="p-2 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${badgeColor}">${l.status}</span></td>
+                    `;
+                    historyBody.appendChild(tr);
+                });
+            }
+
+            renderLeaveCalendar(u);
+        }
+
+        function renderLeaveCalendar(u) {
+            let grid = document.getElementById('leave-calendar-grid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            let now = new Date(), year = now.getFullYear(), month = now.getMonth();
+            let monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            let title = document.getElementById('leave-cal-title');
+            if(title) title.innerText = `Kalender Cuti: ${monthNames[month]} ${year}`;
+
+            ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].forEach(d => {
+                let h = document.createElement('div'); h.className = "font-bold text-[10px] text-slate-700 py-1"; h.innerText = d;
+                grid.appendChild(h);
+            });
+
+            let firstDay = new Date(year, month, 1).getDay();
+            let totalDays = new Date(year, month + 1, 0).getDate();
+            for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
+
+            let leaveList = u.leaveList || [];
+
+            for (let day = 1; day <= totalDays; day++) {
+                let dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                let foundLeave = leaveList.find(l => l.date === dateKey);
+                let statusTag = foundLeave ? foundLeave.status : '-';
+
+                let cell = document.createElement('div');
+                cell.className = "p-1.5 border rounded text-[11px] font-bold flex flex-col items-center justify-center h-12 bg-white shadow-sm";
+                cell.innerHTML = `<span class="text-[10px] text-slate-500 font-bold">${day}</span><span class="mt-0.5 px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${statusTag === 'ACC' ? 'bg-emerald-600 text-white' : statusTag === 'Pending' ? 'bg-amber-500 text-white' : statusTag === 'Tolak' ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-400'}">${statusTag}</span>`;
+                grid.appendChild(cell);
+            }
+        }
+
+        async function submitLeaveRequest() {
+            let u = dbHC[activeUser];
+            let joinDate = new Date(u.tglgabung || '2020-01-01');
+            let today = new Date();
+            let diffDays = (today - joinDate) / (1000 * 60 * 60 * 24);
+
+            if (diffDays < 365) {
+                return alert("Masa kerja Anda belum mencapai 1 tahun, belum memenuhi syarat pengajuan cuti.");
+            }
+
+            let dateVal = document.getElementById('leave-input-date').value;
+            let purposeVal = document.getElementById('leave-input-purpose').value.trim();
+
+            if (!dateVal || !purposeVal) {
+                return alert("Harap isi Tanggal Cuti dan Tujuan Cuti dengan lengkap!");
+            }
+
+            // Validasi H-7
+            let selectedDate = new Date(dateVal);
+            let minAllowedDate = new Date();
+            minAllowedDate.setDate(minAllowedDate.getDate() + 7);
+
+            if (selectedDate < minAllowedDate) {
+                return alert("Pengajuan cuti minimal dilakukan 7 hari (H-7) dari tanggal pelaksanaan.");
+            }
+
+            // Validasi Maksimal 1 Hari per Bulan
+            let selMonth = dateVal.substring(0, 7); // Format: YYYY-MM
+            if (!u.leaveList) u.leaveList = [];
+            
+            let alreadyTakenInMonth = u.leaveList.some(l => l.date.startsWith(selMonth) && (l.status === 'ACC' || l.status === 'Pending'));
+            if (alreadyTakenInMonth) {
+                return alert("Anda hanya berhak mengambil maksimal 1 hari cuti dalam bulan yang sama!");
+            }
+
+            u.leaveList.push({ date: dateVal, purpose: purposeVal, status: 'Pending' });
+            await syncToCloud(activeUser);
+            
+            document.getElementById('leave-input-date').value = '';
+            document.getElementById('leave-input-purpose').value = '';
+            loadDataToForm();
+            alert("Pengajuan cuti berhasil dikirim ke Team Leader untuk disetujui.");
         }
 
         const kpiGrades = ["-", "K", "C", "C+", "B", "B+", "A", "A+", "BS"];
@@ -1214,7 +1470,7 @@
         }
 
         function switchTab(tabName) {
-            ['pribadi', 'pekerjaan', 'kendaraan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen', 'kpi'].forEach(t => {
+            ['pribadi', 'pekerjaan', 'kendaraan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen', 'kpi', 'cuti'].forEach(t => {
                 let tabEl = document.getElementById(`tab-${t}`);
                 let btnEl = document.getElementById(`tab-btn-${t}`);
                 if(tabEl) tabEl.classList.add('hidden');
