@@ -109,6 +109,11 @@
                     <button onclick="openAdminPanel()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-xs font-bold">Buka Panel Admin & Sanksi SP</button>
                 </div>
 
+                <div id="sales-notice-box" class="hidden bg-blue-50 border border-blue-200 p-4 rounded-xl flex justify-between items-center w-full shadow-sm">
+                    <span class="text-xs text-blue-800 font-medium">ℹ️ Akun Anda bersifat Lihat Data (View-Only). Hubungi Team Leader Irvan Tuba Jati jika ada pembaruan data.</span>
+                    <button onclick="requestAdminEdit()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-xs font-bold">Minta Izin Edit (Password Admin)</button>
+                </div>
+
                 <div class="flex flex-wrap bg-white p-2 rounded-xl shadow-sm border border-slate-200 gap-1 w-full">
                     <button onclick="switchTab('pribadi')" id="tab-btn-pribadi" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg bg-navy-900 text-white transition text-center shadow">1. Data Pribadi</button>
                     <button onclick="switchTab('pekerjaan')" id="tab-btn-pekerjaan" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold rounded-lg text-slate-600 hover:bg-slate-100 transition text-center">2. Pekerjaan</button>
@@ -357,7 +362,7 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end pt-4">
+                <div id="btn-save-container" class="flex justify-end pt-4 hidden">
                     <button onclick="simpanData()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl text-xs font-bold transition shadow-lg">
                         💾 Simpan Perubahan Data Saya
                     </button>
@@ -503,10 +508,15 @@
                 document.getElementById('user-session-info').classList.remove('hidden');
                 document.getElementById('lbl-user-login').innerText = `Masuk: ${dbHC[activeUser].nama} (${dbHC[activeUser].role})`;
                 
-                if (dbHC[activeUser].role === 'Admin') {
+                let currentUser = dbHC[activeUser];
+                if (currentUser.role === 'Admin') {
                     document.getElementById('admin-shortcut-box').classList.remove('hidden');
+                    document.getElementById('sales-notice-box').classList.add('hidden');
+                    setFormEditable(true);
                 } else {
                     document.getElementById('admin-shortcut-box').classList.add('hidden');
+                    document.getElementById('sales-notice-box').classList.remove('hidden');
+                    setFormEditable(false);
                 }
                 loadDataToForm();
             } else {
@@ -514,6 +524,39 @@
                 document.getElementById('section-dashboard').classList.add('hidden');
                 document.getElementById('section-admin').classList.add('hidden');
                 document.getElementById('user-session-info').classList.add('hidden');
+            }
+        }
+
+        function setFormEditable(isEditable) {
+            const inputs = document.querySelectorAll('main input, main select, main textarea');
+            inputs.forEach(el => {
+                if (el.id !== 'input-username' && el.id !== 'input-password') {
+                    if (isEditable) {
+                        el.removeAttribute('disabled');
+                        el.classList.remove('bg-slate-100');
+                        el.classList.add('bg-slate-50');
+                    } else {
+                        el.setAttribute('disabled', 'true');
+                        el.classList.remove('bg-slate-50');
+                        el.classList.add('bg-slate-100');
+                    }
+                }
+            });
+            const saveBtnContainer = document.getElementById('btn-save-container');
+            if (isEditable) {
+                saveBtnContainer.classList.remove('hidden');
+            } else {
+                saveBtnContainer.classList.add('hidden');
+            }
+        }
+
+        function requestAdminEdit() {
+            let pass = prompt("Masukkan Password Admin (admin123) untuk membuka akses edit:");
+            if (pass === "admin123") {
+                setFormEditable(true);
+                alert("Akses Edit Berhasil Dibuka! Silakan lakukan perubahan data lalu klik Simpan.");
+            } else if (pass !== null) {
+                alert("Password Admin salah!");
             }
         }
 
