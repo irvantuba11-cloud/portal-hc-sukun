@@ -583,6 +583,28 @@
         <footer class="bg-slate-200 text-center p-4 text-xs text-slate-600 font-bold w-full">PT. Sukun Wartono Indonesia Perwakilan Jakarta © 2026</footer>
     </div>
 
+    <!-- MODAL KUSTOM PASSWORD ADMIN (AMAN, TERSEMBUNYI BULATAN BINTANG & TANPA PETUNJUK) -->
+    <div id="admin-password-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4 border border-slate-200 animate-in fade-in zoom-in duration-200">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                    <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold text-navy-900">Otorisasi Administrator</h3>
+                    <p class="text-[11px] text-slate-500">Masukkan Password Admin untuk membuka akses edit.</p>
+                </div>
+            </div>
+            <div>
+                <input type="password" id="modal-admin-pass-input" class="w-full p-3 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-navy-900 focus:outline-none" placeholder="••••••••">
+            </div>
+            <div class="flex justify-end space-x-2 pt-2">
+                <button onclick="closeAdminPassModal(false)" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-bold transition cursor-pointer">Batal</button>
+                <button onclick="closeAdminPassModal(true)" class="px-5 py-2 bg-navy-900 hover:bg-navy-800 text-white rounded-xl text-xs font-bold transition cursor-pointer shadow-md">Konfirmasi</button>
+            </div>
+        </div>
+    </div>
+
     <!-- AREA CETAK SURAT PERINGATAN (A4) -->
     <div id="printSection" class="hidden">
         <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 30px; color: #000;">
@@ -908,13 +930,29 @@
             }
         }
 
+        // SISTEM MODAL KUSTOM PASSWORD ADMIN (AMAN TERSEMBUNYI BULATAN & TANPA BOCORAN PASSWORD)
+        let adminEditResolver = null;
         function requestAdminEdit() {
-            let pass = prompt("Masukkan Password Admin (admin123) untuk membuka akses edit:");
-            if (pass === "admin123") {
-                setFormEditable(true);
-                alert("Akses Edit Berhasil Dibuka! Silakan lakukan perubahan data lalu klik Simpan.");
-            } else if (pass !== null) {
-                alert("Password Admin salah!");
+            let modal = document.getElementById('admin-password-modal');
+            let inputPass = document.getElementById('modal-admin-pass-input');
+            inputPass.value = '';
+            modal.classList.remove('hidden');
+            inputPass.focus();
+        }
+
+        function closeAdminPassModal(isConfirmed) {
+            let modal = document.getElementById('admin-password-modal');
+            let inputPass = document.getElementById('modal-admin-pass-input');
+            modal.classList.add('hidden');
+
+            if (isConfirmed) {
+                let pass = inputPass.value.trim();
+                if (pass === "admin123") {
+                    setFormEditable(true);
+                    alert("Akses Edit Berhasil Dibuka! Silakan lakukan perubahan data lalu klik Simpan.");
+                } else {
+                    alert("Password Admin salah!");
+                }
             }
         }
 
@@ -969,7 +1007,6 @@
             document.getElementById('section-dashboard').classList.add('hidden');
             document.getElementById('section-admin').classList.remove('hidden');
             
-            // Otomatis unduh data terbaru dari Supabase Cloud setiap kali Panel Admin dibuka
             try {
                 let { data, error } = await _supabase.from('hc_database').select('*');
                 if (data && data.length > 0) {
