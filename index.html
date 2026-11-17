@@ -485,17 +485,19 @@
 
             <p style="font-size: 12px; line-height: 1.6; margin-bottom: 40px;">Surat Peringatan ini diterbitkan sebagai bentuk pembinaan dan penegakan SOP perusahaan agar yang bersangkutan dapat segera memperbaiki kinerja serta mematuhi aturan operasional kedepannya.</p>
 
-            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-top: 40px;">
-                <div style="text-align: center; width: 220px;">
-                    <p style="margin-bottom: 60px; font-weight: bold;">Mengetahui,<br>Team Leader</p>
-                    <p style="margin: 0; font-weight: bold; text-decoration: underline;">( Irvan Tuba Jati, S.E. )</p>
-                </div>
-                <div style="text-align: center; width: 220px;">
-                    <p style="margin-bottom: 15px;">Jakarta, <span id="print-today-date"></span></p>
-                    <p style="margin-bottom: 60px; font-weight: bold;">Petugas / Karyawan</p>
-                    <p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p>
-                </div>
-            </div>
+            <table style="width: 100%; margin-top: 40px; font-size: 12px; border-collapse: collapse;">
+                <tr>
+                    <td style="text-align: center; width: 50%;">
+                        <p style="margin-bottom: 65px; font-weight: bold;">Mengetahui,<br>Team Leader</p>
+                        <p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p>
+                    </td>
+                    <td style="text-align: center; width: 50%;">
+                        <p style="margin-bottom: 15px;">Jakarta, <span id="print-today-date"></span></p>
+                        <p style="margin-bottom: 65px; font-weight: bold;">Petugas / Karyawan</p>
+                        <p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -797,7 +799,10 @@
             let today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
             document.getElementById('print-today-date').innerText = today;
 
+            let printSec = document.getElementById('printSection');
+            printSec.classList.remove('hidden');
             window.print();
+            printSec.classList.add('hidden');
         }
 
         function renderAdminSPTable() {
