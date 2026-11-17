@@ -921,7 +921,11 @@
         async function syncToCloud(userId) {
             try {
                 let { error } = await _supabase.from('hc_database').upsert({ id: userId, data: dbHC[userId] });
-                if (error) alert("Gagal menyimpan ke cloud: " + error.message);
+                if (error) {
+                    alert("Gagal menyimpan ke cloud: " + error.message);
+                } else {
+                    alert("Data berhasil tersimpan dan sinkron ke Cloud!");
+                }
             } catch (e) {
                 console.error("Sync error", e);
             }
