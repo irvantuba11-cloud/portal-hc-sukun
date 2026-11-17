@@ -22,6 +22,8 @@
             body * { visibility: hidden; }
             #printSection, #printSection * { visibility: visible; }
             #printSection { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: white; }
+            #printLeaveSection, #printLeaveSection * { visibility: visible; }
+            #printLeaveSection { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: white; }
         }
         .nav-3d-btn {
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
@@ -146,7 +148,10 @@
 
                     <!-- KONTROL PERSETUJUAN CUTI & IZIN ADMIN -->
                     <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
-                        <h3 class="text-xs font-bold text-navy-900 uppercase">Daftar Pengajuan & Riwayat Cuti / Izin Sales</h3>
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-xs font-bold text-navy-900 uppercase">Daftar Pengajuan & Riwayat Cuti / Izin Sales</h3>
+                            <button onclick="refreshAdminApprovals()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-bold cursor-pointer">🔄 Refresh Data</button>
+                        </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-xs text-left border bg-white rounded-lg overflow-hidden">
                                 <thead>
@@ -917,7 +922,6 @@
             try {
                 let { error } = await _supabase.from('hc_database').upsert({ id: userId, data: dbHC[userId] });
                 if (error) alert("Gagal menyimpan ke cloud: " + error.message);
-                else alert("Data berhasil tersimpan dan sinkron ke Cloud!");
             } catch (e) {
                 console.error("Sync error", e);
             }
@@ -966,6 +970,25 @@
         function backToMyProfile() {
             document.getElementById('section-admin').classList.add('hidden');
             document.getElementById('section-dashboard').classList.remove('hidden');
+        }
+
+        async function refreshAdminApprovals() {
+            try {
+                let { data, error } = await _supabase.from('hc_database').select('*');
+                if (data && data.length > 0) {
+                    data.forEach(row => { 
+                        if (row.id && row.data) {
+                            if (!row.data.leaveList) row.data.leaveList = [];
+                            if (row.data.approvedLeaveCount === undefined) row.data.approvedLeaveCount = 0;
+                            dbHC[row.id] = row.data; 
+                        }
+                    });
+                }
+            } catch (e) {
+                console.error("Refresh error", e);
+            }
+            renderAdminLeaveApprovals();
+            alert("Data pengajuan berhasil diperbarui dari Cloud!");
         }
 
         function renderAdminPanel() {
@@ -1338,26 +1361,22 @@
             let minAllowedDate = new Date();
 
             if (typeVal === 'Cuti') {
-                // Validasi Cuti: Minimal masa kerja 1 tahun
                 let joinDate = new Date(u.tglgabung || '2020-01-01');
                 let diffDays = (todayCheck - joinDate) / (1000 * 60 * 60 * 24);
                 if (diffDays < 365) {
                     return alert("Masa kerja Anda belum mencapai 1 tahun, belum memenuhi syarat pengajuan cuti.");
                 }
-                // Validasi Cuti: Min H-7
                 minAllowedDate.setDate(minAllowedDate.getDate() + 7);
                 if (selectedDate < minAllowedDate) {
                     return alert("Pengajuan cuti minimal dilakukan 7 hari (H-7) dari tanggal pelaksanaan.");
                 }
             } else {
-                // Validasi Izin: Min H-3 (Tanpa syarat masa kerja 1 tahun)
                 minAllowedDate.setDate(minAllowedDate.getDate() + 3);
                 if (selectedDate < minAllowedDate) {
                     return alert("Pengajuan izin minimal dilakukan 3 hari (H-3) dari tanggal pelaksanaan.");
                 }
             }
 
-            // Validasi Maksimal 1 Kali (1 Hari) per Bulan untuk masing-masing jenis
             let selMonth = dateVal.substring(0, 7); // Format: YYYY-MM
             if (!u.leaveList) u.leaveList = [];
             
@@ -1367,6 +1386,8 @@
             }
 
             u.leaveList.push({ type: typeVal, date: dateVal, purpose: purposeVal, status: 'Pending' });
+            
+            // Sync langsung ke Supabase Cloud
             await syncToCloud(activeUser);
             
             document.getElementById('leave-input-date').value = '';
