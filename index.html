@@ -16,6 +16,13 @@
             }
         }
     </script>
+    <style>
+        @media print {
+            body * { visibility: hidden; }
+            #printSection, #printSection * { visibility: visible; }
+            #printSection { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: white; }
+        }
+    </style>
 </head>
 <body class="bg-slate-100 font-sans antialiased text-slate-800">
     <div class="min-h-screen flex flex-col justify-between">
@@ -60,7 +67,7 @@
                     <div class="flex justify-between items-center border-b pb-3">
                         <div>
                             <h2 class="text-lg font-bold text-navy-900">Panel Admin - Kontrol Absensi & Riwayat SP</h2>
-                            <p class="text-xs text-slate-500">Kelola kalender absensi harian dan penerbitan Surat Peringatan (SP) secara sinkron real-time.</p>
+                            <p class="text-xs text-slate-500">Kelola kalender absensi harian dan penerbitan Surat Peringatan (SP) serta cetak dokumen resmi.</p>
                         </div>
                         <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700">Kembali ke Profil Saya</button>
                     </div>
@@ -73,7 +80,7 @@
                         </div>
                         <div class="lg:col-span-2 space-y-6">
                             <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4">
-                                <h3 class="text-xs font-bold text-navy-900 uppercase">2. Tambah Catatan Riwayat SP / Cut Off (Dengan Masa Berlaku)</h3>
+                                <h3 class="text-xs font-bold text-navy-900 uppercase">2. Tambah Catatan Riwayat SP / Cut Off & Cetak</h3>
                                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
                                     <div><label class="font-bold text-slate-800 block mb-1">Tanggal</label><input type="date" id="admin-sp-date" class="w-full p-2 border rounded bg-white font-semibold text-slate-900"></div>
                                     <div>
@@ -83,13 +90,13 @@
                                             <option value="SP1">SP 1</option><option value="SP2">SP 2</option><option value="SP3">SP 3</option><option value="Cut Off">Cut Off</option>
                                         </select>
                                     </div>
-                                    <div><label class="font-bold text-slate-800 block mb-1">Masa Berlaku / Periode</label><input type="text" id="admin-sp-period" class="w-full p-2 border rounded bg-white font-semibold text-slate-900" placeholder="Cth: 3 Bulan / dst"></div>
+                                    <div><label class="font-bold text-slate-800 block mb-1">Masa Berlaku</label><input type="text" id="admin-sp-period" class="w-full p-2 border rounded bg-white font-semibold text-slate-900" placeholder="Cth: 3 Bulan"></div>
                                     <div><label class="font-bold text-slate-800 block mb-1">Keterangan</label><input type="text" id="admin-sp-desc" class="w-full p-2 border rounded bg-white font-semibold text-slate-900" placeholder="Keterangan..."></div>
                                 </div>
                                 <div class="flex justify-end"><button onclick="addAdminSP()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow">+ Terbitkan SP</button></div>
                                 <div class="overflow-x-auto pt-2">
                                     <table class="w-full text-xs text-left border bg-white rounded-lg overflow-hidden">
-                                        <thead><tr class="bg-slate-200 text-slate-800 font-bold"><th class="p-2">Tanggal</th><th class="p-2">Jenis SP</th><th class="p-2">Masa Berlaku</th><th class="p-2">Keterangan</th><th class="p-2 text-center">Aksi</th></tr></thead>
+                                        <thead><tr class="bg-slate-200 text-slate-800 font-bold"><th class="p-2">Tanggal</th><th class="p-2">Jenis SP</th><th class="p-2">Masa Berlaku</th><th class="p-2">Keterangan</th><th class="p-2 text-center">Aksi / Cetak</th></tr></thead>
                                         <tbody id="admin-sp-table-body"></tbody>
                                     </table>
                                 </div>
@@ -364,7 +371,7 @@
                     </div>
                 </div>
 
-                <!-- 8. REKAP KPI BULANAN (DESEMBER TAHUN LALU S.D. NOVEMBER TAHUN BERJALAN) -->
+                <!-- 8. REKAP KPI BULANAN -->
                 <div id="tab-kpi" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
                     <div class="flex flex-col sm:flex-row justify-between items-center border-b pb-3 gap-3">
                         <div>
@@ -400,13 +407,10 @@
                                     <th class="p-2.5">November</th>
                                 </tr>
                             </thead>
-                            <tbody id="kpi-table-body" class="text-center font-semibold text-slate-900">
-                                <!-- Data render via JS -->
-                            </tbody>
+                            <tbody id="kpi-table-body" class="text-center font-semibold text-slate-900"></tbody>
                         </table>
                     </div>
 
-                    <!-- Hasil Rata-Rata Otomatis -->
                     <div class="p-4 bg-indigo-50 border border-indigo-200 rounded-xl flex flex-col sm:flex-row justify-between items-center gap-2">
                         <div>
                             <span class="text-xs font-bold text-indigo-900 uppercase block">Hasil Rata-Rata Kinerja Tahunan</span>
@@ -426,6 +430,73 @@
             </div>
         </main>
         <footer class="bg-slate-200 text-center p-4 text-xs text-slate-600 font-bold w-full">PT. Sukun Wartono Indonesia Perwakilan Jakarta © 2026</footer>
+    </div>
+
+    <!-- AREA CETAK SURAT PERINGATAN (A4) -->
+    <div id="printSection" class="hidden">
+        <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 30px; color: #000;">
+            <div style="text-align: center; border-bottom: 3px double #000; padding-bottom: 12px; margin-bottom: 25px;">
+                <h2 style="margin: 0; font-size: 16px; font-weight: bold; text-transform: uppercase;">PT. Sukun Wartono Indonesia Perwakilan Jakarta</h2>
+                <p style="margin: 3px 0 0; font-size: 11px;">Jl. Raya Pramuka Kav 60-61, Rawasari, Cempaka Putih, Jakarta Pusat</p>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 25px;">
+                <h3 style="margin: 0; font-size: 14px; font-weight: bold; text-decoration: underline;" id="print-sp-title">SURAT PERINGATAN</h3>
+                <p style="margin: 5px 0 0; font-size: 12px;" id="print-sp-nomor">Nomor: SP / ... / 2026</p>
+            </div>
+
+            <p style="font-size: 12px; line-height: 1.6; margin-bottom: 15px;">Yang bertanda tangan di bawah ini Team Leader PT. Sukun Wartono Indonesia Perwakilan Jakarta, dengan ini menerbitkan Surat Peringatan kepada:</p>
+
+            <table style="width: 100%; font-size: 12px; margin-bottom: 20px; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 160px; padding: 4px 0; font-weight: bold;">Nama Karyawan</td>
+                    <td style="padding: 4px 0;">: ........................................................................</td>
+                </tr>
+                <tr>
+                    <td style="padding: 4px 0; font-weight: bold;">NIK / ID Karyawan</td>
+                    <td style="padding: 4px 0;">: ........................................................................</td>
+                </tr>
+                <tr>
+                    <td style="padding: 4px 0; font-weight: bold;">Jabatan / Area</td>
+                    <td style="padding: 4px 0;">: ........................................................................</td>
+                </tr>
+            </table>
+
+            <p style="font-size: 12px; line-height: 1.6; margin-bottom: 15px;">Telah diberikan sanksi / peringatan administratif dengan rincian sebagai berikut:</p>
+
+            <table style="width: 100%; font-size: 12px; margin-bottom: 25px; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 160px; padding: 6px 0; font-weight: bold;">Jenis Sanksi</td>
+                    <td style="padding: 6px 0; font-weight: bold;" id="print-sp-type-val">: -</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 0; font-weight: bold;">Masa Berlaku</td>
+                    <td style="padding: 6px 0;" id="print-sp-period-val">: -</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 0; font-weight: bold;">Tanggal Kejadian</td>
+                    <td style="padding: 6px 0;" id="print-sp-date-val">: -</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 0; font-weight: bold; vertical-align: top;">Keterangan / Alasan</td>
+                    <td style="padding: 6px 0;" id="print-sp-desc-val">: -</td>
+                </tr>
+            </table>
+
+            <p style="font-size: 12px; line-height: 1.6; margin-bottom: 40px;">Surat Peringatan ini diterbitkan sebagai bentuk pembinaan dan penegakan SOP perusahaan agar yang bersangkutan dapat segera memperbaiki kinerja serta mematuhi aturan operasional kedepannya.</p>
+
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-top: 40px;">
+                <div style="text-align: center; width: 220px;">
+                    <p style="margin-bottom: 60px; font-weight: bold;">Mengetahui,<br>Team Leader</p>
+                    <p style="margin: 0; font-weight: bold; text-decoration: underline;">( Irvan Tuba Jati, S.E. )</p>
+                </div>
+                <div style="text-align: center; width: 220px;">
+                    <p style="margin-bottom: 15px;">Jakarta, <span id="print-today-date"></span></p>
+                    <p style="margin-bottom: 60px; font-weight: bold;">Petugas / Karyawan</p>
+                    <p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- SCRIPT SUPABASE REAL-TIME CLOUD -->
@@ -712,6 +783,23 @@
             renderAdminSPTable();
         }
 
+        function printSPDocument(index) {
+            let salesId = document.getElementById('admin-select-sales').value;
+            let sp = dbHC[salesId].spList[index];
+            if (!sp) return;
+
+            document.getElementById('print-sp-title').innerText = `SURAT PERINGATAN (${sp.type})`;
+            document.getElementById('print-sp-type-val').innerText = `: ${sp.type}`;
+            document.getElementById('print-sp-period-val').innerText = `: ${sp.period || '-'}`;
+            document.getElementById('print-sp-date-val').innerText = `: ${sp.date}`;
+            document.getElementById('print-sp-desc-val').innerText = `: ${sp.desc}`;
+
+            let today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            document.getElementById('print-today-date').innerText = today;
+
+            window.print();
+        }
+
         function renderAdminSPTable() {
             let salesId = document.getElementById('admin-select-sales').value;
             if (!salesId || !dbHC[salesId]) return;
@@ -733,7 +821,10 @@
                     <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] bg-amber-100 text-amber-800 font-bold">${sp.type}</span></td>
                     <td class="p-2 font-semibold text-indigo-700">${sp.period || '-'}</td>
                     <td class="p-2 font-semibold">${sp.desc}</td>
-                    <td class="p-2 text-center"><button onclick="deleteAdminSP(${idx})" class="bg-red-500 text-white px-2 py-1 rounded text-[10px] font-bold">Hapus</button></td>
+                    <td class="p-2 text-center space-x-1">
+                        <button onclick="printSPDocument(${idx})" class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">Cetak</button>
+                        <button onclick="deleteAdminSP(${idx})" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold">Hapus</button>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -882,53 +973,9 @@
                 { key: 'nov', label: 'November' }
             ];
 
-            let tr = document.createElement('tr');
             let totalScore = 0;
             let countValid = 0;
 
-            months.forEach(m => {
-                let cellKey = `${selectedYear}_${m.key}`;
-                let currentVal = u.kpiData[cellKey] || '-';
-                if (gradeValues[currentVal] > 0) {
-                    totalScore += gradeValues[currentVal];
-                    countValid++;
-                }
-
-                let td = document.createElement('td');
-                td.className = "p-2 border";
-                
-                let isAdminUser = (dbHC[activeUser].role === 'Admin' || !document.getElementById('btn-save-container').classList.contains('hidden'));
-                
-                if (isAdminUser) {
-                    let select = document.createElement('select');
-                    select.className = "w-full p-1 border rounded bg-white text-xs font-bold text-slate-900";
-                    kpiGrades.forEach(g => {
-                        let opt = document.createElement('option');
-                        opt.value = g;
-                        opt.text = g;
-                        if (g === currentVal) opt.selected = true;
-                        select.appendChild(opt);
-                    });
-                    select.onchange = async function() {
-                        u.kpiData[cellKey] = select.value;
-                        await syncToCloud(activeUser);
-                        renderKPITable();
-                    };
-                    td.appendChild(select);
-                } else {
-                    td.innerText = currentVal;
-                }
-                tr.appendChild(td);
-            });
-
-            // Label baris pertama nama sales
-            let tdName = document.createElement('td');
-            tdName.className = "p-2.5 border font-bold text-left bg-slate-50";
-            tdName.innerText = u.nama;
-            tbody.appendChild(tdName);
-            
-            // Masukkan cell bulan ke tbody setelah diperbarui
-            tbody.innerHTML = '';
             let mainTr = document.createElement('tr');
             let tdTitle = document.createElement('td');
             tdTitle.className = "p-2.5 border font-bold text-left bg-slate-50";
@@ -938,6 +985,11 @@
             months.forEach(m => {
                 let cellKey = `${selectedYear}_${m.key}`;
                 let currentVal = u.kpiData[cellKey] || '-';
+                if (gradeValues[currentVal] > 0) {
+                    totalScore += gradeValues[currentVal];
+                    countValid++;
+                }
+
                 let td = document.createElement('td');
                 td.className = "p-2 border";
 
@@ -965,7 +1017,6 @@
             });
             tbody.appendChild(mainTr);
 
-            // Hitung rata-rata otomatis
             let avgResultEl = document.getElementById('kpi-avg-result');
             if (countValid > 0) {
                 let avgNum = Math.round(totalScore / countValid);
