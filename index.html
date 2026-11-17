@@ -799,7 +799,7 @@
                 }
                 loadDataToForm();
             } else {
-                document.getElementById('section-login').classList.add('hidden');
+                document.getElementById('section-login').classList.remove('hidden');
                 document.getElementById('section-dashboard').classList.add('hidden');
                 document.getElementById('section-admin').classList.add('hidden');
                 document.getElementById('user-session-info').classList.add('hidden');
@@ -1287,7 +1287,7 @@
                 return alert("Pengajuan cuti minimal dilakukan 7 hari (H-7) dari tanggal pelaksanaan.");
             }
 
-            // Validasi Maksimal 1 Hari per Bulan (Pemberitahuan tegas sesuai instruksi)
+            // Validasi Maksimal 1 Hari per Bulan
             let selMonth = dateVal.substring(0, 7); // Format: YYYY-MM
             if (!u.leaveList) u.leaveList = [];
             
