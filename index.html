@@ -7,6 +7,7 @@
     <link rel="manifest" href="manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -22,33 +23,80 @@
             #printSection, #printSection * { visibility: visible; }
             #printSection { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: white; }
         }
+        .nav-3d-btn {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .nav-3d-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+        }
+        .nav-3d-btn.active {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-color: #60a5fa;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+        }
     </style>
 </head>
 <body class="bg-slate-100 font-sans antialiased text-slate-800">
     <div class="min-h-screen flex flex-col justify-between">
-        <!-- HEADER KORPORAT PROFESIONAL -->
-        <header class="bg-navy-900 text-white px-8 py-5 shadow-lg flex flex-col sm:flex-row justify-between items-center w-full gap-4 border-b border-slate-800">
-            <div class="flex items-center space-x-4">
-                <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center font-black text-blue-900 shadow-md">
-                    HC
-                </div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="text-base font-black tracking-wide uppercase">Human Capital</h1>
-                        <span class="bg-emerald-500 text-[10px] px-2 py-0.5 rounded-md font-bold tracking-wider">PWK JAKARTA</span>
+        <!-- HEADER UTAMA DENGAN MENU 3D DI ATAS -->
+        <header class="bg-navy-900 text-white px-6 py-4 shadow-xl w-full border-b border-slate-800 space-y-4">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center font-black text-blue-900 shadow-md">
+                        HC
                     </div>
-                    <p class="text-xs text-slate-400 font-medium mt-0.5">PT. Sukun Wartono Indonesia</p>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-base font-black tracking-wide uppercase">Human Capital</h1>
+                            <span class="bg-emerald-500 text-[10px] px-2 py-0.5 rounded-md font-bold tracking-wider">PWK JAKARTA</span>
+                        </div>
+                        <p class="text-xs text-slate-400 font-medium">PT. Sukun Wartono Indonesia</p>
+                    </div>
+                </div>
+
+                <div id="user-session-info" class="hidden flex items-center space-x-3 bg-slate-800/90 px-3.5 py-2 rounded-xl border border-slate-700 shadow-sm">
+                    <span id="lbl-user-login" class="text-xs text-slate-200 font-bold"></span>
+                    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded-lg transition font-bold shadow-xs">Keluar</button>
                 </div>
             </div>
-            <div id="user-session-info" class="hidden flex items-center space-x-4 bg-slate-800/80 px-4 py-2 rounded-xl border border-slate-700 shadow-sm">
-                <span id="lbl-user-login" class="text-xs text-slate-200 font-bold"></span>
-                <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded-lg transition font-bold shadow-xs">Keluar</button>
+
+            <!-- BILAH MENU UTAMA BERBENTUK 3D DI ATAS -->
+            <div id="top-nav-menu" class="hidden max-w-7xl mx-auto pt-2 border-t border-slate-800/80 flex flex-wrap gap-2 items-center justify-center md:justify-start">
+                <button onclick="switchTab('pribadi')" id="tab-btn-pribadi" class="nav-3d-btn active px-3.5 py-2 rounded-xl text-xs font-bold text-white flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="user" class="w-4 h-4 text-emerald-400"></i> Pribadi
+                </button>
+                <button onclick="switchTab('pekerjaan')" id="tab-btn-pekerjaan" class="nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="briefcase" class="w-4 h-4 text-indigo-400"></i> Pekerjaan
+                </button>
+                <button onclick="switchTab('kendaraan')" id="tab-btn-kendaraan" class="nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="truck" class="w-4 h-4 text-amber-400"></i> Kendaraan
+                </button>
+                <button onclick="switchTab('kompensasi')" id="tab-btn-kompensasi" class="nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="credit-card" class="w-4 h-4 text-emerald-400"></i> Bank & Payroll
+                </button>
+                <button onclick="switchTab('kinerja')" id="tab-btn-kinerja" class="nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="calendar-check" class="w-4 h-4 text-blue-400"></i> Kinerja & Absen
+                </button>
+                <button onclick="switchTab('pendidikan')" id="tab-btn-pendidikan" class="nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="graduation-cap" class="w-4 h-4 text-purple-400"></i> Pendidikan
+                </button>
+                <button onclick="switchTab('dokumen')" id="tab-btn-dokumen" class="nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="folder-open" class="w-4 h-4 text-amber-400"></i> Dokumen
+                </button>
+                <button onclick="switchTab('kpi')" id="tab-btn-kpi" class="nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="award" class="w-4 h-4 text-teal-400"></i> Rekap KPI
+                </button>
             </div>
         </header>
 
         <main class="flex-grow p-6 w-full max-w-7xl mx-auto space-y-6">
             <!-- HALAMAN LOGIN -->
-            <div id="section-login" class="bg-white p-8 rounded-2xl shadow-xl max-w-md mx-auto mt-16">
+            <div id="section-login" class="bg-white p-8 rounded-2xl shadow-xl max-w-md mx-auto mt-12">
                 <div class="flex flex-col items-center justify-center mb-6">
                     <div class="w-16 h-16 bg-white text-blue-900 rounded-2xl flex items-center justify-center shadow-lg mb-3 border-2 border-slate-300">
                         <span class="text-xl font-black tracking-wider">HC</span>
@@ -66,7 +114,7 @@
                         <label class="block text-xs font-bold text-slate-800 mb-1">Password</label>
                         <input type="password" id="input-password" class="w-full p-3 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none font-semibold text-slate-900" placeholder="••••••••">
                     </div>
-                    <button onclick="login()" class="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 rounded-lg text-sm font-bold transition shadow-md">Masuk Aplikasi</button>
+                    <button onclick="login()" class="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 rounded-lg text-sm font-bold transition shadow-md cursor-pointer">Masuk Aplikasi</button>
                 </div>
             </div>
 
@@ -78,7 +126,7 @@
                             <h2 class="text-lg font-bold text-navy-900">Panel Admin - Kontrol Absensi & Riwayat SP</h2>
                             <p class="text-xs text-slate-500">Kelola kalender absensi harian dan penerbitan Surat Peringatan (SP) serta cetak dokumen resmi.</p>
                         </div>
-                        <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700">Kembali ke Profil Saya</button>
+                        <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700 cursor-pointer">Kembali ke Profil Saya</button>
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="space-y-4">
@@ -102,7 +150,7 @@
                                     <div><label class="font-bold text-slate-800 block mb-1">Masa Berlaku</label><input type="text" id="admin-sp-period" class="w-full p-2 border rounded bg-white font-semibold text-slate-900" placeholder="Cth: 3 Bulan"></div>
                                     <div><label class="font-bold text-slate-800 block mb-1">Keterangan</label><input type="text" id="admin-sp-desc" class="w-full p-2 border rounded bg-white font-semibold text-slate-900" placeholder="Keterangan..."></div>
                                 </div>
-                                <div class="flex justify-end"><button onclick="addAdminSP()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow">+ Terbitkan SP</button></div>
+                                <div class="flex justify-end"><button onclick="addAdminSP()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow cursor-pointer">+ Terbitkan SP</button></div>
                                 <div class="overflow-x-auto pt-2">
                                     <table class="w-full text-xs text-left border bg-white rounded-lg overflow-hidden">
                                         <thead><tr class="bg-slate-200 text-slate-800 font-bold"><th class="p-2">Tanggal</th><th class="p-2">Jenis SP</th><th class="p-2">Masa Berlaku</th><th class="p-2">Keterangan</th><th class="p-2 text-center">Aksi / Cetak</th></tr></thead>
@@ -123,24 +171,12 @@
             <div id="section-dashboard" class="hidden space-y-6 w-full">
                 <div id="admin-shortcut-box" class="hidden bg-amber-50 border border-amber-200 p-4 rounded-xl flex justify-between items-center w-full shadow-sm">
                     <span class="text-xs text-amber-900 font-bold">⚠️ Anda login sebagai Administrator (Team Leader Irvan Tuba Jati).</span>
-                    <button onclick="openAdminPanel()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow">Buka Panel Admin & Sanksi SP</button>
+                    <button onclick="openAdminPanel()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow cursor-pointer">Buka Panel Admin & Sanksi SP</button>
                 </div>
 
                 <div id="sales-notice-box" class="hidden bg-blue-50 border border-blue-200 p-4 rounded-xl flex justify-between items-center w-full shadow-sm">
                     <span class="text-xs text-blue-900 font-bold">ℹ️ Akun Anda bersifat Lihat Data (View-Only). Hubungi Team Leader Irvan Tuba Jati jika ada pembaruan data.</span>
-                    <button onclick="requestAdminEdit()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow">Minta Izin Edit (Password Admin)</button>
-                </div>
-
-                <!-- Menu Tab dengan Indikator Garis Bawah Biru Tua -->
-                <div class="flex flex-wrap bg-white px-3 py-2 rounded-xl shadow-sm border border-slate-200 gap-2 w-full">
-                    <button onclick="switchTab('pribadi')" id="tab-btn-pribadi" class="flex-1 min-w-[100px] py-2 text-xs font-bold transition text-center border-b-4 border-blue-900 text-navy-900">1. Pribadi</button>
-                    <button onclick="switchTab('pekerjaan')" id="tab-btn-pekerjaan" class="flex-1 min-w-[100px] py-2 text-xs font-semibold text-slate-600 hover:text-navy-900 transition text-center border-b-4 border-transparent">2. Pekerjaan</button>
-                    <button onclick="switchTab('kendaraan')" id="tab-btn-kendaraan" class="flex-1 min-w-[100px] py-2 text-xs font-semibold text-slate-600 hover:text-navy-900 transition text-center border-b-4 border-transparent">3. Kendaraan</button>
-                    <button onclick="switchTab('kompensasi')" id="tab-btn-kompensasi" class="flex-1 min-w-[100px] py-2 text-xs font-semibold text-slate-600 hover:text-navy-900 transition text-center border-b-4 border-transparent">4. Bank & Payroll</button>
-                    <button onclick="switchTab('kinerja')" id="tab-btn-kinerja" class="flex-1 min-w-[100px] py-2 text-xs font-semibold text-slate-600 hover:text-navy-900 transition text-center border-b-4 border-transparent">5. Kinerja & Absen</button>
-                    <button onclick="switchTab('pendidikan')" id="tab-btn-pendidikan" class="flex-1 min-w-[100px] py-2 text-xs font-semibold text-slate-600 hover:text-navy-900 transition text-center border-b-4 border-transparent">6. Pendidikan</button>
-                    <button onclick="switchTab('dokumen')" id="tab-btn-dokumen" class="flex-1 min-w-[100px] py-2 text-xs font-semibold text-slate-600 hover:text-navy-900 transition text-center border-b-4 border-transparent">7. Dokumen</button>
-                    <button onclick="switchTab('kpi')" id="tab-btn-kpi" class="flex-1 min-w-[100px] py-2 text-xs font-semibold text-slate-600 hover:text-navy-900 transition text-center border-b-4 border-transparent">8. Rekap KPI</button>
+                    <button onclick="requestAdminEdit()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow cursor-pointer">Minta Izin Edit (Password Admin)</button>
                 </div>
 
                 <!-- 1. DATA PRIBADI & PAS FOTO KOTAK FORMAL -->
@@ -155,7 +191,7 @@
                         <div class="space-y-2 text-center sm:text-left">
                             <label class="font-bold text-navy-900 block text-xs">Pas Foto Formal Karyawan</label>
                             <p class="text-[11px] text-slate-500 font-medium">Unggah foto formal latar belakang bebas/rapi format JPG/PNG.</p>
-                            <input type="file" id="file-pasfoto" accept="image/*" onchange="previewPasFoto(event)" class="text-xs text-slate-600 font-semibold file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800">
+                            <input type="file" id="file-pasfoto" accept="image/*" onchange="previewPasFoto(event)" class="text-xs text-slate-600 font-semibold file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800 cursor-pointer">
                         </div>
                     </div>
 
@@ -370,12 +406,12 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                         <div class="p-4 border rounded-xl bg-slate-50 space-y-2">
                             <label class="font-bold text-navy-900 block">Scan / Foto KTP</label>
-                            <input type="file" id="file-ktp" accept="image/*,.pdf" class="w-full text-xs text-slate-600 font-semibold file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800">
+                            <input type="file" id="file-ktp" accept="image/*,.pdf" class="w-full text-xs text-slate-600 font-semibold file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800 cursor-pointer">
                             <span id="status-file-ktp" class="text-[10px] text-emerald-700 font-bold block"></span>
                         </div>
                         <div class="p-4 border rounded-xl bg-slate-50 space-y-2">
                             <label class="font-bold text-navy-900 block">Scan / Foto Ijazah</label>
-                            <input type="file" id="file-ijazah" accept="image/*,.pdf" class="w-full text-xs text-slate-600 font-semibold file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800">
+                            <input type="file" id="file-ijazah" accept="image/*,.pdf" class="w-full text-xs text-slate-600 font-semibold file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800 cursor-pointer">
                             <span id="status-file-ijazah" class="text-[10px] text-emerald-700 font-bold block"></span>
                         </div>
                     </div>
@@ -433,7 +469,7 @@
                 </div>
 
                 <div id="btn-save-container" class="flex justify-end pt-4 hidden">
-                    <button onclick="simpanData()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl text-xs font-bold transition shadow-lg">
+                    <button onclick="simpanData()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl text-xs font-bold transition shadow-lg cursor-pointer">
                         💾 Simpan Perubahan Data Saya
                     </button>
                 </div>
@@ -646,6 +682,7 @@
                 document.getElementById('section-admin').classList.add('hidden');
                 document.getElementById('section-dashboard').classList.remove('hidden');
                 document.getElementById('user-session-info').classList.remove('hidden');
+                document.getElementById('top-nav-menu').classList.remove('hidden');
                 document.getElementById('lbl-user-login').innerText = `Masuk: ${dbHC[activeUser].nama} (${dbHC[activeUser].role})`;
                 
                 let currentUser = dbHC[activeUser];
@@ -664,7 +701,9 @@
                 document.getElementById('section-dashboard').classList.add('hidden');
                 document.getElementById('section-admin').classList.add('hidden');
                 document.getElementById('user-session-info').classList.add('hidden');
+                document.getElementById('top-nav-menu').classList.add('hidden');
             }
+            lucide.createIcons();
         }
 
         function setFormEditable(isEditable) {
@@ -837,8 +876,8 @@
                     <td class="p-2 font-semibold text-indigo-700">${sp.period || '-'}</td>
                     <td class="p-2 font-semibold">${sp.desc}</td>
                     <td class="p-2 text-center space-x-1">
-                        <button onclick="printSPDocument(${idx})" class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold">Cetak</button>
-                        <button onclick="deleteAdminSP(${idx})" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold">Hapus</button>
+                        <button onclick="printSPDocument(${idx})" class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">Cetak</button>
+                        <button onclick="deleteAdminSP(${idx})" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">Hapus</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -1165,16 +1204,16 @@
                 let btnEl = document.getElementById(`tab-btn-${t}`);
                 if(tabEl) tabEl.classList.add('hidden');
                 if(btnEl) {
-                    btnEl.classList.remove('border-b-4', 'border-blue-900', 'text-navy-900', 'font-bold');
-                    btnEl.classList.add('border-b-4', 'border-transparent', 'text-slate-600', 'font-semibold');
+                    btnEl.classList.remove('active');
+                    btnEl.classList.add('text-slate-300');
                 }
             });
             let targetTab = document.getElementById(`tab-${tabName}`);
             let targetBtn = document.getElementById(`tab-btn-${tabName}`);
             if(targetTab) targetTab.classList.remove('hidden');
             if(targetBtn) {
-                targetBtn.classList.remove('border-b-4', 'border-transparent', 'text-slate-600', 'font-semibold');
-                targetBtn.classList.add('border-b-4', 'border-blue-900', 'text-navy-900', 'font-bold');
+                targetBtn.classList.remove('text-slate-300');
+                targetBtn.classList.add('active');
             }
         }
 
