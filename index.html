@@ -141,31 +141,29 @@
                 </div>
             </div>
 
-            <!-- HALAMAN PEMBUKA / WELCOME BRIEFING (MUNCUL SETELAH LOGIN BERHASIL) -->
+            <!-- HALAMAN PEMBUKA / WELCOME BRIEFING (SESUAI INSTRUKSI ANDA) -->
             <div id="section-welcome" class="hidden bg-white p-8 rounded-2xl shadow-xl max-w-3xl mx-auto space-y-6 border border-slate-200">
                 <div class="flex items-center space-x-4 border-b pb-4">
                     <div class="w-12 h-12 rounded-xl logo-3d flex items-center justify-center font-black text-white text-lg shrink-0">
                         HC
                     </div>
                     <div>
-                        <h2 class="text-base font-black text-navy-900 uppercase">Sistem Database Informasi Karyawan</h2>
-                        <p class="text-xs text-slate-500 font-medium">PT. Sukun Wartono Indonesia - Perwakilan Jakarta</p>
+                        <h2 class="text-sm font-black text-navy-900 uppercase tracking-wide">HUMAN CAPITAL PORTAL</h2>
+                        <p class="text-xs text-slate-500 font-semibold">PT. Sukun Wartono Indonesia - PWK Jakarta</p>
                     </div>
                 </div>
 
                 <div class="space-y-4 text-xs text-slate-700 leading-relaxed">
+                    <p class="font-bold text-navy-900 text-sm">SELAMAT DATANG DI SISTEM DATABASE INFORMASI KARYAWAN</p>
+
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
-                        <h3 class="font-bold text-navy-900 uppercase tracking-wide text-xs flex items-center gap-2">
-                            <i data-lucide="file-text" class="w-4 h-4 text-blue-600"></i> Deskripsi Sistem
-                        </h3>
-                        <p class="text-slate-600 font-medium pl-6">Portal manajemen data kepegawaian terpusat yang dirancang untuk menyimpan, memperbarui, dan mengelola seluruh database profil serta informasi administratif karyawan secara akurat, aman, dan terintegrasi secara real-time dengan cloud perusahaan.</p>
+                        <h3 class="font-bold text-navy-900 uppercase tracking-wide text-xs">📄 DESKRIPSI</h3>
+                        <p class="text-slate-600 font-medium leading-relaxed">Portal manajemen data kepegawaian terpusat yang dirancang untuk menyimpan, memperbarui, dan mengelola seluruh database profil serta informasi administratif karyawan secara akurat, aman, dan terintegrasi secara real-time dengan cloud perusahaan.</p>
                     </div>
 
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
-                        <h3 class="font-bold text-navy-900 uppercase tracking-wide text-xs flex items-center gap-2">
-                            <i data-lucide="target" class="w-4 h-4 text-emerald-600"></i> Tujuan Utama
-                        </h3>
-                        <ul class="list-disc pl-10 space-y-1 text-slate-600 font-medium">
+                        <h3 class="font-bold text-navy-900 uppercase tracking-wide text-xs">🎯 TUJUAN</h3>
+                        <ul class="list-disc pl-5 space-y-1 text-slate-600 font-medium">
                             <li>Mewujudkan pusat data (database) karyawan yang tertib, terstruktur, dan mudah diakses oleh pihak berwenang.</li>
                             <li>Memastikan validitas data pribadi, riwayat pekerjaan, dokumen legal, serta informasi penunjang operasional setiap pegawai selalu mutakhir.</li>
                             <li>Mendukung tata kelola administrasi Sumber Daya Manusia (HR) yang efisien dan berstandar korporat.</li>
@@ -173,10 +171,8 @@
                     </div>
 
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
-                        <h3 class="font-bold text-navy-900 uppercase tracking-wide text-xs flex items-center gap-2">
-                            <i data-lucide="award" class="w-4 h-4 text-amber-600"></i> Manfaat Sistem
-                        </h3>
-                        <ul class="list-disc pl-10 space-y-1 text-slate-600 font-medium">
+                        <h3 class="font-bold text-navy-900 uppercase tracking-wide text-xs">🌟 MANFAAT</h3>
+                        <ul class="list-disc pl-5 space-y-1 text-slate-600 font-medium">
                             <li>Kemudahan akses mandiri bagi pegawai untuk memantau kelengkapan data pribadi, rekapitulasi absensi, cuti, hingga evaluasi kinerja.</li>
                             <li>Efisiensi operasional bagi manajemen dalam memproses pelaporan, penerbitan dokumen administratif, serta pengambilan keputusan kebijakan ketenagakerjaan berbasis data yang akurat.</li>
                         </ul>
@@ -185,7 +181,7 @@
 
                 <div class="flex justify-end pt-4 border-t">
                     <button onclick="proceedToDashboard()" class="bg-navy-900 hover:bg-navy-800 text-white px-6 py-3 rounded-xl text-xs font-bold transition shadow-md cursor-pointer flex items-center gap-2">
-                        Lanjut ke Menu Utama <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        🚀 Lanjut ke Menu Utama (Next)
                     </button>
                 </div>
             </div>
@@ -201,7 +197,6 @@
                         <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700 cursor-pointer">Kembali ke Profil Saya</button>
                     </div>
 
-                    <!-- KONTROL PERSETUJUAN CUTI & IZIN ADMIN -->
                     <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
                         <div class="flex justify-between items-center">
                             <h3 class="text-xs font-bold text-navy-900 uppercase">Daftar Pengajuan & Riwayat Cuti / Izin Sales</h3>
@@ -574,7 +569,6 @@
                         </div>
                     </div>
 
-                    <!-- Kotak Form Pengajuan Cuti / Izin -->
                     <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4">
                         <h4 class="text-xs font-bold text-navy-900 uppercase">Form Pengajuan Cuti / Izin Baru</h4>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
@@ -601,7 +595,6 @@
                         </div>
                     </div>
 
-                    <!-- Kalender & Riwayat Pengajuan Cuti / Izin -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
                             <h4 id="leave-cal-title" class="text-xs font-bold text-navy-900 uppercase">Kalender Cuti & Izin Bulan Ini</h4>
