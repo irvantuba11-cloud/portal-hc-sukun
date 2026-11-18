@@ -24,6 +24,8 @@
             #printSection { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: white; }
             #printLeaveSection, #printLeaveSection * { visibility: visible; }
             #printLeaveSection { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: white; }
+            #printIDCardSection, #printIDCardSection * { visibility: visible; }
+            #printIDCardSection { position: absolute; left: 0; top: 0; width: 100%; padding: 10px; background: white; }
         }
         .nav-3d-btn {
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
@@ -68,6 +70,11 @@
                 </div>
 
                 <div id="user-session-info" class="hidden flex items-center space-x-3">
+                    <!-- TOMBOL LOGO KTP (DI SEBELAH KIRI TOMBOL KUNCI) -->
+                    <button onclick="openIDCardModal()" title="Lihat Kartu Identitas (KTP)" class="flex items-center justify-center px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-900 transition shadow-md cursor-pointer font-bold gap-1 text-xs">
+                        <i data-lucide="id-card" class="w-4 h-4"></i> KTP
+                    </button>
+
                     <button id="btn-request-edit-icon" onclick="requestAdminEdit()" title="Minta Izin Edit (Masukkan Password Admin)" class="hidden items-center justify-center w-9 h-9 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-900 transition shadow-md cursor-pointer font-bold">
                         <i data-lucide="key-round" class="w-4 h-4"></i>
                     </button>
@@ -583,7 +590,83 @@
         <footer class="bg-slate-200 text-center p-4 text-xs text-slate-600 font-bold w-full">PT. Sukun Wartono Indonesia Perwakilan Jakarta © 2026</footer>
     </div>
 
-    <!-- MODAL KUSTOM PASSWORD ADMIN (AMAN, TERSEMBUNYI BULATAN BINTANG & TANPA PETUNJUK) -->
+    <!-- MODAL LIHAT ID CARD (UNTUK SALES & ADMIN) -->
+    <div id="modal-view-idcard" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 space-y-4 border border-slate-200">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="text-sm font-bold text-navy-900 uppercase flex items-center gap-2">
+                    <i data-lucide="id-card" class="w-4 h-4 text-amber-600"></i> Kartu Identitas Pegawai (KTP)
+                </h3>
+                <button onclick="document.getElementById('modal-view-idcard').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 font-bold text-base cursor-pointer">✕</button>
+            </div>
+            
+            <!-- PREVIEW KARTU ALA KTP -->
+            <div id="idcard-preview-container" class="p-5 bg-slate-100 rounded-xl border flex justify-center">
+                <div class="w-[340px] h-[215px] bg-white border-2 border-slate-300 rounded-xl p-3.5 shadow-md flex flex-col justify-between text-[11px] font-sans text-slate-800 relative">
+                    <div class="flex justify-between items-center border-b pb-1.5 border-slate-200">
+                        <div>
+                            <span class="font-black uppercase tracking-wider text-[10px] text-navy-900 block">PT. Sukun Wartono Indonesia</span>
+                            <span class="text-[9px] text-slate-500 font-semibold">Perwakilan Jakarta - Human Capital</span>
+                        </div>
+                        <div class="w-12 h-12 bg-navy-900 rounded-lg flex items-center justify-center p-1 border border-slate-300 shadow-inner">
+                            <span class="text-[8px] font-black text-white text-center leading-tight">SUKUN</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-4 gap-2 items-center py-1">
+                        <div class="col-span-3 space-y-1">
+                            <div class="flex"><span class="w-14 font-bold text-slate-500">NIK / ID</span><span class="font-bold text-slate-900" id="card-nik">-</span></div>
+                            <div class="flex"><span class="w-14 font-bold text-slate-500">Nama</span><span class="font-bold text-navy-900 truncate" id="card-nama">-</span></div>
+                            <div class="flex"><span class="w-14 font-bold text-slate-500">Jabatan</span><span class="font-semibold text-slate-800 truncate" id="card-jabatan">-</span></div>
+                            <div class="flex"><span class="w-14 font-bold text-slate-500">Divisi</span><span class="font-semibold text-slate-800 truncate" id="card-divisi">-</span></div>
+                        </div>
+                        <div class="col-span-1 flex justify-center">
+                            <div class="w-14 h-16 bg-navy-900 rounded-md border border-slate-300 flex flex-col items-center justify-center p-1 shadow-inner text-white text-center">
+                                <span class="text-[8px] font-bold uppercase tracking-tighter">SUKUN</span>
+                                <span class="text-[6px] text-slate-300">Wartono</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-t pt-1.5 border-slate-200 space-y-0.5 text-[10px]">
+                        <div class="flex"><span class="w-16 font-bold text-slate-500">No. Telp</span><span class="font-semibold text-slate-900" id="card-telp">-</span></div>
+                        <div class="flex"><span class="w-16 font-bold text-slate-500">Email</span><span class="font-semibold text-slate-900 truncate" id="card-email">-</span></div>
+                        <div class="flex"><span class="w-16 font-bold text-slate-500">Alamat</span><span class="font-semibold text-slate-700 leading-tight">Jl. Raya Pramuka Kav 60-61 Rawasari, Cempaka Putih, Jakarta Pusat</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-2">
+                <button onclick="document.getElementById('modal-view-idcard').classList.add('hidden')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PILIHAN ADMIN (LIHAT ATAU CETAK 10 KARTU F4) -->
+    <div id="modal-admin-idcard-options" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4 border border-slate-200">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="text-sm font-bold text-navy-900 uppercase">Menu Kartu Identitas (KTP)</h3>
+                <button onclick="document.getElementById('modal-admin-idcard-options').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 font-bold text-base cursor-pointer">✕</button>
+            </div>
+            <p class="text-xs text-slate-600 font-medium">Pilih aksi untuk melihat atau mencetak 10 kartu dalam 1 lembar F4:</p>
+            <div class="space-y-2 pt-2">
+                <button onclick="adminOpenViewCard()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer flex items-center justify-center gap-2">
+                    <i data-lucide="eye" class="w-4 h-4"></i> Lihat Kartu Identitas
+                </button>
+                <button onclick="adminPrint10Cards()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer flex items-center justify-center gap-2">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Cetak Kartu (10 pcs per F4)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AREA CETAK 10 KARTU DALAM 1 LEMBAR F4 (KHUSUS ADMIN) -->
+    <div id="printIDCardSection" class="hidden">
+        <div style="font-family: Arial, sans-serif; max-width: 210mm; margin: 0 auto; padding: 10mm; background: white; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10mm; justify-items: center;">
+            <!-- 10 Kartu akan digenerate otomatis lewat Javascript -->
+        </div>
+    </div>
+
+    <!-- MODAL KUSTOM PASSWORD ADMIN (AMAN TERSEMBUNYI BULATAN & TANPA PETUNJUK) -->
     <div id="admin-password-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4 border border-slate-200 animate-in fade-in zoom-in duration-200">
             <div class="flex items-center space-x-3">
@@ -930,8 +1013,6 @@
             }
         }
 
-        // SISTEM MODAL KUSTOM PASSWORD ADMIN (AMAN TERSEMBUNYI BULATAN & TANPA BOCORAN PASSWORD)
-        let adminEditResolver = null;
         function requestAdminEdit() {
             let modal = document.getElementById('admin-password-modal');
             let inputPass = document.getElementById('modal-admin-pass-input');
@@ -954,6 +1035,93 @@
                     alert("Password Admin salah!");
                 }
             }
+        }
+
+        // LOGIKA KLIK TOMBOL KTP (DI HEADER ATAS)
+        function openIDCardModal() {
+            let currentUser = dbHC[activeUser];
+            if (!currentUser) return;
+
+            if (currentUser.role === 'Admin') {
+                // Jika Admin, buka modal pilihan [Lihat] atau [Cetak] untuk sales yang sedang dipilih di panel admin atau admin sendiri
+                document.getElementById('modal-admin-idcard-options').classList.remove('hidden');
+            } else {
+                // Jika Sales, langsung tampilkan modal Lihat ID Card milik sendiri
+                populateIDCardData(currentUser);
+                document.getElementById('modal-view-idcard').classList.remove('hidden');
+            }
+        }
+
+        function adminOpenViewCard() {
+            document.getElementById('modal-admin-idcard-options').classList.add('hidden');
+            let targetId = document.getElementById('admin-select-sales') ? document.getElementById('admin-select-sales').value : activeUser;
+            let targetUser = dbHC[targetId] || dbHC[activeUser];
+            populateIDCardData(targetUser);
+            document.getElementById('modal-view-idcard').classList.remove('hidden');
+        }
+
+        function populateIDCardData(u) {
+            document.getElementById('card-nik').innerText = u.nik || '-';
+            document.getElementById('card-nama').innerText = u.nama || '-';
+            let jabatanText = u.jabatan || '-';
+            if(jabatanText === 'SPM') jabatanText = 'SPM (Sales Promotion Motoris)';
+            document.getElementById('card-jabatan').innerText = jabatanText;
+            document.getElementById('card-divisi').innerText = `${u.divisi ? u.divisi.charAt(0).toUpperCase() + u.divisi.slice(1) : '-'} (Area: ${u.area ? u.area.toUpperCase() : '-'})`;
+            document.getElementById('card-telp').innerText = u.kontak || '-';
+            document.getElementById('card-email').innerText = u.email || '-';
+        }
+
+        function adminPrint10Cards() {
+            document.getElementById('modal-admin-idcard-options').classList.add('hidden');
+            let targetId = document.getElementById('admin-select-sales') ? document.getElementById('admin-select-sales').value : activeUser;
+            let u = dbHC[targetId] || dbHC[activeUser];
+            if (!u) return;
+
+            let container = document.querySelector('#printIDCardSection > div');
+            container.innerHTML = '';
+
+            let jabatanText = u.jabatan || '-';
+            if(jabatanText === 'SPM') jabatanText = 'SPM (Sales Promotion Motoris)';
+            let divisiArea = `${u.divisi ? u.divisi.charAt(0).toUpperCase() + u.divisi.slice(1) : '-'} (Area: ${u.area ? u.area.toUpperCase() : '-'})`;
+
+            // Buat 10 kartu dalam 1 lembar F4 grid
+            for (let i = 0; i < 10; i++) {
+                let cardDiv = document.createElement('div');
+                cardDiv.style.cssText = "width: 90mm; height: 55mm; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 3mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; font-family: Arial, sans-serif; font-size: 8pt; color: #1e293b; background: white;";
+                cardDiv.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 2mm;">
+                        <div>
+                            <span style="font-weight: 900; text-transform: uppercase; font-size: 7.5pt; display: block; color: #0f172a;">PT. Sukun Wartono Indonesia</span>
+                            <span style="font-size: 6.5pt; color: #64748b;">Perwakilan Jakarta - Human Capital</span>
+                        </div>
+                        <div style="background: #0f172a; color: white; padding: 2px 5px; border-radius: 3px; font-size: 6pt; font-weight: bold; text-align: center;">SUKUN</div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 2mm; align-items: center;">
+                        <div style="line-height: 1.3;">
+                            <div><b>NIK / ID</b> : ${u.nik || '-'}</div>
+                            <div><b>Nama</b> : ${u.nama || '-'}</div>
+                            <div><b>Jabatan</b> : ${jabatanText}</div>
+                            <div><b>Divisi</b> : ${divisiArea}</div>
+                        </div>
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <div style="width: 14mm; height: 16mm; background: #0f172a; color: white; border-radius: 3px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-size: 5.5pt; font-weight: bold;">
+                                <span>SUKUN</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="border-top: 1px solid #e2e8f0; pt: 1mm; font-size: 7pt; line-height: 1.2;">
+                        <div><b>No. Telp</b> : ${u.kontak || '-'}</div>
+                        <div><b>Email</b> : ${u.email || '-'}</div>
+                        <div><b>Alamat</b> : Jl. Raya Pramuka Kav 60-61 Rawasari, Cempaka Putih, Jakarta Pusat</div>
+                    </div>
+                `;
+                container.appendChild(cardDiv);
+            }
+
+            let printSec = document.getElementById('printIDCardSection');
+            printSec.classList.remove('hidden');
+            window.print();
+            printSec.classList.add('hidden');
         }
 
         async function syncToCloud(userId) {
@@ -1441,7 +1609,6 @@
 
             u.leaveList.push({ type: typeVal, date: dateVal, purpose: purposeVal, status: 'Pending' });
             
-            // Sync langsung ke Supabase Cloud
             await syncToCloud(activeUser);
             
             document.getElementById('leave-input-date').value = '';
