@@ -49,6 +49,7 @@
             box-shadow: 0 6px 15px rgba(15, 23, 42, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.3), inset 0 -2px 3px rgba(0, 0, 0, 0.4);
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
+        /* Style Full Screen Blue Corporate Background */
         .corporate-hero-bg {
             background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 50%, #172554 100%);
             position: relative;
@@ -72,6 +73,7 @@
             border-radius: 50%;
             pointer-events: none;
         }
+        /* Style Ikon 3D Hidup */
         .icon-3d-box {
             background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
             border: 1px solid rgba(255,255,255,0.3);
@@ -177,7 +179,7 @@
                 </div>
             </div>
 
-            <!-- HALAMAN PEMBUKA / WELCOME BRIEFING (FULL SCREEN & 3D ICON & LOGO SUKUN ASLI) -->
+            <!-- HALAMAN PEMBUKA / WELCOME BRIEFING (FULL SCREEN & TOMBOL NEXT TRANSPARAN) -->
             <div id="section-welcome" class="hidden flex-grow corporate-hero-bg flex flex-col justify-between p-6 md:p-12 w-full text-white">
                 <div class="max-w-6xl mx-auto w-full flex justify-between items-center border-b border-blue-500/30 pb-6">
                     <div class="flex items-center space-x-3">
@@ -257,8 +259,9 @@
 
                 <div class="max-w-6xl mx-auto w-full flex justify-between items-center border-t border-blue-500/30 pt-6">
                     <span class="text-xs text-blue-200 font-medium">PT. Sukun Wartono Indonesia © 2026</span>
-                    <button onclick="proceedToDashboard()" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-xl text-xs font-bold transition shadow-2xl cursor-pointer flex items-center gap-2 border border-blue-400/40">
-                        🚀 Lanjut ke Menu Utama (Next)
+                    <!-- Tombol NEXT Transparan dengan Panah Biasa -->
+                    <button onclick="proceedToDashboard()" class="bg-transparent hover:bg-blue-600/30 text-white px-8 py-3.5 rounded-xl text-sm font-bold transition shadow-xl cursor-pointer flex items-center gap-2 border-2 border-white/80 hover:border-white">
+                        Next <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                 </div>
             </div>
