@@ -49,7 +49,7 @@
             box-shadow: 0 6px 15px rgba(15, 23, 42, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.3), inset 0 -2px 3px rgba(0, 0, 0, 0.4);
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
-        /* Style khusus Full Screen Blue Corporate Background ala Referensi */
+        /* Style Full Screen Blue Corporate Background */
         .corporate-hero-bg {
             background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 50%, #172554 100%);
             position: relative;
@@ -141,7 +141,6 @@
             </div>
         </header>
 
-        <!-- KONTEN UTAMA FULL SCREEN -->
         <main class="flex-grow flex flex-col w-full">
             <!-- HALAMAN LOGIN -->
             <div id="section-login" class="flex-grow flex items-center justify-center p-6 bg-slate-100 w-full">
@@ -170,8 +169,7 @@
 
             <!-- HALAMAN PEMBUKA / WELCOME BRIEFING (FULL SCREEN BLUE CORPORATE STYLE) -->
             <div id="section-welcome" class="hidden flex-grow corporate-hero-bg flex flex-col justify-between p-6 md:p-12 w-full text-white">
-                <!-- Header Atas Welcome -->
-                <div class="max-w-6xl mx-w-full w-full flex justify-between items-center border-b border-blue-500/30 pb-6">
+                <div class="max-w-6xl mx-auto w-full flex justify-between items-center border-b border-blue-500/30 pb-6">
                     <div class="flex items-center space-x-3">
                         <div class="w-12 h-12 rounded-xl logo-3d flex items-center justify-center font-black text-white text-lg shadow-lg">
                             HC
@@ -186,7 +184,6 @@
                     </div>
                 </div>
 
-                <!-- Konten Tengah Welcome (Grid Rapi & Full Screen) -->
                 <div class="max-w-6xl mx-auto w-full py-8 space-y-6">
                     <div class="text-center space-y-2">
                         <h1 class="text-2xl md:text-3xl font-black tracking-tight text-white drop-shadow-md">
@@ -242,7 +239,6 @@
                     </div>
                 </div>
 
-                <!-- Footer Bawah Welcome dengan Tombol Next -->
                 <div class="max-w-6xl mx-auto w-full flex justify-between items-center border-t border-blue-500/30 pt-6">
                     <span class="text-xs text-blue-300/80 font-medium">PT. Sukun Wartono Indonesia © 2026</span>
                     <button onclick="proceedToDashboard()" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-xl text-xs font-bold transition shadow-2xl cursor-pointer flex items-center gap-2 border border-blue-400/30">
@@ -1858,12 +1854,18 @@
                 let tabEl = document.getElementById(`tab-${t}`);
                 let btnEl = document.getElementById(`tab-btn-${t}`);
                 if(tabEl) tabEl.classList.add('hidden');
-                if(btnEl) { tabEl.classList.remove('active'); btnEl.classList.add('text-slate-300'); }
+                if(btnEl) {
+                    btnEl.classList.remove('active');
+                    btnEl.classList.add('text-slate-300');
+                }
             });
             let targetTab = document.getElementById(`tab-${tabName}`);
             let targetBtn = document.getElementById(`tab-btn-${tabName}`);
             if(targetTab) targetTab.classList.remove('hidden');
-            if(targetBtn) { targetBtn.classList.remove('text-slate-300'); targetBtn.classList.add('active'); }
+            if(targetBtn) {
+                targetBtn.classList.remove('text-slate-300');
+                targetBtn.classList.add('active');
+            }
         }
 
         initApp();
