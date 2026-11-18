@@ -179,7 +179,7 @@
                 </div>
             </div>
 
-            <!-- HALAMAN PEMBUKA / WELCOME BRIEFING (FULL SCREEN & TOMBOL NEXT TRANSPARAN) -->
+            <!-- HALAMAN PEMBUKA / WELCOME BRIEFING -->
             <div id="section-welcome" class="hidden flex-grow corporate-hero-bg flex flex-col justify-between p-6 md:p-12 w-full text-white">
                 <div class="max-w-6xl mx-auto w-full flex justify-between items-center border-b border-blue-500/30 pb-6">
                     <div class="flex items-center space-x-3">
@@ -192,7 +192,6 @@
                         </div>
                     </div>
                     <div class="text-right flex flex-col items-end space-y-1.5">
-                        <!-- Logo Sukun Mc. Wartono Sesuai Gambar Yang Dikirim -->
                         <div class="bg-navy-900 border-2 border-slate-300 rounded-lg px-3 py-1.5 shadow-md flex flex-col items-center justify-center">
                             <span class="text-xs font-serif font-black tracking-wider text-white uppercase" style="letter-spacing: 1.5px;">SUKUN</span>
                             <div class="w-full border-t border-white my-0.5"></div>
@@ -259,7 +258,6 @@
 
                 <div class="max-w-6xl mx-auto w-full flex justify-between items-center border-t border-blue-500/30 pt-6">
                     <span class="text-xs text-blue-200 font-medium">PT. Sukun Wartono Indonesia © 2026</span>
-                    <!-- Tombol NEXT Transparan dengan Panah Biasa -->
                     <button onclick="proceedToDashboard()" class="bg-transparent hover:bg-blue-600/30 text-white px-8 py-3.5 rounded-xl text-sm font-bold transition shadow-xl cursor-pointer flex items-center gap-2 border-2 border-white/80 hover:border-white">
                         Next <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
@@ -275,6 +273,22 @@
                             <p class="text-xs text-slate-500">Kelola absensi harian, terbitkan SP, serta ACC / Tolak / Cetak / Hapus pengajuan cuti & izin sales.</p>
                         </div>
                         <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700 cursor-pointer">Kembali ke Profil Saya</button>
+                    </div>
+
+                    <!-- MENU KHUSUS "HAK AKSES" (HANYA MUNCUL DI AKUN IRVANTUBA) -->
+                    <div id="super-admin-access-panel" class="hidden bg-indigo-50 p-5 rounded-xl border border-indigo-200 space-y-3">
+                        <div class="flex justify-between items-center border-b border-indigo-200 pb-2">
+                            <div>
+                                <h3 class="text-xs font-black text-indigo-900 uppercase flex items-center gap-1.5">
+                                    <i data-lucide="shield-check" class="w-4 h-4 text-indigo-700"></i> Pengaturan Menu Khusus: Hak Akses Administrator
+                                </h3>
+                                <p class="text-[11px] text-indigo-700 font-medium">Pilih karyawan yang diberi wewenang sebagai Administrator (Sub-Admin) sistem.</p>
+                            </div>
+                            <button onclick="saveAdminAccessSettings()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded-lg text-xs font-bold cursor-pointer shadow-xs">💾 Simpan Perubahan Akses</button>
+                        </div>
+                        <div id="access-list-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-2">
+                            <!-- Diisi dinamis via Javascript -->
+                        </div>
                     </div>
 
                     <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
@@ -343,7 +357,7 @@
             <!-- DASHBOARD UTAMA -->
             <div id="section-dashboard" class="hidden p-6 max-w-7xl mx-auto w-full space-y-6">
                 <div id="admin-shortcut-box" class="hidden bg-amber-50 border border-amber-200 p-4 rounded-xl flex justify-between items-center w-full shadow-sm">
-                    <span class="text-xs text-amber-900 font-bold">⚠️ Anda login sebagai Administrator (Team Leader Irvan Tuba Jati).</span>
+                    <span class="text-xs text-amber-900 font-bold">⚠️ Anda login sebagai Administrator (Team Leader / Sub-Admin).</span>
                     <button onclick="openAdminPanel()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow cursor-pointer">Buka Panel Admin & Sanksi SP</button>
                 </div>
 
@@ -960,18 +974,18 @@
         }
 
         let dbHC = {
-            "irvantuba": { pass: "admin123", role: "Admin", nama: "Irvan Tuba Jati, S.E.", panggilan: "Irvan", nik: "SKN-TL01", androiduser: "irvan_tl", androidpass: "sukun2026", tmptlahir: "Jakarta", tgllahir: "1990-01-01", gender: "Laki-laki", kontak: "081380000000", email: "irvantuba11@gmail.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jl. Raya Pramuka Kav 60-61, Jakarta Pusat", ktp: "3173xxxxxxxx", npwp: "09.xxx", bpjskesehatan: "00011122xx", bpjsketenagakerjaan: "888222xx", vjenis: "Mobil", vmerek: "Toyota", vmodel: "Avanza", vtahun: "2023", vplat: "B 1234 TL", vstnk: "STNK123456", vsimjenis: "SIM A & C", vsimno: "SIM987654", dnama: "Keluarga Utama", dhub: "Istri", dinfo: "0813xxxxxxxx", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2020-01-01", namabank: "BCA", norek: "88887777xx", namarek: "Irvan Tuba Jati", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas Indonesia - Manajemen", jurusan: "Manajemen", pasfoto: "", files: {} },
-            "kikinurawaludin": { pass: "kiki123", role: "Sales", nama: "Kiki Nurawaludin", panggilan: "Kiki", nik: "SKN-S01", androiduser: "kiki_sukun", androidpass: "kiki123", tmptlahir: "Jakarta", tgllahir: "1998-05-12", gender: "Laki-laki", kontak: "081234567890", email: "kiki@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta Pusat", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 5678 KIK", vstnk: "STNK111", vsimjenis: "SIM C", vsimno: "SIM111", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "123456xx", namarek: "Kiki Nurawaludin", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} },
-            "bagusramandhika": { pass: "bagus123", role: "Sales", nama: "Bagus Ramandhika", panggilan: "Bagus", nik: "SKN-S02", androiduser: "bagus_sukun", androidpass: "bagus123", tmptlahir: "Jakarta", tgllahir: "1999-06-15", gender: "Laki-laki", kontak: "081200000002", email: "bagus@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 9876 BAG", vstnk: "STNK222", vsimjenis: "SIM C", vsimno: "SIM222", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "222333xx", namarek: "Bagus Ramandhika", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "malfainasshidiqi": { pass: "diki123", role: "Sales", nama: "M Alfain Asshidiqi", panggilan: "Alfain", nik: "SKN-S03", androiduser: "alfain_sukun", androidpass: "diki123", tmptlahir: "Jakarta", tgllahir: "1998-03-10", gender: "Laki-laki", kontak: "081200000003", email: "alfain@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2020", vplat: "B 1111 ALF", vstnk: "STNK333", vsimjenis: "SIM C", vsimno: "SIM333", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "333444xx", namarek: "M Alfain Asshidiqi", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
-            "andiwirmanto": { pass: "andi123", role: "Sales", nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", androiduser: "andi_sukun", androidpass: "andi123", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 2222 AND", vstnk: "STNK444", vsimjenis: "SIM C", vsimno: "SIM444", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "dhanitriharto": { pass: "dhani123", role: "Sales", nama: "Dhani Triharto", panggilan: "Dhani", nik: "SKN-S05", androiduser: "dhani_sukun", androidpass: "dhani123", tmptlahir: "Jakarta", tgllahir: "1997-07-18", gender: "Laki-laki", kontak: "081200000005", email: "dhani@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "Mio", vtahun: "2022", vplat: "B 3333 DHA", vstnk: "STNK555", vsimjenis: "SIM C", vsimno: "SIM555", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "555666xx", namarek: "Dhani Triharto", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
-            "mohammaddenisp": { pass: "denis123", role: "Sales", nama: "Mohammad Denis P", panggilan: "Denis", nik: "SKN-S06", androiduser: "denis_sukun", androidpass: "denis123", tmptlahir: "Jakarta", tgllahir: "1998-09-22", gender: "Laki-laki", kontak: "081200000006", email: "denis@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Scoopy", vtahun: "2023", vplat: "B 4444 DEN", vstnk: "STNK666", vsimjenis: "SIM C", vsimno: "SIM666", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "666777xx", namarek: "Mohammad Denis P", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "rafisuandi": { pass: "rafi123", role: "Sales", nama: "Rafi Suandi", panggilan: "Rafi", nik: "SKN-S07", androiduser: "rafi_sukun", androidpass: "rafi123", tmptlahir: "Bekasi", tgllahir: "1999-08-20", gender: "Laki-laki", kontak: "081298765432", email: "rafi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3172xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2023", vplat: "B 5555 RAF", vstnk: "STNK777", vsimjenis: "SIM C", vsimno: "SIM777", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta utara", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-03-15", namabank: "Mandiri", norek: "777888xx", namarek: "Rafi Suandi", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Bekasi", jurusan: "IPA", pasfoto: "", files: {} },
-            "sarifudin": { pass: "sarif123", role: "Sales", nama: "Sarifudin", panggilan: "Sarif", nik: "SKN-S08", androiduser: "sarif_sukun", androidpass: "sarif123", tmptlahir: "Jakarta", tgllahir: "1996-02-14", gender: "Laki-laki", kontak: "081200000008", email: "sarif@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 6666 SAR", vstnk: "STNK888", vsimjenis: "SIM C", vsimno: "SIM888", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "888999xx", namarek: "Sarifudin", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", nama: "Bachtiar Syahputra", panggilan: "Bachtiar", nik: "SKN-S09", androiduser: "bachtiar_sukun", androidpass: "bachtiar123", tmptlahir: "Jakarta", tgllahir: "1994-11-30", gender: "Laki-laki", kontak: "081200000009", email: "bachtiar@sukun.com", nikah: "Menikah", tanggungan: "2 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 7777 BAC", vstnk: "STNK999", vsimjenis: "SIM C", vsimno: "SIM999", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "999000xx", namarek: "Bachtiar Syahputra", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "rickyjohanpondri": { pass: "ricky123", role: "Sales", nama: "Ricky Johan Pondri", panggilan: "Ricky", nik: "SKN-S10", androiduser: "ricky_sukun", androidpass: "ricky123", tmptlahir: "Jakarta", tgllahir: "1997-12-05", gender: "Laki-laki", kontak: "081200000010", email: "ricky@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 8888 RIC", vstnk: "STNK100", vsimjenis: "SIM C", vsimno: "SIM100", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "100200xx", namarek: "Ricky Johan Pondri", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "syaifulbahri": { pass: "bahri123", role: "Sales", nama: "Syaiful Bahri", panggilan: "Syaiful", nik: "SKN-S11", androiduser: "syaiful_sukun", androidpass: "bahri123", tmptlahir: "Jakarta", tgllahir: "1992-04-10", gender: "Laki-laki", kontak: "081200000011", email: "syaiful@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 9999 SYA", vstnk: "STNK110", vsimjenis: "SIM C", vsimno: "SIM110", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2023-01-01", namabank: "BCA", norek: "110220xx", namarek: "Syaiful Bahri", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} }
+            "irvantuba": { pass: "admin123", role: "Admin", isSubAdmin: true, nama: "Irvan Tuba Jati, S.E.", panggilan: "Irvan", nik: "SKN-TL01", androiduser: "irvan_tl", androidpass: "sukun2026", tmptlahir: "Jakarta", tgllahir: "1990-01-01", gender: "Laki-laki", kontak: "081380000000", email: "irvantuba11@gmail.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jl. Raya Pramuka Kav 60-61, Jakarta Pusat", ktp: "3173xxxxxxxx", npwp: "09.xxx", bpjskesehatan: "00011122xx", bpjsketenagakerjaan: "888222xx", vjenis: "Mobil", vmerek: "Toyota", vmodel: "Avanza", vtahun: "2023", vplat: "B 1234 TL", vstnk: "STNK123456", vsimjenis: "SIM A & C", vsimno: "SIM987654", dnama: "Keluarga Utama", dhub: "Istri", dinfo: "0813xxxxxxxx", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2020-01-01", namabank: "BCA", norek: "88887777xx", namarek: "Irvan Tuba Jati", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas Indonesia - Manajemen", jurusan: "Manajemen", pasfoto: "", files: {} },
+            "kikinurawaludin": { pass: "kiki123", role: "Sales", isSubAdmin: false, nama: "Kiki Nurawaludin", panggilan: "Kiki", nik: "SKN-S01", androiduser: "kiki_sukun", androidpass: "kiki123", tmptlahir: "Jakarta", tgllahir: "1998-05-12", gender: "Laki-laki", kontak: "081234567890", email: "kiki@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta Pusat", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 5678 KIK", vstnk: "STNK111", vsimjenis: "SIM C", vsimno: "SIM111", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "123456xx", namarek: "Kiki Nurawaludin", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} },
+            "bagusramandhika": { pass: "bagus123", role: "Sales", isSubAdmin: false, nama: "Bagus Ramandhika", panggilan: "Bagus", nik: "SKN-S02", androiduser: "bagus_sukun", androidpass: "bagus123", tmptlahir: "Jakarta", tgllahir: "1999-06-15", gender: "Laki-laki", kontak: "081200000002", email: "bagus@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 9876 BAG", vstnk: "STNK222", vsimjenis: "SIM C", vsimno: "SIM222", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "222333xx", namarek: "Bagus Ramandhika", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "malfainasshidiqi": { pass: "diki123", role: "Sales", isSubAdmin: false, nama: "M Alfain Asshidiqi", panggilan: "Alfain", nik: "SKN-S03", androiduser: "alfain_sukun", androidpass: "diki123", tmptlahir: "Jakarta", tgllahir: "1998-03-10", gender: "Laki-laki", kontak: "081200000003", email: "alfain@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2020", vplat: "B 1111 ALF", vstnk: "STNK333", vsimjenis: "SIM C", vsimno: "SIM333", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "333444xx", namarek: "M Alfain Asshidiqi", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
+            "andiwirmanto": { pass: "andi123", role: "Sales", isSubAdmin: false, nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", androiduser: "andi_sukun", androidpass: "andi123", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 2222 AND", vstnk: "STNK444", vsimjenis: "SIM C", vsimno: "SIM444", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "dhanitriharto": { pass: "dhani123", role: "Sales", isSubAdmin: false, nama: "Dhani Triharto", panggilan: "Dhani", nik: "SKN-S05", androiduser: "dhani_sukun", androidpass: "dhani123", tmptlahir: "Jakarta", tgllahir: "1997-07-18", gender: "Laki-laki", kontak: "081200000005", email: "dhani@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "Mio", vtahun: "2022", vplat: "B 3333 DHA", vstnk: "STNK555", vsimjenis: "SIM C", vsimno: "SIM555", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "555666xx", namarek: "Dhani Triharto", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
+            "mohammaddenisp": { pass: "denis123", role: "Sales", isSubAdmin: false, nama: "Mohammad Denis P", panggilan: "Denis", nik: "SKN-S06", androiduser: "denis_sukun", androidpass: "denis123", tmptlahir: "Jakarta", tgllahir: "1998-09-22", gender: "Laki-laki", kontak: "081200000006", email: "denis@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Scoopy", vtahun: "2023", vplat: "B 4444 DEN", vstnk: "STNK666", vsimjenis: "SIM C", vsimno: "SIM666", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "666777xx", namarek: "Mohammad Denis P", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "rafisuandi": { pass: "rafi123", role: "Sales", isSubAdmin: false, nama: "Rafi Suandi", panggilan: "Rafi", nik: "SKN-S07", androiduser: "rafi_sukun", androidpass: "rafi123", tmptlahir: "Bekasi", tgllahir: "1999-08-20", gender: "Laki-laki", kontak: "081298765432", email: "rafi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3172xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2023", vplat: "B 5555 RAF", vstnk: "STNK777", vsimjenis: "SIM C", vsimno: "SIM777", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta utara", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-03-15", namabank: "Mandiri", norek: "777888xx", namarek: "Rafi Suandi", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Bekasi", jurusan: "IPA", pasfoto: "", files: {} },
+            "sarifudin": { pass: "sarif123", role: "Sales", isSubAdmin: false, nama: "Sarifudin", panggilan: "Sarif", nik: "SKN-S08", androiduser: "sarif_sukun", androidpass: "sarif123", tmptlahir: "Jakarta", tgllahir: "1996-02-14", gender: "Laki-laki", kontak: "081200000008", email: "sarif@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 6666 SAR", vstnk: "STNK888", vsimjenis: "SIM C", vsimno: "SIM888", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "888999xx", namarek: "Sarifudin", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", isSubAdmin: false, nama: "Bachtiar Syahputra", panggilan: "Bachtiar", nik: "SKN-S09", androiduser: "bachtiar_sukun", androidpass: "bachtiar123", tmptlahir: "Jakarta", tgllahir: "1994-11-30", gender: "Laki-laki", kontak: "081200000009", email: "bachtiar@sukun.com", nikah: "Menikah", tanggungan: "2 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 7777 BAC", vstnk: "STNK999", vsimjenis: "SIM C", vsimno: "SIM999", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "999000xx", namarek: "Bachtiar Syahputra", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "rickyjohanpondri": { pass: "ricky123", role: "Sales", isSubAdmin: false, nama: "Ricky Johan Pondri", panggilan: "Ricky", nik: "SKN-S10", androiduser: "ricky_sukun", androidpass: "ricky123", tmptlahir: "Jakarta", tgllahir: "1997-12-05", gender: "Laki-laki", kontak: "081200000010", email: "ricky@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 8888 RIC", vstnk: "STNK100", vsimjenis: "SIM C", vsimno: "SIM100", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "100200xx", namarek: "Ricky Johan Pondri", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "syaifulbahri": { pass: "bahri123", role: "Sales", isSubAdmin: false, nama: "Syaiful Bahri", panggilan: "Syaiful", nik: "SKN-S11", androiduser: "syaiful_sukun", androidpass: "bahri123", tmptlahir: "Jakarta", tgllahir: "1992-04-10", gender: "Laki-laki", kontak: "081200000011", email: "syaiful@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 9999 SYA", vstnk: "STNK110", vsimjenis: "SIM C", vsimno: "SIM110", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2023-01-01", namabank: "BCA", norek: "110220xx", namarek: "Syaiful Bahri", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} }
         };
 
         let activeUser = localStorage.getItem('hc_active_user_cloud') || null;
@@ -984,6 +998,7 @@
                         if (row.id && row.data) {
                             if (!row.data.leaveList) row.data.leaveList = [];
                             if (row.data.approvedLeaveCount === undefined) row.data.approvedLeaveCount = 0;
+                            if (row.data.isSubAdmin === undefined) row.data.isSubAdmin = (row.id === 'irvantuba');
                             dbHC[row.id] = row.data; 
                         }
                     });
@@ -993,18 +1008,21 @@
             }
 
             if (activeUser && dbHC[activeUser]) {
+                let currentUser = dbHC[activeUser];
                 document.getElementById('section-login').classList.add('hidden');
                 document.getElementById('section-welcome').classList.add('hidden');
                 document.getElementById('section-admin').classList.add('hidden');
                 document.getElementById('section-dashboard').classList.remove('hidden');
                 document.getElementById('user-session-info').classList.remove('hidden');
                 document.getElementById('top-nav-menu').classList.remove('hidden');
-                document.getElementById('lbl-user-login').innerText = `Masuk: ${dbHC[activeUser].nama} (${dbHC[activeUser].role})`;
+                document.getElementById('lbl-user-login').innerText = `Masuk: ${currentUser.nama} (${currentUser.role})`;
                 
-                let currentUser = dbHC[activeUser];
                 let btnKeyIcon = document.getElementById('btn-request-edit-icon');
 
-                if (currentUser.role === 'Admin') {
+                // Cek hak akses admin (Bisa admin utama atau sub-admin yang ditunjuk)
+                let hasAdminRights = (activeUser === 'irvantuba' || currentUser.role === 'Admin' || currentUser.isSubAdmin);
+
+                if (hasAdminRights) {
                     document.getElementById('admin-shortcut-box').classList.remove('hidden');
                     if(btnKeyIcon) btnKeyIcon.classList.add('hidden');
                     setFormEditable(true);
@@ -1039,6 +1057,7 @@
                         if (row.id && row.data) {
                             if (!row.data.leaveList) row.data.leaveList = [];
                             if (row.data.approvedLeaveCount === undefined) row.data.approvedLeaveCount = 0;
+                            if (row.data.isSubAdmin === undefined) row.data.isSubAdmin = (row.id === 'irvantuba');
                             dbHC[row.id] = row.data; 
                         }
                     });
@@ -1058,16 +1077,17 @@
         }
 
         function proceedToDashboard() {
+            let currentUser = dbHC[activeUser];
             document.getElementById('section-welcome').classList.add('hidden');
             document.getElementById('section-dashboard').classList.remove('hidden');
             document.getElementById('user-session-info').classList.remove('hidden');
             document.getElementById('top-nav-menu').classList.remove('hidden');
-            document.getElementById('lbl-user-login').innerText = `Masuk: ${dbHC[activeUser].nama} (${dbHC[activeUser].role})`;
+            document.getElementById('lbl-user-login').innerText = `Masuk: ${currentUser.nama} (${currentUser.role})`;
             
-            let currentUser = dbHC[activeUser];
             let btnKeyIcon = document.getElementById('btn-request-edit-icon');
+            let hasAdminRights = (activeUser === 'irvantuba' || currentUser.role === 'Admin' || currentUser.isSubAdmin);
 
-            if (currentUser.role === 'Admin') {
+            if (hasAdminRights) {
                 document.getElementById('admin-shortcut-box').classList.remove('hidden');
                 if(btnKeyIcon) btnKeyIcon.classList.add('hidden');
                 setFormEditable(true);
@@ -1130,7 +1150,8 @@
         function openIDCardModal() {
             let currentUser = dbHC[activeUser];
             if (!currentUser) return;
-            if (currentUser.role === 'Admin') {
+            let hasAdminRights = (activeUser === 'irvantuba' || currentUser.role === 'Admin' || currentUser.isSubAdmin);
+            if (hasAdminRights) {
                 document.getElementById('modal-admin-idcard-options').classList.remove('hidden');
             } else {
                 populateIDCardData(currentUser);
@@ -1235,6 +1256,7 @@
                         if (row.id && row.data) {
                             if (!row.data.leaveList) row.data.leaveList = [];
                             if (row.data.approvedLeaveCount === undefined) row.data.approvedLeaveCount = 0;
+                            if (row.data.isSubAdmin === undefined) row.data.isSubAdmin = (row.id === 'irvantuba');
                             dbHC[row.id] = row.data; 
                         }
                     });
@@ -1257,6 +1279,7 @@
                         if (row.id && row.data) {
                             if (!row.data.leaveList) row.data.leaveList = [];
                             if (row.data.approvedLeaveCount === undefined) row.data.approvedLeaveCount = 0;
+                            if (row.data.isSubAdmin === undefined) row.data.isSubAdmin = (row.id === 'irvantuba');
                             dbHC[row.id] = row.data; 
                         }
                     });
@@ -1272,16 +1295,65 @@
                 select.innerHTML = '';
                 for (let username in dbHC) {
                     let user = dbHC[username];
-                    if (username !== 'irvantuba') {
+                    if (username !== activeUser) {
                         let opt = document.createElement('option');
                         opt.value = username;
-                        opt.text = `${user.nama}`;
+                        opt.text = `${user.nama} (${user.jabatan || 'Sales'})`;
                         select.appendChild(opt);
                     }
                 }
             }
+
+            // Render Panel Manajemen Akses khusus Super Admin (irvantuba)
+            let accessPanel = document.getElementById('super-admin-access-panel');
+            if (activeUser === 'irvantuba') {
+                accessPanel.classList.remove('hidden');
+                renderAdminAccessCheckboxes();
+            } else {
+                accessPanel.classList.add('hidden');
+            }
+
             renderAdminModules();
             renderAdminLeaveApprovals();
+        }
+
+        function renderAdminAccessCheckboxes() {
+            let container = document.getElementById('access-list-container');
+            if(!container) return;
+            container.innerHTML = '';
+
+            for (let username in dbHC) {
+                if (username === 'irvantuba') continue; // Super admin utama tetap
+                let user = dbHC[username];
+                let isChecked = user.isSubAdmin ? 'checked' : '';
+
+                let div = document.createElement('div');
+                div.className = "flex items-center justify-between p-2.5 bg-white border border-indigo-100 rounded-lg shadow-2xs";
+                div.innerHTML = `
+                    <div class="truncate pr-2">
+                        <span class="font-bold text-slate-900 block truncate text-xs">${user.nama}</span>
+                        <span class="text-[10px] text-slate-500 font-medium">${user.jabatan || 'Sales'} - Area: ${user.area || '-'}</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                        <input type="checkbox" id="access-chk-${username}" ${isChecked} class="sr-only peer">
+                        <div class="w-7 h-4 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-600"></div>
+                    </label>
+                `;
+                container.appendChild(div);
+            }
+        }
+
+        async function saveAdminAccessSettings() {
+            for (let username in dbHC) {
+                if (username === 'irvantuba') continue;
+                let chk = document.getElementById(`access-chk-${username}`);
+                if (chk) {
+                    dbHC[username].isSubAdmin = chk.checked;
+                    await syncToCloud(username);
+                }
+            }
+            alert("Pengaturan hak akses administrator berhasil disimpan ke Cloud!");
+            renderAdminPanel();
         }
 
         function renderAdminModules() {
@@ -1442,7 +1514,7 @@
             let hasData = false;
 
             for (let username in dbHC) {
-                if (username === 'irvantuba') continue;
+                if (username === activeUser) continue;
                 let user = dbHC[username];
                 if (user.leaveList && user.leaveList.length > 0) {
                     user.leaveList.forEach((leave, idx) => {
@@ -1725,7 +1797,8 @@
 
                 let td = document.createElement('td');
                 td.className = "p-2 border";
-                let isAdminUser = (dbHC[activeUser].role === 'Admin' || !document.getElementById('btn-save-container').classList.contains('hidden'));
+                let currentUser = dbHC[activeUser];
+                let isAdminUser = (activeUser === 'irvantuba' || currentUser.role === 'Admin' || currentUser.isSubAdmin || !document.getElementById('btn-save-container').classList.contains('hidden'));
                 if (isAdminUser) {
                     let select = document.createElement('select');
                     select.className = "w-full p-1.5 border rounded bg-white text-xs font-bold text-slate-900";
