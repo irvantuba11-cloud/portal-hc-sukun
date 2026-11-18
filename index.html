@@ -261,89 +261,90 @@
                 </div>
             </div>
 
-            <!-- HALAMAN PEMBUKA 2: 9 LANGKAH KUNJUNGAN -->
-            <div id="section-welcome-step2" class="hidden flex-grow corporate-hero-bg flex flex-col justify-between p-6 md:p-12 w-full text-white">
-                <div class="max-w-6xl mx-auto w-full flex justify-between items-center border-b border-blue-500/30 pb-4">
+            <!-- HALAMAN PEMBUKA 2: 9 LANGKAH KUNJUNGAN (GRID TANPA SCROLL) -->
+            <div id="section-welcome-step2" class="hidden flex-grow corporate-hero-bg flex flex-col justify-between p-4 md:p-8 w-full text-white">
+                <div class="max-w-7xl mx-auto w-full flex justify-between items-center border-b border-blue-500/30 pb-3">
                     <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 rounded-xl logo-3d flex items-center justify-center font-black text-white text-lg shadow-lg">
+                        <div class="w-10 h-10 rounded-xl logo-3d flex items-center justify-center font-black text-white text-base shadow-lg">
                             HC
                         </div>
                         <div>
-                            <h2 class="text-base font-black tracking-wider uppercase text-white">PANDUAN OPERASIONAL LAPANGAN</h2>
-                            <p class="text-xs text-blue-200 font-medium">PT. Sukun Wartono Indonesia - PWK Jakarta</p>
+                            <h2 class="text-sm font-black tracking-wider uppercase text-white">PANDUAN OPERASIONAL LAPANGAN</h2>
+                            <p class="text-[11px] text-blue-200 font-medium">PT. Sukun Wartono Indonesia - PWK Jakarta</p>
                         </div>
                     </div>
-                    <div class="text-right flex flex-col items-end space-y-1">
-                        <div class="bg-navy-900 border-2 border-slate-300 rounded-lg px-3 py-1 shadow-md flex flex-col items-center justify-center">
+                    <div class="text-right">
+                        <div class="bg-navy-900 border-2 border-slate-300 rounded-lg px-2.5 py-1 shadow-md inline-block text-center">
                             <span class="text-[10px] font-serif font-black tracking-wider text-white uppercase" style="letter-spacing: 1px;">SUKUN</span>
-                            <div class="w-full border-t border-white my-0.5"></div>
-                            <span class="text-[6px] font-sans font-bold tracking-widest text-slate-200 uppercase">Mc. WARTONO</span>
+                            <div class="w-full border-t border-white my-0.2"></div>
+                            <span class="text-[5px] font-sans font-bold tracking-widest text-slate-200 uppercase">Mc. WARTONO</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="max-w-5xl mx-auto w-full py-6 space-y-4">
-                    <div class="text-center space-y-1">
-                        <h1 class="text-2xl md:text-3xl font-black tracking-tight text-amber-300 drop-shadow-md uppercase">
+                <div class="max-w-7xl mx-auto w-full py-2 space-y-3">
+                    <div class="text-center space-y-0.5">
+                        <h1 class="text-xl md:text-2xl font-black tracking-tight text-amber-300 drop-shadow-md uppercase">
                             9 LANGKAH KUNJUNGAN
                         </h1>
                         <p class="text-xs text-blue-200 font-semibold italic">"Urip Iku Urup"</p>
                     </div>
 
-                    <!-- Konten 9 Langkah Rapi & Scrollable Card -->
-                    <div class="bg-blue-950/80 backdrop-blur-md p-6 rounded-2xl border border-blue-400/40 shadow-2xl space-y-3 max-h-[60vh] overflow-y-auto text-xs md:text-sm leading-relaxed text-blue-100 font-medium">
-                        
-                        <div class="border-b border-blue-800/60 pb-2">
-                            <span class="font-bold text-amber-300">1. PERSIAPAN</span>
-                            <p class="text-xs text-slate-200 pl-4 mt-0.5">1. Loading Barang<br>2. Penataan Barang Di Box<br>3. Persiapan Form, Nota, Media Promosi, Alat Peraga, Alat Tulis, HP</p>
+                    <!-- Layout Grid 3 Kolom agar pas tanpa scroll -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px] text-blue-100">
+                        <!-- Kolom 1 -->
+                        <div class="space-y-2.5">
+                            <div class="bg-blue-950/80 backdrop-blur-md p-3.5 rounded-xl border border-blue-400/40 shadow-xl space-y-1">
+                                <span class="font-black text-amber-300 block text-xs">1. PERSIAPAN</span>
+                                <p class="text-[10px] text-slate-200 leading-tight">1. Loading Barang<br>2. Penataan Barang Di Box<br>3. Persiapan Form, Nota, Media Promosi, Alat Peraga, Alat Tulis, HP</p>
+                            </div>
+                            <div class="bg-blue-950/80 backdrop-blur-md p-3.5 rounded-xl border border-blue-400/40 shadow-xl space-y-1">
+                                <span class="font-black text-amber-300 block text-xs">2. PENDEKATAN</span>
+                                <p class="text-[10px] text-slate-200 leading-tight">1. Tujuan untuk menjalin hubungan baik dengan tuan toko dan sales</p>
+                            </div>
+                            <div class="bg-blue-950/80 backdrop-blur-md p-3.5 rounded-xl border border-blue-400/40 shadow-xl space-y-1">
+                                <span class="font-black text-amber-300 block text-xs">3. CEK STOK</span>
+                                <p class="text-[10px] text-slate-200 leading-tight">1. Tujuan untuk mengetahui stok rokok yang ada di outlet dan kesegaran produk</p>
+                            </div>
                         </div>
 
-                        <div class="border-b border-blue-800/60 pb-2">
-                            <span class="font-bold text-amber-300">2. PENDEKATAN</span>
-                            <p class="text-xs text-slate-200 pl-4 mt-0.5">1. Tujuan untuk menjalin hubungan baik dengan tuan toko dan sales</p>
+                        <!-- Kolom 2 -->
+                        <div class="space-y-2.5">
+                            <div class="bg-blue-950/80 backdrop-blur-md p-3.5 rounded-xl border border-blue-400/40 shadow-xl space-y-1">
+                                <span class="font-black text-amber-300 block text-xs">4. PRESENTASI PENJUALAN</span>
+                                <p class="text-[10px] text-slate-200 leading-tight">1. Penyampaian program promosi yang berjalan<br>2. Penyampaian tentang produk, rasa, harga dan keuntungan</p>
+                            </div>
+                            <div class="bg-blue-950/80 backdrop-blur-md p-3.5 rounded-xl border border-blue-400/40 shadow-xl space-y-1">
+                                <span class="font-black text-amber-300 block text-xs">5. ORDER PENJUALAN</span>
+                                <p class="text-[10px] text-slate-200 leading-tight">1. Analisa kemampuan pengambilan outlet dan sisa stok di toko</p>
+                            </div>
+                            <div class="bg-blue-950/80 backdrop-blur-md p-3.5 rounded-xl border border-blue-400/40 shadow-xl space-y-1">
+                                <span class="font-black text-amber-300 block text-xs">6. ADMINISTRASI</span>
+                                <p class="text-[10px] text-slate-200 leading-tight">1. Pembuatan nota penjualan dan memasukan penjualan di Android</p>
+                            </div>
                         </div>
 
-                        <div class="border-b border-blue-800/60 pb-2">
-                            <span class="font-bold text-amber-300">3. CEK STOK</span>
-                            <p class="text-xs text-slate-200 pl-4 mt-0.5">1. Tujuan untuk mengetahui stok rokok yang ada di outlet dan kesegaran produk</p>
+                        <!-- Kolom 3 -->
+                        <div class="space-y-2.5">
+                            <div class="bg-blue-950/80 backdrop-blur-md p-3.5 rounded-xl border border-blue-400/40 shadow-xl space-y-1">
+                                <span class="font-black text-amber-300 block text-xs">7. MARCHENDASING</span>
+                                <p class="text-[10px] text-slate-200 leading-tight">1. Penataan display rokok kiri ke kanan<br>2. Penataan head to head & grouping all brand<br>3. Pemasangan media promosi</p>
+                            </div>
+                            <div class="bg-blue-950/80 backdrop-blur-md p-3.5 rounded-xl border border-blue-400/40 shadow-xl space-y-1">
+                                <span class="font-black text-amber-300 block text-xs">8. EVALUASI KUNJUNGAN</span>
+                                <p class="text-[10px] text-slate-200 leading-tight">1. Mengevaluasi penambahan penjualan dan kendala di toko</p>
+                            </div>
+                            <div class="bg-blue-950/80 backdrop-blur-md p-3.5 rounded-xl border border-blue-400/40 shadow-xl space-y-1">
+                                <span class="font-black text-amber-300 block text-xs">9. DS (DIRECT SELLING)</span>
+                                <p class="text-[10px] text-slate-200 leading-tight">1. Info kompetitor & perokok<br>2. Perkenalan & hobi ramah<br>3. Nyalakan, sugesti (adem/alus/segar)<br>4. Kunjungi ulang & arahkan pembelian</p>
+                            </div>
                         </div>
-
-                        <div class="border-b border-blue-800/60 pb-2">
-                            <span class="font-bold text-amber-300">4. PRESENTASI PENJUALAN</span>
-                            <p class="text-xs text-slate-200 pl-4 mt-0.5">1. Penyampaian program promosi yang berjalan saat ini<br>2. Penyampaian kepada toko tentang produk, rasa, harga dan keuntungan</p>
-                        </div>
-
-                        <div class="border-b border-blue-800/60 pb-2">
-                            <span class="font-bold text-amber-300">5. ORDER PENJUALAN</span>
-                            <p class="text-xs text-slate-200 pl-4 mt-0.5">1. Analisa kemampuan pengambilan outlet dan sisa stok di toko</p>
-                        </div>
-
-                        <div class="border-b border-blue-800/60 pb-2">
-                            <span class="font-bold text-amber-300">6. ADMINISTRASI</span>
-                            <p class="text-xs text-slate-200 pl-4 mt-0.5">1. Pembuatan nota penjualan dan memasukan penjualan di Android</p>
-                        </div>
-
-                        <div class="border-b border-blue-800/60 pb-2">
-                            <span class="font-bold text-amber-300">7. MARCHENDASING</span>
-                            <p class="text-xs text-slate-200 pl-4 mt-0.5">1. Penataan display rokok agar selalu terlihat konsumen dari kiri ke kanan<br>2. Penataan head to head. Penataan / pengelompokan berdasarkan jenis rokok<br>3. Penataan grouping - penataan / pengelompokan all brand di satu baris<br>4. Pemasangan media promosi</p>
-                        </div>
-
-                        <div class="border-b border-blue-800/60 pb-2">
-                            <span class="font-bold text-amber-300">8. EVALUASI KUNJUNGAN</span>
-                            <p class="text-xs text-slate-200 pl-4 mt-0.5">1. Mengevaluasi apakah di toko tersebut dapat menambah penjualan dan kendala</p>
-                        </div>
-
-                        <div>
-                            <span class="font-bold text-amber-300">9. DS (DIRECT SELLING)</span>
-                            <p class="text-xs text-slate-200 pl-4 mt-0.5">1. Mengetahui penjualan brand rokok kompetitor yang laku di daerah tersebut<br>2. Mencari info konsumen perokok kompetitor<br>3. Mencatat nama dan alamat konsumen<br>4. Perkenalan diri dan cerita bagaimana kita mengetahui kediaman calon konsumen<br>5. Tanyakan hobi atau cerita dengan ramah<br>6. Keunggulan brand dengan kompetitor<br>7. Bantu menyalakan<br>8. Sugesti rokok (adem, alus dan segar)<br>9. Setelah melakukan DS petugas kembali lagi ke outlet<br>10. Memberi tahu outlet bahwa bidikan DS sudah di datang dan di arahkan pembelian</p>
-                        </div>
-
                     </div>
                 </div>
 
-                <div class="max-w-5xl mx-auto w-full flex justify-between items-center border-t border-blue-500/30 pt-4">
+                <div class="max-w-7xl mx-auto w-full flex justify-between items-center border-t border-blue-500/30 pt-3">
                     <span class="text-xs text-blue-200 font-medium">PT. Sukun Wartono Indonesia © 2026</span>
-                    <button onclick="proceedToDashboard()" class="bg-transparent hover:bg-blue-600/30 text-white px-8 py-3.5 rounded-xl text-sm font-bold transition shadow-xl cursor-pointer flex items-center gap-2 border-2 border-white/80 hover:border-white">
+                    <button onclick="proceedToDashboard()" class="bg-transparent hover:bg-blue-600/30 text-white px-8 py-2.5 rounded-xl text-sm font-bold transition shadow-xl cursor-pointer flex items-center gap-2 border-2 border-white/80 hover:border-white">
                         Next <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -360,7 +361,6 @@
                         <button onclick="backToMyProfile()" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-slate-700 cursor-pointer">Kembali ke Profil Saya</button>
                     </div>
 
-                    <!-- MENU KHUSUS "HAK AKSES" -->
                     <div id="super-admin-access-panel" class="hidden bg-indigo-50 p-5 rounded-xl border border-indigo-200 space-y-3">
                         <div class="flex justify-between items-center border-b border-indigo-200 pb-2">
                             <div>
@@ -508,7 +508,7 @@
                     </div>
                 </div>
 
-                <!-- 2. PEKERJAAN (DENGAN TAMBAHAN KOLOM LINK MAPS) -->
+                <!-- 2. PEKERJAAN (DENGAN KOLOM LINK MAPS) -->
                 <div id="tab-pekerjaan" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">2. Data Pekerjaan & Organisasi</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
