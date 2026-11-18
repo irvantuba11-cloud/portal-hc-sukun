@@ -1043,10 +1043,8 @@
             if (!currentUser) return;
 
             if (currentUser.role === 'Admin') {
-                // Jika Admin, buka modal pilihan [Lihat] atau [Cetak] untuk sales yang sedang dipilih di panel admin atau admin sendiri
                 document.getElementById('modal-admin-idcard-options').classList.remove('hidden');
             } else {
-                // Jika Sales, langsung tampilkan modal Lihat ID Card milik sendiri
                 populateIDCardData(currentUser);
                 document.getElementById('modal-view-idcard').classList.remove('hidden');
             }
@@ -1084,7 +1082,6 @@
             if(jabatanText === 'SPM') jabatanText = 'SPM (Sales Promotion Motoris)';
             let divisiArea = `${u.divisi ? u.divisi.charAt(0).toUpperCase() + u.divisi.slice(1) : '-'} (Area: ${u.area ? u.area.toUpperCase() : '-'})`;
 
-            // Buat 10 kartu dalam 1 lembar F4 grid
             for (let i = 0; i < 10; i++) {
                 let cardDiv = document.createElement('div');
                 cardDiv.style.cssText = "width: 90mm; height: 55mm; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 3mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; font-family: Arial, sans-serif; font-size: 8pt; color: #1e293b; background: white;";
@@ -1238,6 +1235,71 @@
         function renderAdminModules() {
             renderAdminCalendar();
             renderAdminSPTable();
+        }
+
+        // FUNGSI KALENDER ABSENSI ADMIN (DITAMBAHKAN AGAR BISA MENGISI ABSEN SALES)
+        function renderAdminCalendar() {
+            let salesId = document.getElementById('admin-select-sales').value;
+            if (!salesId || !dbHC[salesId]) return;
+            
+            let u = dbHC[salesId];
+            if (!u.dailyAttendance) u.dailyAttendance = {};
+
+            let grid = document.getElementById('admin-calendar-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            let now = new Date(), year = now.getFullYear(), month = now.getMonth();
+            let monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            let title = document.getElementById('admin-cal-title');
+            if(title) title.innerText = `3. Atur Status Absen Harian (${monthNames[month]} ${year}) - Klik Tanggal`;
+
+            ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].forEach(d => {
+                let h = document.createElement('div'); 
+                h.className = "font-bold text-[10px] text-slate-700 py-1"; 
+                h.innerText = d;
+                grid.appendChild(h);
+            });
+
+            let firstDay = new Date(year, month, 1).getDay();
+            let totalDays = new Date(year, month + 1, 0).getDate();
+            for (let i = 0; i < firstDay; i++) {
+                grid.appendChild(document.createElement('div'));
+            }
+
+            for (let day = 1; day <= totalDays; day++) {
+                let dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                let status = u.dailyAttendance[dateKey] || '-';
+
+                let cell = document.createElement('div');
+                cell.className = "p-1.5 border rounded text-[11px] font-bold flex flex-col items-center justify-center h-14 bg-white shadow-sm cursor-pointer hover:bg-slate-100 transition";
+                cell.innerHTML = `
+                    <span class="text-[10px] text-slate-500 font-bold">${day}</span>
+                    <span class="mt-0.5 px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${
+                        status === 'Hadir' ? 'bg-emerald-600 text-white' : 
+                        status === 'Izin' ? 'bg-amber-600 text-white' : 
+                        status === 'Sakit' ? 'bg-blue-600 text-white' : 
+                        status === 'Alpha' ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-400'
+                    }">${status}</span>
+                `;
+
+                cell.onclick = async function() {
+                    let states = ['-', 'Hadir', 'Izin', 'Sakit', 'Alpha'];
+                    let currentIndex = states.indexOf(status);
+                    let nextStatus = states[(currentIndex + 1) % states.length];
+
+                    if (nextStatus === '-') {
+                        delete u.dailyAttendance[dateKey];
+                    } else {
+                        u.dailyAttendance[dateKey] = nextStatus;
+                    }
+
+                    await syncToCloud(salesId);
+                    renderAdminCalendar();
+                };
+
+                grid.appendChild(cell);
+            }
         }
 
         async function addAdminSP() {
@@ -1488,7 +1550,6 @@
             renderLeaveModule(u);
         }
 
-        // MODUL CUTI & IZIN LOGIC
         function renderLeaveModule(u) {
             let joinDateStr = u.tglgabung;
             let quotaEl = document.getElementById('lbl-quota-days');
@@ -1512,7 +1573,6 @@
                 quotaEl.innerText = `${remaining} Hari (Terpakai: ${approvedCount}/12)`;
             }
 
-            // Render Riwayat Cuti & Izin
             historyBody.innerHTML = '';
             let leaveList = u.leaveList || [];
             if (leaveList.length === 0) {
@@ -1570,7 +1630,7 @@
 
         async function submitLeaveRequest() {
             let u = dbHC[activeUser];
-            let typeVal = document.getElementById('leave-input-type').value; // 'Cuti' atau 'Izin'
+            let typeVal = document.getElementById('leave-input-type').value;
             let dateVal = document.getElementById('leave-input-date').value;
             let purposeVal = document.getElementById('leave-input-purpose').value.trim();
 
@@ -1599,7 +1659,7 @@
                 }
             }
 
-            let selMonth = dateVal.substring(0, 7); // Format: YYYY-MM
+            let selMonth = dateVal.substring(0, 7);
             if (!u.leaveList) u.leaveList = [];
             
             let alreadyTakenInMonth = u.leaveList.some(l => (l.type || 'Cuti') === typeVal && l.date.startsWith(selMonth) && (l.status === 'ACC' || l.status === 'Pending' || l.status === 'Tolak'));
