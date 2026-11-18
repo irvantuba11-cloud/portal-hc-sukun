@@ -70,7 +70,6 @@
                 </div>
 
                 <div id="user-session-info" class="hidden flex items-center space-x-3">
-                    <!-- TOMBOL LOGO KTP (DI SEBELAH KIRI TOMBOL KUNCI) -->
                     <button onclick="openIDCardModal()" title="Lihat Kartu Identitas (KTP)" class="flex items-center justify-center px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-900 transition shadow-md cursor-pointer font-bold gap-1 text-xs">
                         <i data-lucide="id-card" class="w-4 h-4"></i> KTP
                     </button>
@@ -139,6 +138,55 @@
                         <input type="password" id="input-password" class="w-full p-3 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none font-semibold text-slate-900" placeholder="••••••••">
                     </div>
                     <button onclick="login()" class="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 rounded-lg text-sm font-bold transition shadow-md cursor-pointer">Masuk Aplikasi</button>
+                </div>
+            </div>
+
+            <!-- HALAMAN PEMBUKA / WELCOME BRIEFING (MUNCUL SETELAH LOGIN BERHASIL) -->
+            <div id="section-welcome" class="hidden bg-white p-8 rounded-2xl shadow-xl max-w-3xl mx-auto space-y-6 border border-slate-200">
+                <div class="flex items-center space-x-4 border-b pb-4">
+                    <div class="w-12 h-12 rounded-xl logo-3d flex items-center justify-center font-black text-white text-lg shrink-0">
+                        HC
+                    </div>
+                    <div>
+                        <h2 class="text-base font-black text-navy-900 uppercase">Sistem Database Informasi Karyawan</h2>
+                        <p class="text-xs text-slate-500 font-medium">PT. Sukun Wartono Indonesia - Perwakilan Jakarta</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-xs text-slate-700 leading-relaxed">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                        <h3 class="font-bold text-navy-900 uppercase tracking-wide text-xs flex items-center gap-2">
+                            <i data-lucide="file-text" class="w-4 h-4 text-blue-600"></i> Deskripsi Sistem
+                        </h3>
+                        <p class="text-slate-600 font-medium pl-6">Portal manajemen data kepegawaian terpusat yang dirancang untuk menyimpan, memperbarui, dan mengelola seluruh database profil serta informasi administratif karyawan secara akurat, aman, dan terintegrasi secara real-time dengan cloud perusahaan.</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-navy-900 uppercase tracking-wide text-xs flex items-center gap-2">
+                            <i data-lucide="target" class="w-4 h-4 text-emerald-600"></i> Tujuan Utama
+                        </h3>
+                        <ul class="list-disc pl-10 space-y-1 text-slate-600 font-medium">
+                            <li>Mewujudkan pusat data (database) karyawan yang tertib, terstruktur, dan mudah diakses oleh pihak berwenang.</li>
+                            <li>Memastikan validitas data pribadi, riwayat pekerjaan, dokumen legal, serta informasi penunjang operasional setiap pegawai selalu mutakhir.</li>
+                            <li>Mendukung tata kelola administrasi Sumber Daya Manusia (HR) yang efisien dan berstandar korporat.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <h3 class="font-bold text-navy-900 uppercase tracking-wide text-xs flex items-center gap-2">
+                            <i data-lucide="award" class="w-4 h-4 text-amber-600"></i> Manfaat Sistem
+                        </h3>
+                        <ul class="list-disc pl-10 space-y-1 text-slate-600 font-medium">
+                            <li>Kemudahan akses mandiri bagi pegawai untuk memantau kelengkapan data pribadi, rekapitulasi absensi, cuti, hingga evaluasi kinerja.</li>
+                            <li>Efisiensi operasional bagi manajemen dalam memproses pelaporan, penerbitan dokumen administratif, serta pengambilan keputusan kebijakan ketenagakerjaan berbasis data yang akurat.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-4 border-t">
+                    <button onclick="proceedToDashboard()" class="bg-navy-900 hover:bg-navy-800 text-white px-6 py-3 rounded-xl text-xs font-bold transition shadow-md cursor-pointer flex items-center gap-2">
+                        Lanjut ke Menu Utama <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
                 </div>
             </div>
 
@@ -600,7 +648,6 @@
                 <button onclick="document.getElementById('modal-view-idcard').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 font-bold text-base cursor-pointer">✕</button>
             </div>
             
-            <!-- PREVIEW KARTU ALA KTP -->
             <div id="idcard-preview-container" class="p-5 bg-slate-100 rounded-xl border flex justify-center">
                 <div class="w-[340px] h-[215px] bg-white border-2 border-slate-300 rounded-xl p-3.5 shadow-md flex flex-col justify-between text-[11px] font-sans text-slate-800 relative">
                     <div class="flex justify-between items-center border-b pb-1.5 border-slate-200">
@@ -661,14 +708,12 @@
 
     <!-- AREA CETAK 10 KARTU DALAM 1 LEMBAR F4 (KHUSUS ADMIN) -->
     <div id="printIDCardSection" class="hidden">
-        <div style="font-family: Arial, sans-serif; max-width: 210mm; margin: 0 auto; padding: 10mm; background: white; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10mm; justify-items: center;">
-            <!-- 10 Kartu akan digenerate otomatis lewat Javascript -->
-        </div>
+        <div style="font-family: Arial, sans-serif; max-width: 210mm; margin: 0 auto; padding: 10mm; background: white; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10mm; justify-items: center;"></div>
     </div>
 
-    <!-- MODAL KUSTOM PASSWORD ADMIN (AMAN TERSEMBUNYI BULATAN & TANPA PETUNJUK) -->
+    <!-- MODAL KUSTOM PASSWORD ADMIN -->
     <div id="admin-password-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4 border border-slate-200 animate-in fade-in zoom-in duration-200">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4 border border-slate-200">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
                     <i data-lucide="shield-alert" class="w-5 h-5"></i>
@@ -695,132 +740,66 @@
                 <h2 style="margin: 0; font-size: 16px; font-weight: bold; text-transform: uppercase;">PT. Sukun Wartono Indonesia Perwakilan Jakarta</h2>
                 <p style="margin: 3px 0 0; font-size: 11px;">Jl. Raya Pramuka Kav 60-61, Rawasari, Cempaka Putih, Jakarta Pusat</p>
             </div>
-
             <div style="text-align: center; margin-bottom: 25px;">
                 <h3 style="margin: 0; font-size: 14px; font-weight: bold; text-decoration: underline;" id="print-sp-title">SURAT PERINGATAN</h3>
                 <p style="margin: 5px 0 0; font-size: 12px;" id="print-sp-nomor">Nomor: SP / ... / 2026</p>
             </div>
-
             <p style="font-size: 12px; line-height: 1.6; margin-bottom: 15px;">Yang bertanda tangan di bawah ini Team Leader PT. Sukun Wartono Indonesia Perwakilan Jakarta, dengan ini menerbitkan Surat Peringatan kepada:</p>
-
             <table style="width: 100%; font-size: 12px; margin-bottom: 20px; border-collapse: collapse;">
-                <tr>
-                    <td style="width: 160px; padding: 4px 0; font-weight: bold;">Nama Karyawan</td>
-                    <td style="padding: 4px 0;">: ........................................................................</td>
-                </tr>
-                <tr>
-                    <td style="padding: 4px 0; font-weight: bold;">NIK / ID Karyawan</td>
-                    <td style="padding: 4px 0;">: ........................................................................</td>
-                </tr>
-                <tr>
-                    <td style="padding: 4px 0; font-weight: bold;">Jabatan / Area</td>
-                    <td style="padding: 4px 0;">: ........................................................................</td>
-                </tr>
+                <tr><td style="width: 160px; padding: 4px 0; font-weight: bold;">Nama Karyawan</td><td>: ........................................................................</td></tr>
+                <tr><td style="padding: 4px 0; font-weight: bold;">NIK / ID Karyawan</td><td>: ........................................................................</td></tr>
+                <tr><td style="padding: 4px 0; font-weight: bold;">Jabatan / Area</td><td>: ........................................................................</td></tr>
             </table>
-
             <p style="font-size: 12px; line-height: 1.6; margin-bottom: 15px;">Telah diberikan sanksi / peringatan administratif dengan rincian sebagai berikut:</p>
-
             <table style="width: 100%; font-size: 12px; margin-bottom: 25px; border-collapse: collapse;">
-                <tr>
-                    <td style="width: 160px; padding: 6px 0; font-weight: bold;">Jenis Sanksi</td>
-                    <td style="padding: 6px 0; font-weight: bold;" id="print-sp-type-val">: -</td>
-                </tr>
-                <tr>
-                    <td style="padding: 6px 0; font-weight: bold;">Masa Berlaku</td>
-                    <td style="padding: 6px 0;" id="print-sp-period-val">: -</td>
-                </tr>
-                <tr>
-                    <td style="padding: 6px 0; font-weight: bold;">Tanggal Kejadian</td>
-                    <td style="padding: 6px 0;" id="print-sp-date-val">: -</td>
-                </tr>
-                <tr>
-                    <td style="padding: 6px 0; font-weight: bold; vertical-align: top;">Keterangan / Alasan</td>
-                    <td style="padding: 6px 0;" id="print-sp-desc-val">: -</td>
-                </tr>
+                <tr><td style="width: 160px; padding: 6px 0; font-weight: bold;">Jenis Sanksi</td><td style="font-weight: bold;" id="print-sp-type-val">: -</td></tr>
+                <tr><td style="padding: 6px 0; font-weight: bold;">Masa Berlaku</td><td id="print-sp-period-val">: -</td></tr>
+                <tr><td style="padding: 6px 0; font-weight: bold;">Tanggal Kejadian</td><td id="print-sp-date-val">: -</td></tr>
+                <tr><td style="padding: 6px 0; font-weight: bold; vertical-align: top;">Keterangan / Alasan</td><td id="print-sp-desc-val">: -</td></tr>
             </table>
-
             <p style="font-size: 12px; line-height: 1.6; margin-bottom: 40px;">Surat Peringatan ini diterbitkan sebagai bentuk pembinaan dan penegakan SOP perusahaan agar yang bersangkutan dapat segera memperbaiki kinerja serta mematuhi aturan operasional kedepannya.</p>
-
             <table style="width: 100%; margin-top: 40px; font-size: 12px; border-collapse: collapse;">
                 <tr>
-                    <td style="text-align: center; width: 50%;">
-                        <p style="margin-bottom: 65px; font-weight: bold;">Mengetahui,<br>Team Leader</p>
-                        <p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p>
-                    </td>
-                    <td style="text-align: center; width: 50%;">
-                        <p style="margin-bottom: 15px;">Jakarta, <span id="print-today-date"></span></p>
-                        <p style="margin-bottom: 65px; font-weight: bold;">Petugas / Karyawan</p>
-                        <p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p>
-                    </td>
+                    <td style="text-align: center; width: 50%;"><p style="margin-bottom: 65px; font-weight: bold;">Mengetahui,<br>Team Leader</p><p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p></td>
+                    <td style="text-align: center; width: 50%;"><p style="margin-bottom: 15px;">Jakarta, <span id="print-today-date"></span></p><p style="margin-bottom: 65px; font-weight: bold;">Petugas / Karyawan</p><p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p></td>
                 </tr>
             </table>
         </div>
     </div>
 
-    <!-- AREA CETAK FORM PENGAJUAN CUTI / IZIN (A4) - NAMA KOSONG MANUAL -->
+    <!-- AREA CETAK FORM PENGAJUAN CUTI / IZIN (A4) -->
     <div id="printLeaveSection" class="hidden">
         <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 30px; color: #000;">
             <div style="text-align: center; border-bottom: 3px double #000; padding-bottom: 12px; margin-bottom: 25px;">
                 <h2 style="margin: 0; font-size: 16px; font-weight: bold; text-transform: uppercase;">PT. Sukun Wartono Indonesia Perwakilan Jakarta</h2>
                 <p style="margin: 3px 0 0; font-size: 11px;">Jl. Raya Pramuka Kav 60-61, Rawasari, Cempaka Putih, Jakarta Pusat</p>
             </div>
-
             <div style="text-align: center; margin-bottom: 25px;">
                 <h3 style="margin: 0; font-size: 14px; font-weight: bold; text-decoration: underline;" id="print-leave-title">FORMULIR PENGAJUAN CUTI / IZIN</h3>
                 <p style="margin: 5px 0 0; font-size: 12px;" id="print-leave-nomor">Nomor: CUTI / ... / 2026</p>
             </div>
-
             <p style="font-size: 12px; line-height: 1.6; margin-bottom: 15px;">Yang bertanda tangan di bawah ini mengajukan permohonan <span id="print-leave-type-label">Cuti</span> kepada Team Leader PT. Sukun Wartono Indonesia Perwakilan Jakarta, dengan rincian sebagai berikut:</p>
-
             <table style="width: 100%; font-size: 12px; margin-bottom: 20px; border-collapse: collapse;">
-                <tr>
-                    <td style="width: 160px; padding: 4px 0; font-weight: bold;">Nama Karyawan</td>
-                    <td style="padding: 4px 0;">: ........................................................................</td>
-                </tr>
-                <tr>
-                    <td style="padding: 4px 0; font-weight: bold;">NIK / ID Karyawan</td>
-                    <td style="padding: 4px 0;">: ........................................................................</td>
-                </tr>
-                <tr>
-                    <td style="padding: 4px 0; font-weight: bold;">Jabatan / Area</td>
-                    <td style="padding: 4px 0;">: ........................................................................</td>
-                </tr>
+                <tr><td style="width: 160px; padding: 4px 0; font-weight: bold;">Nama Karyawan</td><td>: ........................................................................</td></tr>
+                <tr><td style="padding: 4px 0; font-weight: bold;">NIK / ID Karyawan</td><td>: ........................................................................</td></tr>
+                <tr><td style="padding: 4px 0; font-weight: bold;">Jabatan / Area</td><td>: ........................................................................</td></tr>
             </table>
-
             <table style="width: 100%; font-size: 12px; margin-bottom: 25px; border-collapse: collapse;">
-                <tr>
-                    <td style="width: 160px; padding: 6px 0; font-weight: bold;">Jenis Pengajuan</td>
-                    <td style="padding: 6px 0; font-weight: bold;" id="print-leave-type-val">: -</td>
-                </tr>
-                <tr>
-                    <td style="width: 160px; padding: 6px 0; font-weight: bold;">Tanggal Pelaksanaan</td>
-                    <td style="padding: 6px 0;" id="print-leave-date-val">: -</td>
-                </tr>
-                <tr>
-                    <td style="width: 160px; padding: 6px 0; font-weight: bold; vertical-align: top;">Tujuan / Keperluan</td>
-                    <td style="padding: 6px 0;" id="print-leave-purpose-val">: -</td>
-                </tr>
+                <tr><td style="width: 160px; padding: 6px 0; font-weight: bold;">Jenis Pengajuan</td><td style="font-weight: bold;" id="print-leave-type-val">: -</td></tr>
+                <tr><td style="width: 160px; padding: 6px 0; font-weight: bold;">Tanggal Pelaksanaan</td><td id="print-leave-date-val">: -</td></tr>
+                <tr><td style="width: 160px; padding: 6px 0; font-weight: bold; vertical-align: top;">Tujuan / Keperluan</td><td id="print-leave-purpose-val">: -</td></tr>
             </table>
-
             <p style="font-size: 12px; line-height: 1.6; margin-bottom: 40px;">Demikian permohonan ini diajukan untuk dapat diperiksa dan mendapat persetujuan lebih lanjut.</p>
-
             <table style="width: 100%; margin-top: 40px; font-size: 12px; border-collapse: collapse;">
                 <tr>
-                    <td style="text-align: center; width: 50%;">
-                        <p style="margin-bottom: 65px; font-weight: bold;">Pemohon,<br>Petugas Sales</p>
-                        <p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p>
-                    </td>
-                    <td style="text-align: center; width: 50%;">
-                        <p style="margin-bottom: 15px;">Jakarta, <span id="print-leave-today"></span></p>
-                        <p style="margin-bottom: 65px; font-weight: bold;">Mengetahui,<br>Team Leader</p>
-                        <p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p>
-                    </td>
+                    <td style="text-align: center; width: 50%;"><p style="margin-bottom: 65px; font-weight: bold;">Pemohon,<br>Petugas Sales</p><p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p></td>
+                    <td style="text-align: center; width: 50%;"><p style="margin-bottom: 15px;">Jakarta, <span id="print-leave-today"></span></p><p style="margin-bottom: 65px; font-weight: bold;">Mengetahui,<br>Team Leader</p><p style="margin: 0; font-weight: bold; text-decoration: underline;">( ........................................ )</p></td>
                 </tr>
             </table>
         </div>
     </div>
 
-    <!-- SCRIPT SUPABASE REAL-TIME CLOUD -->
+    <!-- SCRIPT SUPABASE REAL-TIME CLOUD & LOGIC -->
     <script>
         const SUPABASE_URL = "https://zmnnbvctrqawceyuedey.supabase.co";
         const SUPABASE_KEY = "sb_publishable_IuY-pkdnbQDPjk757XG6Xw_8Va1VQhW";
@@ -852,18 +831,12 @@
             let jenis = document.getElementById('v-jenis').value;
             let merekSelect = document.getElementById('v-merek');
             merekSelect.innerHTML = '';
-            
             let mereks = vehicleOptions[jenis] ? Object.keys(vehicleOptions[jenis]) : ["Lainnya"];
             mereks.forEach(m => {
-                let opt = document.createElement('option');
-                opt.value = m;
-                opt.text = m;
+                let opt = document.createElement('option'); opt.value = m; opt.text = m;
                 merekSelect.appendChild(opt);
             });
-
-            if(selectedMerek && mereks.includes(selectedMerek)) {
-                merekSelect.value = selectedMerek;
-            }
+            if(selectedMerek && mereks.includes(selectedMerek)) merekSelect.value = selectedMerek;
             updateModelOptions(selectedModel);
         }
 
@@ -872,18 +845,12 @@
             let merek = document.getElementById('v-merek').value;
             let modelSelect = document.getElementById('v-model');
             modelSelect.innerHTML = '';
-
             let models = (vehicleOptions[jenis] && vehicleOptions[jenis][merek]) ? vehicleOptions[jenis][merek] : ["Standar / Lainnya"];
             models.forEach(mo => {
-                let opt = document.createElement('option');
-                opt.value = mo;
-                opt.text = mo;
+                let opt = document.createElement('option'); opt.value = mo; opt.text = mo;
                 modelSelect.appendChild(opt);
             });
-
-            if(selectedModel && models.includes(selectedModel)) {
-                modelSelect.value = selectedModel;
-            }
+            if(selectedModel && models.includes(selectedModel)) modelSelect.value = selectedModel;
         }
 
         const jurusanOptions = {
@@ -901,9 +868,7 @@
             jurSelect.innerHTML = '';
             let list = jurusanOptions[jenjang] || ["Umum"];
             list.forEach(item => {
-                let opt = document.createElement('option');
-                opt.value = item;
-                opt.text = item;
+                let opt = document.createElement('option'); opt.value = item; opt.text = item;
                 jurSelect.appendChild(opt);
             });
             if (selectedVal) jurSelect.value = selectedVal;
@@ -918,9 +883,7 @@
                 output.classList.remove('hidden');
                 placeholder.classList.add('hidden');
             };
-            if(event.target.files[0]) {
-                reader.readAsDataURL(event.target.files[0]);
-            }
+            if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
         }
 
         let dbHC = {
@@ -958,6 +921,7 @@
 
             if (activeUser && dbHC[activeUser]) {
                 document.getElementById('section-login').classList.add('hidden');
+                document.getElementById('section-welcome').classList.add('hidden');
                 document.getElementById('section-admin').classList.add('hidden');
                 document.getElementById('section-dashboard').classList.remove('hidden');
                 document.getElementById('user-session-info').classList.remove('hidden');
@@ -982,11 +946,68 @@
                 loadDataToForm();
             } else {
                 document.getElementById('section-login').classList.remove('hidden');
+                document.getElementById('section-welcome').classList.add('hidden');
                 document.getElementById('section-dashboard').classList.add('hidden');
                 document.getElementById('section-admin').classList.add('hidden');
                 document.getElementById('user-session-info').classList.add('hidden');
                 document.getElementById('top-nav-menu').classList.add('hidden');
             }
+            lucide.createIcons();
+        }
+
+        async function login() {
+            let u = document.getElementById('input-username').value.trim().toLowerCase();
+            let p = document.getElementById('input-password').value.trim();
+
+            try {
+                let { data, error } = await _supabase.from('hc_database').select('*');
+                if (data && data.length > 0) {
+                    data.forEach(row => { 
+                        if (row.id && row.data) {
+                            if (!row.data.leaveList) row.data.leaveList = [];
+                            if (row.data.approvedLeaveCount === undefined) row.data.approvedLeaveCount = 0;
+                            dbHC[row.id] = row.data; 
+                        }
+                    });
+                }
+            } catch (err) {}
+
+            if (dbHC[u] && String(dbHC[u].pass).trim() === String(p)) {
+                activeUser = u;
+                localStorage.setItem('hc_active_user_cloud', u);
+                
+                // TAMPILKAN HALAMAN WELCOME BRIEFING TERLEBIH DAHULU SEBELUM KE DASHBOARD UTAMA
+                document.getElementById('section-login').classList.add('hidden');
+                document.getElementById('section-welcome').classList.remove('hidden');
+                lucide.createIcons();
+            } else {
+                alert("ID Pengguna atau Password salah!");
+            }
+        }
+
+        function proceedToDashboard() {
+            document.getElementById('section-welcome').classList.add('hidden');
+            document.getElementById('section-dashboard').classList.remove('hidden');
+            document.getElementById('user-session-info').classList.remove('hidden');
+            document.getElementById('top-nav-menu').classList.remove('hidden');
+            document.getElementById('lbl-user-login').innerText = `Masuk: ${dbHC[activeUser].nama} (${dbHC[activeUser].role})`;
+            
+            let currentUser = dbHC[activeUser];
+            let btnKeyIcon = document.getElementById('btn-request-edit-icon');
+
+            if (currentUser.role === 'Admin') {
+                document.getElementById('admin-shortcut-box').classList.remove('hidden');
+                if(btnKeyIcon) btnKeyIcon.classList.add('hidden');
+                setFormEditable(true);
+            } else {
+                document.getElementById('admin-shortcut-box').classList.add('hidden');
+                if(btnKeyIcon) {
+                    btnKeyIcon.classList.remove('hidden');
+                    btnKeyIcon.classList.add('flex');
+                }
+                setFormEditable(false);
+            }
+            loadDataToForm();
             lucide.createIcons();
         }
 
@@ -1006,11 +1027,8 @@
                 }
             });
             const saveBtnContainer = document.getElementById('btn-save-container');
-            if (isEditable) {
-                saveBtnContainer.classList.remove('hidden');
-            } else {
-                saveBtnContainer.classList.add('hidden');
-            }
+            if (isEditable) saveBtnContainer.classList.remove('hidden');
+            else saveBtnContainer.classList.add('hidden');
         }
 
         function requestAdminEdit() {
@@ -1037,11 +1055,9 @@
             }
         }
 
-        // LOGIKA KLIK TOMBOL KTP (DI HEADER ATAS)
         function openIDCardModal() {
             let currentUser = dbHC[activeUser];
             if (!currentUser) return;
-
             if (currentUser.role === 'Admin') {
                 document.getElementById('modal-admin-idcard-options').classList.remove('hidden');
             } else {
@@ -1077,7 +1093,6 @@
 
             let container = document.querySelector('#printIDCardSection > div');
             container.innerHTML = '';
-
             let jabatanText = u.jabatan || '-';
             if(jabatanText === 'SPM') jabatanText = 'SPM (Sales Promotion Motoris)';
             let divisiArea = `${u.divisi ? u.divisi.charAt(0).toUpperCase() + u.divisi.slice(1) : '-'} (Area: ${u.area ? u.area.toUpperCase() : '-'})`;
@@ -1124,41 +1139,10 @@
         async function syncToCloud(userId) {
             try {
                 let { error } = await _supabase.from('hc_database').upsert({ id: userId, data: dbHC[userId] });
-                if (error) {
-                    alert("Gagal menyimpan ke cloud: " + error.message);
-                } else {
-                    alert("Data berhasil tersimpan dan sinkron ke Cloud!");
-                }
+                if (error) alert("Gagal menyimpan ke cloud: " + error.message);
+                else alert("Data berhasil tersimpan dan sinkron ke Cloud!");
             } catch (e) {
                 console.error("Sync error", e);
-            }
-        }
-
-        async function login() {
-            let u = document.getElementById('input-username').value.trim().toLowerCase();
-            let p = document.getElementById('input-password').value.trim();
-
-            try {
-                let { data, error } = await _supabase.from('hc_database').select('*');
-                if (data && data.length > 0) {
-                    data.forEach(row => { 
-                        if (row.id && row.data) {
-                            if (!row.data.leaveList) row.data.leaveList = [];
-                            if (row.data.approvedLeaveCount === undefined) row.data.approvedLeaveCount = 0;
-                            dbHC[row.id] = row.data; 
-                        }
-                    });
-                }
-            } catch (err) {
-                console.log("Menggunakan data lokal");
-            }
-
-            if (dbHC[u] && String(dbHC[u].pass).trim() === String(p)) {
-                activeUser = u;
-                localStorage.setItem('hc_active_user_cloud', u);
-                initApp();
-            } else {
-                alert("ID Pengguna atau Password salah!");
             }
         }
 
@@ -1183,9 +1167,7 @@
                         }
                     });
                 }
-            } catch (e) {
-                console.error("Auto-fetch error", e);
-            }
+            } catch (e) {}
 
             renderAdminPanel();
         }
@@ -1207,9 +1189,7 @@
                         }
                     });
                 }
-            } catch (e) {
-                console.error("Refresh error", e);
-            }
+            } catch (e) {}
             renderAdminLeaveApprovals();
             alert("Data pengajuan berhasil diperbarui dari Cloud!");
         }
@@ -1237,11 +1217,9 @@
             renderAdminSPTable();
         }
 
-        // FUNGSI KALENDER ABSENSI ADMIN (DITAMBAHKAN AGAR BISA MENGISI ABSEN SALES)
         function renderAdminCalendar() {
             let salesId = document.getElementById('admin-select-sales').value;
             if (!salesId || !dbHC[salesId]) return;
-            
             let u = dbHC[salesId];
             if (!u.dailyAttendance) u.dailyAttendance = {};
 
@@ -1255,17 +1233,13 @@
             if(title) title.innerText = `3. Atur Status Absen Harian (${monthNames[month]} ${year}) - Klik Tanggal`;
 
             ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].forEach(d => {
-                let h = document.createElement('div'); 
-                h.className = "font-bold text-[10px] text-slate-700 py-1"; 
-                h.innerText = d;
+                let h = document.createElement('div'); h.className = "font-bold text-[10px] text-slate-700 py-1"; h.innerText = d;
                 grid.appendChild(h);
             });
 
             let firstDay = new Date(year, month, 1).getDay();
             let totalDays = new Date(year, month + 1, 0).getDate();
-            for (let i = 0; i < firstDay; i++) {
-                grid.appendChild(document.createElement('div'));
-            }
+            for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
 
             for (let day = 1; day <= totalDays; day++) {
                 let dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -1287,17 +1261,12 @@
                     let states = ['-', 'Hadir', 'Izin', 'Sakit', 'Alpha'];
                     let currentIndex = states.indexOf(status);
                     let nextStatus = states[(currentIndex + 1) % states.length];
-
-                    if (nextStatus === '-') {
-                        delete u.dailyAttendance[dateKey];
-                    } else {
-                        u.dailyAttendance[dateKey] = nextStatus;
-                    }
+                    if (nextStatus === '-') delete u.dailyAttendance[dateKey];
+                    else u.dailyAttendance[dateKey] = nextStatus;
 
                     await syncToCloud(salesId);
                     renderAdminCalendar();
                 };
-
                 grid.appendChild(cell);
             }
         }
@@ -1336,9 +1305,7 @@
             document.getElementById('print-sp-period-val').innerText = `: ${sp.period || '-'}`;
             document.getElementById('print-sp-date-val').innerText = `: ${sp.date}`;
             document.getElementById('print-sp-desc-val').innerText = `: ${sp.desc}`;
-
-            let today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-            document.getElementById('print-today-date').innerText = today;
+            document.getElementById('print-today-date').innerText = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
             let printSec = document.getElementById('printSection');
             printSec.classList.remove('hidden');
@@ -1358,9 +1325,7 @@
             document.getElementById('print-leave-type-val').innerText = `: ${typeName}`;
             document.getElementById('print-leave-date-val').innerText = `: ${leave.date}`;
             document.getElementById('print-leave-purpose-val').innerText = `: ${leave.purpose}`;
-
-            let today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-            document.getElementById('print-leave-today').innerText = today;
+            document.getElementById('print-leave-today').innerText = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
             let printSec = document.getElementById('printLeaveSection');
             printSec.classList.remove('hidden');
@@ -1433,10 +1398,7 @@
                     });
                 }
             }
-
-            if (!hasData) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-3 text-center text-slate-400 font-semibold">Tidak ada data cuti atau izin.</td></tr>`;
-            }
+            if (!hasData) tbody.innerHTML = `<tr><td colspan="6" class="p-3 text-center text-slate-400 font-semibold">Tidak ada data cuti atau izin.</td></tr>`;
         }
 
         async function processLeave(username, idx, decision) {
@@ -1454,7 +1416,6 @@
                     if (user.approvedLeaveCount > 0) user.approvedLeaveCount--;
                 }
             }
-
             await syncToCloud(username);
             renderAdminLeaveApprovals();
             alert(`Pengajuan berhasil di-${decision}!`);
@@ -1464,12 +1425,10 @@
             if (!confirm("Apakah Anda yakin ingin menghapus / membatalkan pengajuan ini?")) return;
             let user = dbHC[username];
             if (!user.leaveList[idx]) return;
-
             let removed = user.leaveList.splice(idx, 1)[0];
             if ((removed.type === 'Cuti' || !removed.type) && removed.status === 'ACC') {
                 if (user.approvedLeaveCount > 0) user.approvedLeaveCount--;
             }
-
             await syncToCloud(username);
             renderAdminLeaveApprovals();
             alert("Data berhasil dihapus.");
@@ -1562,8 +1521,7 @@
 
             let joinDate = new Date(joinDateStr);
             let today = new Date();
-            let diffTime = today - joinDate;
-            let diffDays = diffTime / (1000 * 60 * 60 * 24);
+            let diffDays = (today - joinDate) / (1000 * 60 * 60 * 24);
 
             if (diffDays < 365) {
                 quotaEl.innerText = "Belum 1 Tahun Masa Kerja (0 Hari)";
@@ -1592,7 +1550,6 @@
                     historyBody.appendChild(tr);
                 });
             }
-
             renderLeaveCalendar(u);
         }
 
@@ -1615,7 +1572,6 @@
             for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
 
             let leaveList = u.leaveList || [];
-
             for (let day = 1; day <= totalDays; day++) {
                 let dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                 let foundLeave = leaveList.find(l => l.date === dateKey);
@@ -1634,9 +1590,7 @@
             let dateVal = document.getElementById('leave-input-date').value;
             let purposeVal = document.getElementById('leave-input-purpose').value.trim();
 
-            if (!dateVal || !purposeVal) {
-                return alert("Harap isi Tanggal Pelaksanaan dan Tujuan / Keperluan dengan lengkap!");
-            }
+            if (!dateVal || !purposeVal) return alert("Harap isi Tanggal Pelaksanaan dan Tujuan / Keperluan dengan lengkap!");
 
             let selectedDate = new Date(dateVal);
             let todayCheck = new Date();
@@ -1645,32 +1599,21 @@
             if (typeVal === 'Cuti') {
                 let joinDate = new Date(u.tglgabung || '2020-01-01');
                 let diffDays = (todayCheck - joinDate) / (1000 * 60 * 60 * 24);
-                if (diffDays < 365) {
-                    return alert("Masa kerja Anda belum mencapai 1 tahun, belum memenuhi syarat pengajuan cuti.");
-                }
+                if (diffDays < 365) return alert("Masa kerja Anda belum mencapai 1 tahun, belum memenuhi syarat pengajuan cuti.");
                 minAllowedDate.setDate(minAllowedDate.getDate() + 7);
-                if (selectedDate < minAllowedDate) {
-                    return alert("Pengajuan cuti minimal dilakukan 7 hari (H-7) dari tanggal pelaksanaan.");
-                }
+                if (selectedDate < minAllowedDate) return alert("Pengajuan cuti minimal dilakukan 7 hari (H-7) dari tanggal pelaksanaan.");
             } else {
                 minAllowedDate.setDate(minAllowedDate.getDate() + 3);
-                if (selectedDate < minAllowedDate) {
-                    return alert("Pengajuan izin minimal dilakukan 3 hari (H-3) dari tanggal pelaksanaan.");
-                }
+                if (selectedDate < minAllowedDate) return alert("Pengajuan izin minimal dilakukan 3 hari (H-3) dari tanggal pelaksanaan.");
             }
 
             let selMonth = dateVal.substring(0, 7);
             if (!u.leaveList) u.leaveList = [];
-            
             let alreadyTakenInMonth = u.leaveList.some(l => (l.type || 'Cuti') === typeVal && l.date.startsWith(selMonth) && (l.status === 'ACC' || l.status === 'Pending' || l.status === 'Tolak'));
-            if (alreadyTakenInMonth) {
-                return alert(`Tidak bisa ${typeVal.toLowerCase()} lebih dari 1x dalam 1 bulan! Anda sudah memiliki riwayat atau pengajuan ${typeVal.toLowerCase()} di bulan ini, wajib memilih 1 tanggal saja.`);
-            }
+            if (alreadyTakenInMonth) return alert(`Tidak bisa ${typeVal.toLowerCase()} lebih dari 1x dalam 1 bulan!`);
 
             u.leaveList.push({ type: typeVal, date: dateVal, purpose: purposeVal, status: 'Pending' });
-            
             await syncToCloud(activeUser);
-            
             document.getElementById('leave-input-date').value = '';
             document.getElementById('leave-input-purpose').value = '';
             loadDataToForm();
@@ -1691,23 +1634,12 @@
             tbody.innerHTML = '';
 
             let months = [
-                { key: 'dec_prev', label: 'Desember (Thn Lalu)' },
-                { key: 'jan', label: 'Januari' },
-                { key: 'feb', label: 'Februari' },
-                { key: 'mar', label: 'Maret' },
-                { key: 'apr', label: 'April' },
-                { key: 'mei', label: 'Mei' },
-                { key: 'jun', label: 'Juni' },
-                { key: 'jul', label: 'Juli' },
-                { key: 'agu', label: 'Agustus' },
-                { key: 'sep', label: 'September' },
-                { key: 'okt', label: 'Oktober' },
-                { key: 'nov', label: 'November' }
+                { key: 'dec_prev', label: 'Desember (Thn Lalu)' }, { key: 'jan', label: 'Januari' }, { key: 'feb', label: 'Februari' }, { key: 'mar', label: 'Maret' },
+                { key: 'apr', label: 'April' }, { key: 'mei', label: 'Mei' }, { key: 'jun', label: 'Juni' }, { key: 'jul', label: 'Juli' },
+                { key: 'agu', label: 'Agustus' }, { key: 'sep', label: 'September' }, { key: 'okt', label: 'Oktober' }, { key: 'nov', label: 'November' }
             ];
 
-            let totalScore = 0;
-            let countValid = 0;
-
+            let totalScore = 0, countValid = 0;
             let mainTr = document.createElement('tr');
             let tdTitle = document.createElement('td');
             tdTitle.className = "p-2.5 border font-bold text-left bg-slate-50";
@@ -1717,22 +1649,16 @@
             months.forEach(m => {
                 let cellKey = `${selectedYear}_${m.key}`;
                 let currentVal = u.kpiData[cellKey] || '-';
-                if (gradeValues[currentVal] > 0) {
-                    totalScore += gradeValues[currentVal];
-                    countValid++;
-                }
+                if (gradeValues[currentVal] > 0) { totalScore += gradeValues[currentVal]; countValid++; }
 
                 let td = document.createElement('td');
                 td.className = "p-2 border";
-
                 let isAdminUser = (dbHC[activeUser].role === 'Admin' || !document.getElementById('btn-save-container').classList.contains('hidden'));
                 if (isAdminUser) {
                     let select = document.createElement('select');
                     select.className = "w-full p-1.5 border rounded bg-white text-xs font-bold text-slate-900";
                     kpiGrades.forEach(g => {
-                        let opt = document.createElement('option');
-                        opt.value = g;
-                        opt.text = g;
+                        let opt = document.createElement('option'); opt.value = g; opt.text = g;
                         if (g === currentVal) opt.selected = true;
                         select.appendChild(opt);
                     });
@@ -1742,9 +1668,7 @@
                         renderKPITable();
                     };
                     td.appendChild(select);
-                } else {
-                    td.innerText = currentVal;
-                }
+                } else { td.innerText = currentVal; }
                 mainTr.appendChild(td);
             });
             tbody.appendChild(mainTr);
@@ -1754,9 +1678,7 @@
                 let avgNum = Math.round(totalScore / countValid);
                 let finalPredikat = valueToGrade[avgNum] || '-';
                 avgResultEl.innerText = `${finalPredikat} (Skor Rata-rata: ${(totalScore / countValid).toFixed(2)})`;
-            } else {
-                avgResultEl.innerText = "Belum ada penilaian tercatat";
-            }
+            } else { avgResultEl.innerText = "Belum ada penilaian tercatat"; }
         }
 
         function renderSalesCalendar(u) {
@@ -1862,9 +1784,7 @@
             u.jurusan = document.getElementById('e-jurusan').value;
 
             let previewImg = document.getElementById('preview-pasfoto');
-            if(!previewImg.classList.contains('hidden')) {
-                u.pasfoto = previewImg.src;
-            }
+            if(!previewImg.classList.contains('hidden')) u.pasfoto = previewImg.src;
 
             if(!u.files) u.files = {};
             let fileKtp = document.getElementById('file-ktp').files[0];
@@ -1881,18 +1801,12 @@
                 let tabEl = document.getElementById(`tab-${t}`);
                 let btnEl = document.getElementById(`tab-btn-${t}`);
                 if(tabEl) tabEl.classList.add('hidden');
-                if(btnEl) {
-                    btnEl.classList.remove('active');
-                    btnEl.classList.add('text-slate-300');
-                }
+                if(btnEl) { tabEl.classList.remove('active'); btnEl.classList.add('text-slate-300'); }
             });
             let targetTab = document.getElementById(`tab-${tabName}`);
             let targetBtn = document.getElementById(`tab-btn-${tabName}`);
             if(targetTab) targetTab.classList.remove('hidden');
-            if(targetBtn) {
-                targetBtn.classList.remove('text-slate-300');
-                targetBtn.classList.add('active');
-            }
+            if(targetBtn) { targetBtn.classList.remove('text-slate-300'); targetBtn.classList.add('active'); }
         }
 
         initApp();
