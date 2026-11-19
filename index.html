@@ -555,11 +555,13 @@
                         </div>
                         <div>
                             <label class="font-bold text-slate-800 block mb-1">Merek Kendaraan</label>
-                            <select id="v-merek" onchange="updateModelOptions()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900"></select>
+                            <select id="v-merek" onchange="handleMerekChange()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900"></select>
+                            <input type="text" id="v-merek-manual" class="hidden mt-2 w-full p-2.5 border border-blue-400 rounded-lg bg-white font-semibold text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ketik merek kendaraan manual...">
                         </div>
                         <div>
                             <label class="font-bold text-slate-800 block mb-1">Model / Tipe Kendaraan</label>
-                            <select id="v-model" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900"></select>
+                            <select id="v-model" onchange="handleModelChange()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900"></select>
+                            <input type="text" id="v-model-manual" class="hidden mt-2 w-full p-2.5 border border-blue-400 rounded-lg bg-white font-semibold text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ketik model / tipe kendaraan manual...">
                         </div>
                         <div><label class="font-bold text-slate-800 block mb-1">Tahun Kendaraan</label><input type="text" id="v-tahun" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Contoh: 2022"></div>
                         <div><label class="font-bold text-slate-800 block mb-1">Nomor Plat Kendaraan</label><input type="text" id="v-plat" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="B 1234 XYZ"></div>
@@ -585,7 +587,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
                         <div>
                             <label class="font-bold text-slate-800 block mb-1">Nama Bank</label>
-                            <select id="c-namabank" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
+                            <select id="c-namabank" onchange="handleBankChange()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="BCA">BCA</option>
                                 <option value="Mandiri">Mandiri</option>
                                 <option value="BNI">BNI</option>
@@ -594,6 +596,7 @@
                                 <option value="Bank Mega">Bank Mega</option>
                                 <option value="Lainnya">Lainnya</option>
                             </select>
+                            <input type="text" id="c-namabank-manual" class="hidden mt-2 w-full p-2.5 border border-blue-400 rounded-lg bg-white font-semibold text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ketik nama bank manual...">
                         </div>
                         <div><label class="font-bold text-slate-800 block mb-1">Nomor Rekening</label><input type="text" id="c-norek" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                         <div><label class="font-bold text-slate-800 block mb-1">Atas Nama (Sesuai Rekening)</label><input type="text" id="c-namarek" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
@@ -642,7 +645,8 @@
                         <div><label class="font-bold text-slate-800 block mb-1">Institusi / Sekolah</label><input type="text" id="e-institusi" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                         <div>
                             <label class="font-bold text-slate-800 block mb-1">Jurusan</label>
-                            <select id="e-jurusan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900"></select>
+                            <select id="e-jurusan" onchange="handleJurusanChange()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900"></select>
+                            <input type="text" id="e-jurusan-manual" class="hidden mt-2 w-full p-2.5 border border-blue-400 rounded-lg bg-white font-semibold text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ketik nama jurusan manual...">
                         </div>
                     </div>
                 </div>
@@ -781,14 +785,14 @@
                     </div>
                 </div>
 
-                <!-- 10. REKAP AKUN SALES (KHUSUS ADMINISTRATOR) -->
+                <!-- 10. REKAP AKUN SALES (KHUSUS ADMINISTRATOR - PENGELOMPOKAN AREA) -->
                 <div id="tab-rekap" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-3 gap-3">
                         <div>
                             <h3 class="text-sm font-bold text-navy-900 uppercase tracking-wider flex items-center gap-2">
                                 <i data-lucide="shield-check" class="w-4 h-4 text-cyan-600"></i> 10. Rekap Akun Petugas Sales (PWK Jakarta)
                             </h3>
-                            <p class="text-[11px] text-slate-500 font-medium">Direktori ID Pengguna & Password petugas Sales terdaftar. Akun berstatus Administrator disembunyikan demi privasi.</p>
+                            <p class="text-[11px] text-slate-500 font-medium">Direktori ID Pengguna & Password petugas Sales dikelompokkan berdasarkan Area Penempatan. Akun Administrator disembunyikan demi privasi.</p>
                         </div>
                         <span id="rekap-total-badge" class="px-3 py-1.5 bg-cyan-50 border border-cyan-200 text-cyan-900 rounded-xl text-xs font-bold shrink-0">Total: 0 Akun</span>
                     </div>
@@ -991,36 +995,96 @@
 
         const vehicleOptions = {
             "Motor": {
-                "Honda": ["Beat", "Vario", "Scoopy", "PCX", "Revo", "Supra X"],
-                "Yamaha": ["Mio", "NMax", "Aerox", "Fazzio", "Vega R"],
-                "Suzuki": ["Address", "Satria FU", "Nex II"],
-                "Kawasaki": ["W175", "Ninja 250"]
+                "Honda": ["Beat", "Beat Street", "Vario 110", "Vario 125", "Vario 150", "Vario 160", "Scoopy", "Genio", "PCX 150/160", "ADV 150/160", "Revo", "Supra X 125", "Supra GTR", "Sonic 150R", "CB150R", "CBR150R", "Verza", "Lainnya"],
+                "Yamaha": ["Mio M3 / Z / S", "Gear 125", "Fazzio", "Filano", "Freego", "NMax", "Aerox 155", "Lexi", "XMax", "Vega Force / ZR", "Jupiter Z1", "Jupiter MX / MX King", "Vixion", "R15", "MT-15", "XSR 155", "Lainnya"],
+                "Suzuki": ["Nex II", "Address", "Burgman Street", "Satria FU 150", "Smash FI", "GSX-R150 / S150", "Lainnya"],
+                "Kawasaki": ["W175", "KLX 150", "D-Tracker", "Ninja 250", "Lainnya"],
+                "Vespa / Piaggio": ["LX 125", "S 125", "Primavera", "Sprint", "Lainnya"],
+                "Lainnya": ["Lainnya"]
             },
             "Mobil": {
-                "Toyota": ["Avanza", "Innova", "Calya", "Hilux"],
-                "Daihatsu": ["Gran Max", "Xenia", "Sigra", "Ayla"],
-                "Mitsubishi": ["L300", "Xpander", "Pajero Sport"],
-                "Suzuki": ["Carry", "Ertiga"]
+                "Toyota": ["Avanza", "Veloz", "Innova Reborn / Zenix", "Calya", "Agya", "Rush", "Fortuner", "Yaris", "Sienta", "Hilux", "HiAce", "Lainnya"],
+                "Daihatsu": ["Gran Max Pick Up / Blind Van", "Gran Max Minibus", "Xenia", "Sigra", "Ayla", "Terios", "Luxio", "Sirion", "Lainnya"],
+                "Mitsubishi": ["L300", "Xpander", "Xpander Cross", "Pajero Sport", "Triton", "Colt Diesel / Canter", "Lainnya"],
+                "Suzuki": ["Carry Pick Up", "APV", "Ertiga", "XL7", "Ignis", "Baleno", "Lainnya"],
+                "Honda": ["Brio", "Mobilio", "BR-V", "HR-V", "CR-V", "Jazz", "City", "Lainnya"],
+                "Wuling": ["Confero", "Cortez", "Almaz", "Formo", "Lainnya"],
+                "Lainnya": ["Lainnya"]
             },
             "Listrik": {
-                "Gesits": ["Gesits G1", "Gesits Raya"],
-                "Alva": ["Alva One", "Alva Cervo"],
-                "Polytron": ["Polytron Fox-R", "Polytron T-Rex"],
-                "Wuling": ["Air EV", "Binguo EV", "Cloud EV"],
-                "Hyundai": ["Ioniq 5", "Kona Electric"]
+                "Polytron": ["Fox-R", "Fox-S", "T-Rex", "Lainnya"],
+                "Alva": ["Alva One", "Alva Cervo", "Alva N3", "Lainnya"],
+                "Gesits": ["Gesits G1", "Gesits Raya", "Lainnya"],
+                "Yadea": ["T9", "E8S Pro", "G6", "Lainnya"],
+                "United": ["T1800", "TX1800", "TX3000", "MX1200", "Lainnya"],
+                "Volta": ["Volta 401", "Volta Virgo", "Volta Mandala", "Lainnya"],
+                "Smoot": ["Tempur", "Zuzu", "Lainnya"],
+                "Selis": ["E-Max", "Agats", "Lainnya"],
+                "Wuling": ["Air EV", "Binguo EV", "Cloud EV", "Lainnya"],
+                "Hyundai": ["Ioniq 5", "Ioniq 6", "Kona Electric", "Lainnya"],
+                "BYD": ["Dolphin", "Atto 3", "Seal", "M6", "Lainnya"],
+                "Chery": ["Omoda E5", "Lainnya"],
+                "Lainnya": ["Lainnya"]
             }
         };
+
+        function toggleManualField(selectEl, inputId, forceShow = false, manualValue = '') {
+            let inputEl = document.getElementById(inputId);
+            if (!inputEl || !selectEl) return;
+            if (forceShow || selectEl.value === 'Lainnya') {
+                inputEl.classList.remove('hidden');
+                if (manualValue) inputEl.value = manualValue;
+            } else {
+                inputEl.classList.add('hidden');
+                inputEl.value = '';
+            }
+        }
+
+        function handleMerekChange() {
+            let merekSelect = document.getElementById('v-merek');
+            toggleManualField(merekSelect, 'v-merek-manual');
+            updateModelOptions();
+        }
+
+        function handleModelChange() {
+            let modelSelect = document.getElementById('v-model');
+            toggleManualField(modelSelect, 'v-model-manual');
+        }
+
+        function handleBankChange() {
+            let bankSelect = document.getElementById('c-namabank');
+            toggleManualField(bankSelect, 'c-namabank-manual');
+        }
+
+        function handleJurusanChange() {
+            let jurSelect = document.getElementById('e-jurusan');
+            toggleManualField(jurSelect, 'e-jurusan-manual');
+        }
 
         function updateVehicleOptions(selectedMerek = null, selectedModel = null) {
             let jenis = document.getElementById('v-jenis').value;
             let merekSelect = document.getElementById('v-merek');
+            let merekManual = document.getElementById('v-merek-manual');
             merekSelect.innerHTML = '';
+
             let mereks = vehicleOptions[jenis] ? Object.keys(vehicleOptions[jenis]) : ["Lainnya"];
             mereks.forEach(m => {
                 let opt = document.createElement('option'); opt.value = m; opt.text = m;
                 merekSelect.appendChild(opt);
             });
-            if(selectedMerek && mereks.includes(selectedMerek)) merekSelect.value = selectedMerek;
+
+            if (selectedMerek) {
+                if (mereks.includes(selectedMerek) && selectedMerek !== 'Lainnya') {
+                    merekSelect.value = selectedMerek;
+                    toggleManualField(merekSelect, 'v-merek-manual', false);
+                } else {
+                    merekSelect.value = 'Lainnya';
+                    toggleManualField(merekSelect, 'v-merek-manual', true, selectedMerek === 'Lainnya' ? '' : selectedMerek);
+                }
+            } else {
+                toggleManualField(merekSelect, 'v-merek-manual', false);
+            }
+
             updateModelOptions(selectedModel);
         }
 
@@ -1029,33 +1093,86 @@
             let merek = document.getElementById('v-merek').value;
             let modelSelect = document.getElementById('v-model');
             modelSelect.innerHTML = '';
-            let models = (vehicleOptions[jenis] && vehicleOptions[jenis][merek]) ? vehicleOptions[jenis][merek] : ["Standar / Lainnya"];
+
+            let models = (vehicleOptions[jenis] && vehicleOptions[jenis][merek]) ? vehicleOptions[jenis][merek] : ["Lainnya"];
             models.forEach(mo => {
                 let opt = document.createElement('option'); opt.value = mo; opt.text = mo;
                 modelSelect.appendChild(opt);
             });
-            if(selectedModel && models.includes(selectedModel)) modelSelect.value = selectedModel;
+
+            if (selectedModel) {
+                if (models.includes(selectedModel) && selectedModel !== 'Lainnya') {
+                    modelSelect.value = selectedModel;
+                    toggleManualField(modelSelect, 'v-model-manual', false);
+                } else {
+                    modelSelect.value = 'Lainnya';
+                    toggleManualField(modelSelect, 'v-model-manual', true, selectedModel === 'Lainnya' ? '' : selectedModel);
+                }
+            } else {
+                toggleManualField(modelSelect, 'v-model-manual', merek === 'Lainnya');
+            }
         }
 
         const jurusanOptions = {
-            "SD": ["Umum"],
-            "SMP": ["Umum"],
-            "SMA/SMK": ["IPA", "IPS", "Bahasa", "Teknik Komputer & Jaringan", "Akuntansi", "Pemasaran / Bisnis Daring", "Teknik Kendaraan Ringan", "Lainnya"],
-            "D3": ["Manajemen Informatika", "Akuntansi", "Sekretari", "Teknik Mesin", "Perhotelan", "Lainnya"],
-            "D4/S1": ["Manajemen", "Akuntansi", "Ilmu Hukum", "Teknik Informatika", "Ilmu Komunikasi", "Administrasi Bisnis", "Ekonomi Syariah", "Teknik Industri", "Lainnya"],
-            "S2": ["Magister Manajemen", "Magister Hukum", "Magister Sains", "Lainnya"]
+            "SD": ["Umum", "Lainnya"],
+            "SMP": ["Umum", "Lainnya"],
+            "SMA/SMK": [
+                "IPA", "IPS", "Bahasa",
+                "Teknik Kendaraan Ringan (TKR)", "Teknik Bisnis Sepeda Motor (TBSM)",
+                "Teknik Komputer & Jaringan (TKJ)", "Rekayasa Perangkat Lunak (RPL)",
+                "Multimedia / DKV", "Teknik Instalasi Tenaga Listrik",
+                "Teknik Mesin", "Teknik Elektronika",
+                "Akuntansi & Keuangan", "Pemasaran / Bisnis Daring",
+                "Otomatisasi Tata Kelola Perkantoran (OTKP)", "Perhotelan",
+                "Tata Boga", "Farmasi / Keperawatan", "Lainnya"
+            ],
+            "D3": [
+                "Manajemen Informatika", "Sistem Informasi", "Teknik Komputer",
+                "Akuntansi", "Perpajakan", "Manajemen Pemasaran",
+                "Administrasi Bisnis / Perkantoran", "Sekretari",
+                "Keuangan & Perbankan", "Teknik Mesin", "Teknik Elektro",
+                "Teknik Sipil", "Perhotelan & Pariwisata",
+                "Kebidanan / Keperawatan", "Lainnya"
+            ],
+            "D4/S1": [
+                "Manajemen", "Akuntansi", "Ekonomi Pembangunan", "Ekonomi Syariah",
+                "Administrasi Bisnis", "Administrasi Publik", "Kewirausahaan", "Bisnis Digital",
+                "Teknik Informatika", "Sistem Informasi", "Ilmu Komputer",
+                "Teknik Industri", "Teknik Mesin", "Teknik Sipil", "Teknik Elektro", "Arsitektur",
+                "Ilmu Hukum", "Ilmu Komunikasi", "Hubungan Internasional",
+                "Ilmu Pemerintahan", "Psikologi", "Sastra Inggris", "Sastra Indonesia",
+                "Pendidikan Guru (PGSD / FKIP)", "Kesehatan Masyarakat",
+                "Farmasi", "Ilmu Keperawatan", "Pertanian / Agribisnis", "Lainnya"
+            ],
+            "S2": [
+                "Magister Manajemen (MM)", "Magister Akuntansi (M.Ak)",
+                "Magister Hukum (MH)", "Magister Ilmu Komunikasi",
+                "Magister Administrasi Publik", "Magister Teknik Informatika / Komputer",
+                "Magister Pendidikan", "Magister Sains", "Lainnya"
+            ]
         };
 
         function updateJurusanOptions(selectedVal = null) {
             let jenjang = document.getElementById('e-jenjang').value;
             let jurSelect = document.getElementById('e-jurusan');
             jurSelect.innerHTML = '';
-            let list = jurusanOptions[jenjang] || ["Umum"];
+            let list = jurusanOptions[jenjang] || ["Umum", "Lainnya"];
             list.forEach(item => {
                 let opt = document.createElement('option'); opt.value = item; opt.text = item;
                 jurSelect.appendChild(opt);
             });
-            if (selectedVal) jurSelect.value = selectedVal;
+
+            if (selectedVal) {
+                if (list.includes(selectedVal) && selectedVal !== 'Lainnya') {
+                    jurSelect.value = selectedVal;
+                    toggleManualField(jurSelect, 'e-jurusan-manual', false);
+                } else {
+                    jurSelect.value = 'Lainnya';
+                    toggleManualField(jurSelect, 'e-jurusan-manual', true, selectedVal === 'Lainnya' ? '' : selectedVal);
+                }
+            } else {
+                toggleManualField(jurSelect, 'e-jurusan-manual', false);
+            }
         }
 
         function previewPasFoto(event) {
@@ -1074,14 +1191,14 @@
             "irvantuba": { pass: "admin123", role: "Admin", isSubAdmin: true, nama: "Irvan Tuba Jati, S.E.", panggilan: "Irvan", nik: "SKN-TL01", androiduser: "irvan_tl", androidpass: "sukun2026", tmptlahir: "Jakarta", tgllahir: "1990-01-01", gender: "Laki-laki", kontak: "081380000000", email: "irvantuba11@gmail.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jl. Raya Pramuka Kav 60-61, Jakarta Pusat", ktp: "3173xxxxxxxx", npwp: "09.xxx", bpjskesehatan: "00011122xx", bpjsketenagakerjaan: "888222xx", vjenis: "Mobil", vmerek: "Toyota", vmodel: "Avanza", vtahun: "2023", vplat: "B 1234 TL", vstnk: "STNK123456", vsimjenis: "SIM A & C", vsimno: "SIM987654", dnama: "Keluarga Utama", dhub: "Istri", dinfo: "0813xxxxxxxx", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2020-01-01", namabank: "BCA", norek: "88887777xx", namarek: "Irvan Tuba Jati", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas Indonesia - Manajemen", jurusan: "Manajemen", pasfoto: "", files: {} },
             "raismusthofa": { pass: "rais123", role: "Sales", isSubAdmin: false, nama: "Rais Musthofa", panggilan: "Rais", nik: "SKN-TL02", androiduser: "rais_sukun", androidpass: "rais123", tmptlahir: "Jakarta", tgllahir: "1992-01-01", gender: "Laki-laki", kontak: "081300000000", email: "rais@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3173xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 RAI", vstnk: "STNK000", vsimjenis: "SIM C", vsimno: "SIM000", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SALES SUPERVISOR", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2021-01-01", namabank: "BCA", norek: "1234xx", namarek: "Rais Musthofa", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} },
             "kikinurawaludin": { pass: "kiki123", role: "Sales", isSubAdmin: false, nama: "Kiki Nurawaludin", panggilan: "Kiki", nik: "SKN-S01", androiduser: "kiki_sukun", androidpass: "kiki123", tmptlahir: "Jakarta", tgllahir: "1998-05-12", gender: "Laki-laki", kontak: "081234567890", email: "kiki@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta Pusat", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 5678 KIK", vstnk: "STNK111", vsimjenis: "SIM C", vsimno: "SIM111", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "123456xx", namarek: "Kiki Nurawaludin", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} },
-            "bagusramandhika": { pass: "bagus123", role: "Sales", isSubAdmin: false, nama: "Bagus Ramandhika", panggilan: "Bagus", nik: "SKN-S02", androiduser: "bagus_sukun", androidpass: "bagus123", tmptlahir: "Jakarta", tgllahir: "1999-06-15", gender: "Laki-laki", kontak: "081200000002", email: "bagus@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 9876 BAG", vstnk: "STNK222", vsimjenis: "SIM C", vsimno: "SIM222", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "222333xx", namarek: "Bagus Ramandhika", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "bagusramandhika": { pass: "bagus123", role: "Sales", isSubAdmin: false, nama: "Bagus Ramandhika", panggilan: "Bagus", nik: "SKN-S02", androiduser: "bagus_sukun", androidpass: "bagus123", tmptlahir: "Jakarta", tgllahir: "1999-06-15", gender: "Laki-laki", kontak: "081200000002", email: "bagus@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario 125", vtahun: "2022", vplat: "B 9876 BAG", vstnk: "STNK222", vsimjenis: "SIM C", vsimno: "SIM222", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "222333xx", namarek: "Bagus Ramandhika", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "malfainasshidiqi": { pass: "diki123", role: "Sales", isSubAdmin: false, nama: "M Alfain Asshidiqi", panggilan: "Alfain", nik: "SKN-S03", androiduser: "alfain_sukun", androidpass: "diki123", tmptlahir: "Jakarta", tgllahir: "1998-03-10", gender: "Laki-laki", kontak: "081200000003", email: "alfain@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2020", vplat: "B 1111 ALF", vstnk: "STNK333", vsimjenis: "SIM C", vsimno: "SIM333", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "333444xx", namarek: "M Alfain Asshidiqi", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
             "andiwirmanto": { pass: "andi123", role: "Sales", isSubAdmin: false, nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", androiduser: "andi_sukun", androidpass: "andi123", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 2222 AND", vstnk: "STNK444", vsimjenis: "SIM C", vsimno: "SIM444", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "dhanitriharto": { pass: "dhani123", role: "Sales", isSubAdmin: false, nama: "Dhani Triharto", panggilan: "Dhani", nik: "SKN-S05", androiduser: "dhani_sukun", androidpass: "dhani123", tmptlahir: "Jakarta", tgllahir: "1997-07-18", gender: "Laki-laki", kontak: "081200000005", email: "dhani@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "Mio", vtahun: "2022", vplat: "B 3333 DHA", vstnk: "STNK555", vsimjenis: "SIM C", vsimno: "SIM555", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "555666xx", namarek: "Dhani Triharto", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
+            "dhanitriharto": { pass: "dhani123", role: "Sales", isSubAdmin: false, nama: "Dhani Triharto", panggilan: "Dhani", nik: "SKN-S05", androiduser: "dhani_sukun", androidpass: "dhani123", tmptlahir: "Jakarta", tgllahir: "1997-07-18", gender: "Laki-laki", kontak: "081200000005", email: "dhani@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "Mio M3 / Z / S", vtahun: "2022", vplat: "B 3333 DHA", vstnk: "STNK555", vsimjenis: "SIM C", vsimno: "SIM555", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "555666xx", namarek: "Dhani Triharto", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
             "mohammaddenisp": { pass: "denis123", role: "Sales", isSubAdmin: false, nama: "Mohammad Denis P", panggilan: "Denis", nik: "SKN-S06", androiduser: "denis_sukun", androidpass: "denis123", tmptlahir: "Jakarta", tgllahir: "1998-09-22", gender: "Laki-laki", kontak: "081200000006", email: "denis@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Scoopy", vtahun: "2023", vplat: "B 4444 DEN", vstnk: "STNK666", vsimjenis: "SIM C", vsimno: "SIM666", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "666777xx", namarek: "Mohammad Denis P", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "rafisuandi": { pass: "rafi123", role: "Sales", isSubAdmin: false, nama: "Rafi Suandi", panggilan: "Rafi", nik: "SKN-S07", androiduser: "rafi_sukun", androidpass: "rafi123", tmptlahir: "Bekasi", tgllahir: "1999-08-20", gender: "Laki-laki", kontak: "081298765432", email: "rafi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3172xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2023", vplat: "B 5555 RAF", vstnk: "STNK777", vsimjenis: "SIM C", vsimno: "SIM777", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta utara", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-03-15", namabank: "Mandiri", norek: "777888xx", namarek: "Rafi Suandi", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Bekasi", jurusan: "IPA", pasfoto: "", files: {} },
             "sarifudin": { pass: "sarif123", role: "Sales", isSubAdmin: false, nama: "Sarifudin", panggilan: "Sarif", nik: "SKN-S08", androiduser: "sarif_sukun", androidpass: "sarif123", tmptlahir: "Jakarta", tgllahir: "1996-02-14", gender: "Laki-laki", kontak: "081200000008", email: "sarif@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 6666 SAR", vstnk: "STNK888", vsimjenis: "SIM C", vsimno: "SIM888", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "888999xx", namarek: "Sarifudin", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", isSubAdmin: false, nama: "Bachtiar Syahputra", panggilan: "Bachtiar", nik: "SKN-S09", androiduser: "bachtiar_sukun", androidpass: "bachtiar123", tmptlahir: "Jakarta", tgllahir: "1994-11-30", gender: "Laki-laki", kontak: "081200000009", email: "bachtiar@sukun.com", nikah: "Menikah", tanggungan: "2 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario", vtahun: "2022", vplat: "B 7777 BAC", vstnk: "STNK999", vsimjenis: "SIM C", vsimno: "SIM999", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "999000xx", namarek: "Bachtiar Syahputra", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "bachtiarsyahputra": { pass: "bachtiar123", role: "Sales", isSubAdmin: false, nama: "Bachtiar Syahputra", panggilan: "Bachtiar", nik: "SKN-S09", androiduser: "bachtiar_sukun", androidpass: "bachtiar123", tmptlahir: "Jakarta", tgllahir: "1994-11-30", gender: "Laki-laki", kontak: "081200000009", email: "bachtiar@sukun.com", nikah: "Menikah", tanggungan: "2 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario 125", vtahun: "2022", vplat: "B 7777 BAC", vstnk: "STNK999", vsimjenis: "SIM C", vsimno: "SIM999", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "999000xx", namarek: "Bachtiar Syahputra", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "rickyjohanpondri": { pass: "ricky123", role: "Sales", isSubAdmin: false, nama: "Ricky Johan Pondri", panggilan: "Ricky", nik: "SKN-S10", androiduser: "ricky_sukun", androidpass: "ricky123", tmptlahir: "Jakarta", tgllahir: "1997-12-05", gender: "Laki-laki", kontak: "081200000010", email: "ricky@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 8888 RIC", vstnk: "STNK100", vsimjenis: "SIM C", vsimno: "SIM100", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "100200xx", namarek: "Ricky Johan Pondri", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "syaifulbahri": { pass: "bahri123", role: "Sales", isSubAdmin: false, nama: "Syaiful Bahri", panggilan: "Syaiful", nik: "SKN-S11", androiduser: "syaiful_sukun", androidpass: "bahri123", tmptlahir: "Jakarta", tgllahir: "1992-04-10", gender: "Laki-laki", kontak: "081200000011", email: "syaiful@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 9999 SYA", vstnk: "STNK110", vsimjenis: "SIM C", vsimno: "SIM110", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "TEAM LEADER", divisi: "distribusi", area: "jakarta pusat", atasan: "Rais Musthofa", status: "tetap", tglgabung: "2023-01-01", namabank: "BCA", norek: "110220xx", namarek: "Syaiful Bahri", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} },
             "muhamadmaulana": { pass: "maul123", role: "Sales", isSubAdmin: false, nama: "Muhamad Maulana", panggilan: "Maulana", nik: "SKN-S12", androiduser: "maulana_sukun", androidpass: "maul123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000012", email: "maulana@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 MAU", vstnk: "STNK12", vsimjenis: "SIM C", vsimno: "SIM12", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta timur", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "12xx", namarek: "Muhamad Maulana", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
@@ -1748,7 +1865,16 @@
             document.getElementById('w-tglgabung').value = u.tglgabung || '';
             document.getElementById('w-linkmaps').value = u.linkmaps || '';
 
-            document.getElementById('c-namabank').value = u.namabank || 'BCA';
+            let bankSelect = document.getElementById('c-namabank');
+            let standardBanks = ["BCA", "Mandiri", "BNI", "BRI", "CIMB Niaga", "Bank Mega", "Lainnya"];
+            let savedBank = u.namabank || 'BCA';
+            if (standardBanks.includes(savedBank) && savedBank !== 'Lainnya') {
+                bankSelect.value = savedBank;
+                toggleManualField(bankSelect, 'c-namabank-manual', false);
+            } else {
+                bankSelect.value = 'Lainnya';
+                toggleManualField(bankSelect, 'c-namabank-manual', true, savedBank === 'Lainnya' ? '' : savedBank);
+            }
             document.getElementById('c-norek').value = u.norek || '';
             document.getElementById('c-namarek').value = u.namarek || '';
 
@@ -2022,7 +2148,21 @@
 
             let keyword = searchInput ? searchInput.value.trim().toLowerCase() : '';
             tbody.innerHTML = '';
-            let count = 0;
+
+            const areaOrder = [
+                "jakarta barat",
+                "jakarta utara",
+                "jakarta timur",
+                "jakarta pusat",
+                "jakarta selatan",
+                "kota depok"
+            ];
+
+            let groupedByArea = {};
+            areaOrder.forEach(a => { groupedByArea[a] = []; });
+            groupedByArea["lainnya"] = [];
+
+            let totalFiltered = 0;
 
             for (let username in dbHC) {
                 let user = dbHC[username];
@@ -2030,7 +2170,7 @@
                 if (isTargetAdmin) continue;
 
                 let namaStr = (user.nama || '').toLowerCase();
-                let areaStr = (user.area || '').toLowerCase();
+                let areaStr = (user.area || '').trim().toLowerCase();
                 let jabatanStr = (user.jabatan || '').toLowerCase();
                 let userStr = username.toLowerCase();
 
@@ -2038,33 +2178,69 @@
                     continue;
                 }
 
-                count++;
-                let tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 transition";
-                tr.innerHTML = `
-                    <td class="p-3 text-center font-bold text-slate-600">${count}</td>
-                    <td class="p-3 font-bold text-navy-900">${user.nama || '-'}</td>
-                    <td class="p-3 text-slate-600 font-semibold">${user.jabatan || 'SPM'} • <span class="uppercase">${user.area || '-'}</span></td>
-                    <td class="p-3"><code class="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-slate-900 font-bold">${username}</code></td>
-                    <td class="p-3">
-                        <div class="flex items-center gap-2">
-                            <code id="rekap-pass-text-${username}" data-visible="false" class="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-slate-900 font-bold tracking-wider">••••••••</code>
-                            <button type="button" onclick="toggleRekapPass('${username}')" title="Tampilkan / Sembunyikan Password" class="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 transition cursor-pointer">
-                                <i id="rekap-eye-icon-${username}" data-lucide="eye" class="w-3.5 h-3.5"></i>
-                            </button>
-                        </div>
-                    </td>
-                    <td class="p-3 text-center">
-                        <button type="button" onclick="copyRekapInfo('${username}', this)" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-[11px] font-bold transition shadow-2xs cursor-pointer inline-flex items-center gap-1">
-                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin Info
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+                totalFiltered++;
+                let bucketKey = areaOrder.includes(areaStr) ? areaStr : "lainnya";
+                groupedByArea[bucketKey].push({ username, user });
             }
 
-            if (totalBadge) totalBadge.innerText = `Total: ${count} Akun Sales`;
-            if (count === 0) {
+            let renderSequence = [...areaOrder, "lainnya"];
+
+            renderSequence.forEach(areaKey => {
+                let list = groupedByArea[areaKey];
+                if (!list || list.length === 0) return;
+
+                // Urutkan nama abjad A-Z di dalam setiap area
+                list.sort((a, b) => (a.user.nama || '').localeCompare(b.user.nama || '', 'id'));
+
+                let areaLabel = areaKey === "lainnya" ? "AREA LAINNYA / BELUM DIATUR" : areaKey.toUpperCase();
+
+                // Baris Pembatas Area
+                let dividerTr = document.createElement('tr');
+                dividerTr.className = "bg-slate-800 text-white border-y-2 border-slate-900";
+                dividerTr.innerHTML = `
+                    <td colspan="6" class="px-4 py-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-black text-[11px] tracking-wider uppercase flex items-center gap-2 text-cyan-300">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400"></i> AREA: ${areaLabel}
+                            </span>
+                            <span class="text-[10px] font-bold bg-slate-700 text-slate-200 px-2.5 py-0.5 rounded-full border border-slate-600">
+                                ${list.length} Petugas
+                            </span>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(dividerTr);
+
+                // Baris Petugas di Area tersebut
+                list.forEach((item, idx) => {
+                    let { username, user } = item;
+                    let tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-50 transition";
+                    tr.innerHTML = `
+                        <td class="p-3 text-center font-bold text-slate-600">${idx + 1}</td>
+                        <td class="p-3 font-bold text-navy-900">${user.nama || '-'}</td>
+                        <td class="p-3 text-slate-600 font-semibold">${user.jabatan || 'SPM'} • <span class="uppercase">${user.area || '-'}</span></td>
+                        <td class="p-3"><code class="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-slate-900 font-bold">${username}</code></td>
+                        <td class="p-3">
+                            <div class="flex items-center gap-2">
+                                <code id="rekap-pass-text-${username}" data-visible="false" class="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-slate-900 font-bold tracking-wider">••••••••</code>
+                                <button type="button" onclick="toggleRekapPass('${username}')" title="Tampilkan / Sembunyikan Password" class="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 transition cursor-pointer">
+                                    <i id="rekap-eye-icon-${username}" data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="p-3 text-center">
+                            <button type="button" onclick="copyRekapInfo('${username}', this)" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-[11px] font-bold transition shadow-2xs cursor-pointer inline-flex items-center gap-1">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin Info
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            });
+
+            if (totalBadge) totalBadge.innerText = `Total: ${totalFiltered} Akun Sales`;
+            if (totalFiltered === 0) {
                 tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400 font-semibold">Tidak ada akun sales yang sesuai pencarian.</td></tr>`;
             }
             lucide.createIcons();
@@ -2091,7 +2267,7 @@
         function copyRekapInfo(username, btnEl) {
             let u = dbHC[username];
             if (!u) return;
-            let textToCopy = `Akun Human Capital PT. Sukun\nNama: ${u.nama}\nUsername: ${username}\nPassword: ${u.pass}`;
+            let textToCopy = `Akun Human Capital PT. Sukun\nNama: ${u.nama}\nArea: ${(u.area || '-').toUpperCase()}\nUsername: ${username}\nPassword: ${u.pass}`;
             navigator.clipboard.writeText(textToCopy).then(() => {
                 if (btnEl) {
                     let originalHTML = btnEl.innerHTML;
@@ -2139,8 +2315,14 @@
             u.linkmaps = document.getElementById('w-linkmaps').value;
 
             u.vjenis = document.getElementById('v-jenis').value;
-            u.vmerek = document.getElementById('v-merek').value;
-            u.vmodel = document.getElementById('v-model').value;
+            let merekVal = document.getElementById('v-merek').value;
+            let merekManualVal = document.getElementById('v-merek-manual').value.trim();
+            u.vmerek = (merekVal === 'Lainnya' && merekManualVal) ? merekManualVal : merekVal;
+
+            let modelVal = document.getElementById('v-model').value;
+            let modelManualVal = document.getElementById('v-model-manual').value.trim();
+            u.vmodel = (modelVal === 'Lainnya' && modelManualVal) ? modelManualVal : modelVal;
+
             u.vtahun = document.getElementById('v-tahun').value;
             u.vplat = document.getElementById('v-plat').value;
             u.vstnk = document.getElementById('v-stnk').value;
@@ -2152,13 +2334,17 @@
             u.dinfo = document.getElementById('p-dinfo').value;
             u.aktp = document.getElementById('p-aktp').value;
 
-            u.namabank = document.getElementById('c-namabank').value;
+            let bankVal = document.getElementById('c-namabank').value;
+            let bankManualVal = document.getElementById('c-namabank-manual').value.trim();
+            u.namabank = (bankVal === 'Lainnya' && bankManualVal) ? bankManualVal : bankVal;
             u.norek = document.getElementById('c-norek').value;
             u.namarek = document.getElementById('c-namarek').value;
 
             u.jenjang = document.getElementById('e-jenjang').value;
             u.institusi = document.getElementById('e-institusi').value;
-            u.jurusan = document.getElementById('e-jurusan').value;
+            let jurVal = document.getElementById('e-jurusan').value;
+            let jurManualVal = document.getElementById('e-jurusan-manual').value.trim();
+            u.jurusan = (jurVal === 'Lainnya' && jurManualVal) ? jurManualVal : jurVal;
 
             let previewImg = document.getElementById('preview-pasfoto');
             if(!previewImg.classList.contains('hidden')) u.pasfoto = previewImg.src;
