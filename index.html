@@ -423,27 +423,84 @@
                     <button onclick="openAdminPanel()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow cursor-pointer">Buka Panel Admin & Sanksi SP</button>
                 </div>
 
-                <!-- 1. DATA PRIBADI & PAS FOTO KOTAK FORMAL -->
+                <!-- 1. DATA PRIBADI & PAS FOTO GABUNGAN 1 & 2 -->
                 <div id="tab-pribadi" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full">
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">1. Informasi Pribadi & Pas Foto Formal</h3>
                     
-                    <div class="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-6 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
-                        <div class="w-36 h-44 rounded-xl bg-slate-200 border-2 border-navy-900 overflow-hidden flex items-center justify-center shadow-md shrink-0">
-                            <img id="preview-pasfoto" src="" alt="Pas Foto" class="w-full h-full object-cover object-top hidden">
-                            <span id="placeholder-pasfoto" class="text-xs text-slate-500 font-bold text-center px-3">Pas Foto Formal</span>
+                    <div class="flex flex-col lg:flex-row items-stretch gap-6 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+                        <!-- SISI KIRI: PAS FOTO -->
+                        <div class="flex flex-col items-center gap-4 border-r-0 lg:border-r border-slate-200 lg:pr-6 shrink-0 justify-center">
+                            <div class="w-36 h-44 rounded-xl bg-slate-200 border-2 border-navy-900 overflow-hidden flex items-center justify-center shadow-md shrink-0">
+                                <img id="preview-pasfoto" src="" alt="Pas Foto" class="w-full h-full object-cover object-top hidden">
+                                <span id="placeholder-pasfoto" class="text-xs text-slate-500 font-bold text-center px-3">Pas Foto Formal</span>
+                            </div>
+                            <div id="pasfoto-upload-wrapper" class="hidden text-center w-full">
+                                <input type="file" id="file-pasfoto" accept="image/*" onchange="previewPasFoto(event)" class="text-xs text-slate-600 font-semibold file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[11px] file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800 cursor-pointer">
+                            </div>
                         </div>
-                        <div id="pasfoto-upload-wrapper" class="hidden space-y-2 text-center sm:text-left">
-                            <input type="file" id="file-pasfoto" accept="image/*" onchange="previewPasFoto(event)" class="text-xs text-slate-600 font-semibold file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800 cursor-pointer">
+
+                        <!-- SISI KANAN: OPSI GABUNGAN 1 & 2 (PROFIL UTAMA & STATISTIK QUICK METRICS) -->
+                        <div class="flex-grow flex flex-col justify-between space-y-4 lg:space-y-0">
+                            <!-- BAGIAN ATAS: INFORMASI PROFIL UTAMA (OPSI 1) -->
+                            <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
+                                <div class="space-y-1">
+                                    <div class="flex flex-wrap items-center gap-2.5">
+                                        <h2 id="top-profile-name" class="text-lg font-black text-navy-900 tracking-tight">-</h2>
+                                        <span class="bg-emerald-500 text-white text-[10px] px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider">Aktif / Tetap</span>
+                                    </div>
+                                    <p class="text-xs text-slate-500 font-semibold flex items-center gap-1.5">
+                                        <i data-lucide="id-card" class="w-3.5 h-3.5 text-slate-400"></i> NIK: <span id="top-profile-nik" class="text-slate-800 font-bold">-</span>
+                                    </p>
+                                    <p class="text-xs text-slate-500 font-semibold flex flex-wrap items-center gap-x-2 gap-y-1">
+                                        <i data-lucide="briefcase" class="w-3.5 h-3.5 text-slate-400"></i> <span id="top-profile-jabatan" class="text-navy-900 font-bold">-</span> 
+                                        <span class="text-slate-300">•</span> <span id="top-profile-divisi" class="text-slate-700 font-medium">Distribusi</span>
+                                        <span class="text-slate-300">•</span> Penempatan: <span id="top-profile-area" class="text-indigo-900 font-bold uppercase">-</span>
+                                    </p>
+                                </div>
+                                <div class="text-left sm:text-right shrink-0">
+                                    <span class="text-[10px] text-slate-400 font-bold uppercase block tracking-wider">Masa Kerja Estimasi</span>
+                                    <span id="top-profile-duration" class="text-sm font-black text-indigo-900">-</span>
+                                </div>
+                            </div>
+
+                            <!-- BAGIAN BAWAH: METRIKA & QUICK STATISTIK (OPSI 2) -->
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 pt-4 border-t border-slate-200">
+                                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
+                                    <span class="text-[10px] text-emerald-800 font-bold uppercase tracking-wider flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Hadir Bln Ini
+                                    </span>
+                                    <span id="quick-metric-attendance" class="text-sm font-black text-slate-900 block mt-1">0%</span>
+                                </div>
+                                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
+                                    <span class="text-[10px] text-amber-800 font-bold uppercase tracking-wider flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> KPI Terakhir
+                                    </span>
+                                    <span id="quick-metric-kpi" class="text-sm font-black text-slate-900 block mt-1">-</span>
+                                </div>
+                                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
+                                    <span class="text-[10px] text-blue-800 font-bold uppercase tracking-wider flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Sisa Cuti
+                                    </span>
+                                    <span id="quick-metric-leave" class="text-sm font-black text-slate-900 block mt-1">0 Hari</span>
+                                </div>
+                                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
+                                    <span class="text-[10px] text-purple-800 font-bold uppercase tracking-wider flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> Status Data
+                                    </span>
+                                    <span id="quick-metric-completeness" class="text-sm font-black text-slate-900 block mt-1">Lengkap</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
+                    <!-- GRID DATA INPUT FORMULIR -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
                         <div><label class="font-bold text-slate-800 block mb-1">Nama Lengkap</label><input type="text" id="p-nama" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                         <div><label class="font-bold text-slate-800 block mb-1">Nama Panggilan</label><input type="text" id="p-panggilan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                         <div><label class="font-bold text-slate-800 block mb-1">NIK / ID Karyawan</label><input type="text" id="p-nik" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                         
                         <div><label class="font-bold text-slate-800 block mb-1">Username Akun Android</label><input type="text" id="p-androiduser" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Username HP"></div>
-                        <div><label class="font-bold text-slate-800 block mb-1">Password Akun Android</label><input type="text" id="p-androidpass" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Password HP"></div>
+                        <div><label class="font-bold text-slate-800 block mb-1">Password Akun Android</label><input type="password" id="p-androidpass" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Password HP"></div>
 
                         <div><label class="font-bold text-slate-800 block mb-1">Tempat Lahir</label><input type="text" id="p-tmptlahir" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
                         <div><label class="font-bold text-slate-800 block mb-1">Tanggal Lahir</label><input type="date" id="p-tgllahir" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900"></div>
@@ -1110,7 +1167,7 @@
             }
         }
 
-        const jurusanOptions = {
+        const jurusansMap = {
             "SD": ["Umum", "Lainnya"],
             "SMP": ["Umum", "Lainnya"],
             "SMA/SMK": [
@@ -1153,7 +1210,7 @@
             let jenjang = document.getElementById('e-jenjang').value;
             let jurSelect = document.getElementById('e-jurusan');
             jurSelect.innerHTML = '';
-            let list = jurusanOptions[jenjang] || ["Umum", "Lainnya"];
+            let list = jurusansMap[jenjang] || ["Umum", "Lainnya"];
             list.forEach(item => {
                 let opt = document.createElement('option'); opt.value = item; opt.text = item;
                 jurSelect.appendChild(opt);
@@ -1190,7 +1247,7 @@
             "kikinurawaludin": { pass: "kiki123", role: "Sales", isSubAdmin: false, nama: "Kiki Nurawaludin", panggilan: "Kiki", nik: "SKN-S01", androiduser: "kiki_sukun", androidpass: "kiki123", tmptlahir: "Jakarta", tgllahir: "1998-05-12", gender: "Laki-laki", kontak: "081234567890", email: "kiki@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta Pusat", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 5678 KIK", vstnk: "STNK111", vsimjenis: "SIM C", vsimno: "SIM111", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "123456xx", namarek: "Kiki Nurawaludin", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} },
             "bagusramandhika": { pass: "bagus123", role: "Sales", isSubAdmin: false, nama: "Bagus Ramandhika", panggilan: "Bagus", nik: "SKN-S02", androiduser: "bagus_sukun", androidpass: "bagus123", tmptlahir: "Jakarta", tgllahir: "1999-06-15", gender: "Laki-laki", kontak: "081200000002", email: "bagus@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario 125", vtahun: "2022", vplat: "B 9876 BAG", vstnk: "STNK222", vsimjenis: "SIM C", vsimno: "SIM222", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "222333xx", namarek: "Bagus Ramandhika", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "malfainasshidiqi": { pass: "diki123", role: "Sales", isSubAdmin: false, nama: "M Alfain Asshidiqi", panggilan: "Alfain", nik: "SKN-S03", androiduser: "alfain_sukun", androidpass: "diki123", tmptlahir: "Jakarta", tgllahir: "1998-03-10", gender: "Laki-laki", kontak: "081200000003", email: "alfain@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2020", vplat: "B 1111 ALF", vstnk: "STNK333", vsimjenis: "SIM C", vsimno: "SIM333", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "333444xx", namarek: "M Alfain Asshidiqi", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
-            "andiwirmanto": { pass: "andi123", role: "Sales", isSubAdmin: false, nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", androiduser: "andi_sukun", androidpass: "andi123", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 2222 AND", vstnk: "STNK444", vsimjenis: "SIM C", vsimno: "SIM444", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "andiwirmanto": { pass: "andi123", role: "Sales", isSubAdmin: false, nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", androiduser: "andi_sukun", androidpass: "andi123", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 2222 AND", vstnk: "STNK444", vsimjenis: "SIM C", vsimno: "SIM444", dnama: "-", dhub: "Istri", dinfo: "-", font: "bold", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "dhanitriharto": { pass: "dhani123", role: "Sales", isSubAdmin: false, nama: "Dhani Triharto", panggilan: "Dhani", nik: "SKN-S05", androiduser: "dhani_sukun", androidpass: "dhani123", tmptlahir: "Jakarta", tgllahir: "1997-07-18", gender: "Laki-laki", kontak: "081200000005", email: "dhani@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "Mio M3 / Z / S", vtahun: "2022", vplat: "B 3333 DHA", vstnk: "STNK555", vsimjenis: "SIM C", vsimno: "SIM555", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "555666xx", namarek: "Dhani Triharto", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
             "mohammaddenisp": { pass: "denis123", role: "Sales", isSubAdmin: false, nama: "Mohammad Denis P", panggilan: "Denis", nik: "SKN-S06", androiduser: "denis_sukun", androidpass: "denis123", tmptlahir: "Jakarta", tgllahir: "1998-09-22", gender: "Laki-laki", kontak: "081200000006", email: "denis@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Scoopy", vtahun: "2023", vplat: "B 4444 DEN", vstnk: "STNK666", vsimjenis: "SIM C", vsimno: "SIM666", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "666777xx", namarek: "Mohammad Denis P", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "rafisuandi": { pass: "rafi123", role: "Sales", isSubAdmin: false, nama: "Rafi Suandi", panggilan: "Rafi", nik: "SKN-S07", androiduser: "rafi_sukun", androidpass: "rafi123", tmptlahir: "Bekasi", tgllahir: "1999-08-20", gender: "Laki-laki", kontak: "081298765432", email: "rafi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3172xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2023", vplat: "B 5555 RAF", vstnk: "STNK777", vsimjenis: "SIM C", vsimno: "SIM777", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta utara", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-03-15", namabank: "Mandiri", norek: "777888xx", namarek: "Rafi Suandi", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Bekasi", jurusan: "IPA", pasfoto: "", files: {} },
@@ -1203,7 +1260,7 @@
             "lukmanhakimk": { pass: "lukman123", role: "Sales", isSubAdmin: false, nama: "Lukman Hakim", panggilan: "Lukman", nik: "SKN-S14", androiduser: "lukman_sukun", androidpass: "lukman123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000014", email: "lukman@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 LUK", vstnk: "STNK14", vsimjenis: "SIM C", vsimno: "SIM14", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta timur", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "14xx", namarek: "Lukman Hakim", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "jenalmutakin": { pass: "jenal123", role: "Sales", isSubAdmin: false, nama: "Jenal Mutakin", panggilan: "Jenal", nik: "SKN-S15", androiduser: "jenal_sukun", androidpass: "jenal123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000015", email: "jenal@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 JEN", vstnk: "STNK15", vsimjenis: "SIM C", vsimno: "SIM15", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "15xx", namarek: "Jenal Mutakin", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "arsoramandap": { pass: "arso123", role: "Sales", isSubAdmin: false, nama: "Arso Ramanda P", panggilan: "Arso", nik: "SKN-S16", androiduser: "arso_sukun", androidpass: "arso123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000016", email: "arso@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 ARS", vstnk: "STNK16", vsimjenis: "SIM C", vsimno: "SIM16", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "16xx", namarek: "Arso Ramanda P", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "rifqinurianggi": { pass: "rifqi123", role: "Sales", isSubAdmin: false, nama: "Rifqi Nuri Anggi", panggilan: "Rifqi", nik: "SKN-S17", androiduser: "rifqi_sukun", androidpass: "rifqi123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000017", email: "rifqi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 RIF", vstnk: "STNK17", vsimjenis: "SIM C", vsimno: "SIM17", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta timur", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "17xx", namarek: "Rifqi Nuri Anggi", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "rifqinurianggi": { pass: "rifqi123", role: "Sales", isSubAdmin: false, nama: "Rifqi Nuri Anggi", panggilan: "Rifqi", nik: "SKN-S17", androiduser: "rifqi_sukun", androidpass: "rifqi123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000017", email: "rifqi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 RIF", vstnk: "STNK17", vsimjenis: "SIM C", vsimno: "SIM17", dnama: "-", d_hub: "Orangtua", d_info: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta timur", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "17xx", namarek: "Rifqi Nuri Anggi", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "mramadhannasyiri": { pass: "rama123", role: "Sales", isSubAdmin: false, nama: "M Ramadhan Nasyiri", panggilan: "Rama", nik: "SKN-S18", androiduser: "rama_sukun", androidpass: "rama123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000018", email: "rama@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 RAM", vstnk: "STNK18", vsimjenis: "SIM C", vsimno: "SIM18", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "18xx", namarek: "M Ramadhan Nasyiri", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} }
         };
 
@@ -1831,6 +1888,29 @@
             if (!u.leaveList) u.leaveList = [];
             if (u.approvedLeaveCount === undefined) u.approvedLeaveCount = 0;
 
+            // Load header info (Gabungan Opsi 1 & Opsi 2)
+            document.getElementById('top-profile-name').innerText = u.nama || '-';
+            document.getElementById('top-profile-nik').innerText = u.nik || '-';
+            document.getElementById('top-profile-jabatan').innerText = u.jabatan || '-';
+            document.getElementById('top-profile-divisi').innerText = (u.divisi || 'Distribusi').toUpperCase();
+            document.getElementById('top-profile-area').innerText = u.area || '-';
+
+            // Hitung Masa Kerja
+            if (u.tglgabung) {
+                let start = new Date(u.tglgabung);
+                let diff = new Date() - start;
+                let yrs = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+                let mths = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.4375));
+                if (yrs > 0) {
+                    document.getElementById('top-profile-duration').innerText = `${yrs} Tahun ${mths} Bulan`;
+                } else {
+                    document.getElementById('top-profile-duration').innerText = `${mths} Bulan`;
+                }
+            } else {
+                document.getElementById('top-profile-duration').innerText = '0 Bulan';
+            }
+
+            // Input fields
             document.getElementById('p-nama').value = u.nama || '';
             document.getElementById('p-panggilan').value = u.panggilan || '';
             document.getElementById('p-nik').value = u.nik || '';
@@ -1909,15 +1989,26 @@
             renderKPITable();
             renderLeaveModule(u);
             renderRekapAkun();
+            updateCompletenessMetric(u);
+        }
+
+        function updateCompletenessMetric(u) {
+            let fields = [u.nama, u.nik, u.tgllahir, u.kontak, u.ktp, u.aktp, u.jabatan, u.vplat, u.norek, u.institusi];
+            let filled = fields.filter(f => f && f !== '-').length;
+            let pct = Math.round((filled / fields.length) * 100);
+            let statusText = pct === 100 ? "Lengkap" : `${pct}% Terisi`;
+            document.getElementById('quick-metric-completeness').innerText = statusText;
         }
 
         function renderLeaveModule(u) {
             let joinDateStr = u.tglgabung;
             let quotaEl = document.getElementById('lbl-quota-days');
+            let quickLeaveEl = document.getElementById('quick-metric-leave');
             let historyBody = document.getElementById('leave-history-body');
 
             if (!joinDateStr) {
-                quotaEl.innerText = "Tanggal Gabung Kosong";
+                quotaEl.innerText = "Masa Kerja Kosong";
+                quickLeaveEl.innerText = "-";
                 return;
             }
 
@@ -1927,10 +2018,12 @@
 
             if (diffDays < 365) {
                 quotaEl.innerText = "Belum 1 Tahun Masa Kerja (0 Hari)";
+                quickLeaveEl.innerText = "0 Hari";
             } else {
                 let approvedCount = u.approvedLeaveCount || 0;
                 let remaining = 12 - approvedCount;
                 quotaEl.innerText = `${remaining} Hari (Terpakai: ${approvedCount}/12)`;
+                quickLeaveEl.innerText = `${remaining} Hari`;
             }
 
             historyBody.innerHTML = '';
@@ -2042,6 +2135,7 @@
             ];
 
             let totalScore = 0, countValid = 0;
+            let lastSubmittedPredikat = '-';
             let mainTr = document.createElement('tr');
             let tdTitle = document.createElement('td');
             tdTitle.className = "p-2.5 border font-bold text-left bg-slate-50";
@@ -2051,6 +2145,8 @@
             months.forEach(m => {
                 let cellKey = `${selectedYear}_${m.key}`;
                 let currentVal = u.kpiData[cellKey] || '-';
+                if (currentVal !== '-') lastSubmittedPredikat = currentVal;
+
                 if (gradeValues[currentVal] > 0) { totalScore += gradeValues[currentVal]; countValid++; }
 
                 let td = document.createElement('td');
@@ -2075,6 +2171,8 @@
                 mainTr.appendChild(td);
             });
             tbody.appendChild(mainTr);
+
+            document.getElementById('quick-metric-kpi').innerText = lastSubmittedPredikat;
 
             let avgResultEl = document.getElementById('kpi-avg-result');
             if (countValid > 0) {
@@ -2104,10 +2202,14 @@
             let counts = { Hadir: 0, Izin: 0, Sakit: 0, Alpha: 0 };
             let attendance = u.dailyAttendance || {};
 
+            let monthWorkedDays = 0;
             for (let day = 1; day <= totalDays; day++) {
                 let dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                 let status = attendance[dateKey] || '-';
-                if (status !== '-') counts[status] = (counts[status] || 0) + 1;
+                if (status !== '-') {
+                    counts[status] = (counts[status] || 0) + 1;
+                    if(status !== 'Alpha') monthWorkedDays++;
+                }
 
                 let cell = document.createElement('div');
                 cell.className = "p-1.5 border rounded text-[11px] font-bold flex flex-col items-center justify-center h-12 bg-white shadow-sm";
@@ -2118,6 +2220,15 @@
             document.getElementById('stat-izin').innerText = counts.Izin;
             document.getElementById('stat-sakit').innerText = counts.Sakit;
             document.getElementById('stat-alpha').innerText = counts.Alpha;
+
+            // Update Kehadiran Bln Ini (Metrik)
+            let totalRecords = counts.Hadir + counts.Izin + counts.Sakit + counts.Alpha;
+            if(totalRecords > 0) {
+                let attendanceRate = Math.round(( (counts.Hadir + counts.Izin + counts.Sakit) / totalRecords ) * 100);
+                document.getElementById('quick-metric-attendance').innerText = `${attendanceRate}%`;
+            } else {
+                document.getElementById('quick-metric-attendance').innerText = '0%';
+            }
         }
 
         function renderSalesSPTable(u) {
@@ -2225,7 +2336,7 @@
                         <td class="p-3">
                             <div class="flex items-center gap-2">
                                 <code id="rekap-pass-text-${username}" data-visible="false" class="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-slate-900 font-bold tracking-wider">••••••••</code>
-                                <button type="button" onclick="toggleRekapPass('${username}')" title="Tampilkan / Sembunyikan Password" class="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 transition cursor-pointer">
+                                <button type="button" onclick="toggleRekapPass('${username}')" title="Tampilkan / Sembunyikan Password" class="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-350 text-slate-705 transition cursor-pointer">
                                     <i id="rekap-eye-icon-${username}" data-lucide="eye" class="w-3.5 h-3.5"></i>
                                 </button>
                             </div>
