@@ -148,6 +148,9 @@
                 <button onclick="switchTab('cuti')" id="tab-btn-cuti" class="nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 cursor-pointer">
                     <i data-lucide="calendar-days" class="w-4 h-4 text-rose-400"></i> Cuti & Izin
                 </button>
+                <button onclick="switchTab('rekap')" id="tab-btn-rekap" class="hidden nav-3d-btn px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 items-center gap-2 cursor-pointer">
+                    <i data-lucide="key-round" class="w-4 h-4 text-cyan-400"></i> Rekap Akun
+                </button>
             </div>
         </header>
 
@@ -778,6 +781,45 @@
                     </div>
                 </div>
 
+                <!-- 10. REKAP AKUN SALES (KHUSUS ADMINISTRATOR) -->
+                <div id="tab-rekap" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full hidden">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-3 gap-3">
+                        <div>
+                            <h3 class="text-sm font-bold text-navy-900 uppercase tracking-wider flex items-center gap-2">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-cyan-600"></i> 10. Rekap Akun Petugas Sales (PWK Jakarta)
+                            </h3>
+                            <p class="text-[11px] text-slate-500 font-medium">Direktori ID Pengguna & Password petugas Sales terdaftar. Akun berstatus Administrator disembunyikan demi privasi.</p>
+                        </div>
+                        <span id="rekap-total-badge" class="px-3 py-1.5 bg-cyan-50 border border-cyan-200 text-cyan-900 rounded-xl text-xs font-bold shrink-0">Total: 0 Akun</span>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center gap-3">
+                        <div class="relative w-full sm:max-w-md">
+                            <input type="text" id="rekap-search-input" oninput="renderRekapAkun()" placeholder="Cari nama petugas, username, atau area..." class="w-full p-2.5 pl-9 border border-slate-300 rounded-xl text-xs font-semibold text-slate-900 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-navy-900 focus:outline-none">
+                            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+                        </div>
+                        <span class="text-[11px] text-slate-500 font-medium">Klik ikon mata (<span class="font-bold text-slate-700">👁️</span>) untuk menampilkan password per petugas.</span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs text-left border bg-white rounded-xl overflow-hidden">
+                            <thead>
+                                <tr class="bg-slate-200 text-slate-800 font-bold">
+                                    <th class="p-3 w-12 text-center">No</th>
+                                    <th class="p-3">Nama Lengkap Petugas</th>
+                                    <th class="p-3">Jabatan & Area</th>
+                                    <th class="p-3">Username (ID)</th>
+                                    <th class="p-3">Password</th>
+                                    <th class="p-3 text-center">Aksi Cepat</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rekap-akun-table-body" class="divide-y divide-slate-100">
+                                <tr><td colspan="6" class="p-4 text-center text-slate-400 font-semibold">Memuat data akun...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <div id="btn-save-container" class="flex justify-end pt-4 hidden">
                     <button onclick="simpanData()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl text-xs font-bold transition shadow-lg cursor-pointer">
                         💾 Simpan Perubahan Data Saya
@@ -1083,14 +1125,23 @@
                 document.getElementById('lbl-user-login').innerText = `Masuk: ${currentUser.nama} (${currentUser.role})`;
                 
                 let btnKeyIcon = document.getElementById('btn-request-edit-icon');
+                let btnRekapTab = document.getElementById('tab-btn-rekap');
                 let hasAdminRights = (activeUser === 'irvantuba' || currentUser.role === 'Admin' || currentUser.isSubAdmin);
 
                 if (hasAdminRights) {
                     document.getElementById('admin-shortcut-box').classList.remove('hidden');
                     if(btnKeyIcon) btnKeyIcon.classList.add('hidden');
+                    if(btnRekapTab) {
+                        btnRekapTab.classList.remove('hidden');
+                        btnRekapTab.classList.add('flex');
+                    }
                     setFormEditable(true);
                 } else {
                     document.getElementById('admin-shortcut-box').classList.add('hidden');
+                    if(btnRekapTab) {
+                        btnRekapTab.classList.add('hidden');
+                        btnRekapTab.classList.remove('flex');
+                    }
                     if(btnKeyIcon) {
                         btnKeyIcon.classList.remove('hidden');
                         btnKeyIcon.classList.add('flex');
@@ -1157,14 +1208,23 @@
             document.getElementById('lbl-user-login').innerText = `Masuk: ${currentUser.nama} (${currentUser.role})`;
             
             let btnKeyIcon = document.getElementById('btn-request-edit-icon');
+            let btnRekapTab = document.getElementById('tab-btn-rekap');
             let hasAdminRights = (activeUser === 'irvantuba' || currentUser.role === 'Admin' || currentUser.isSubAdmin);
 
             if (hasAdminRights) {
                 document.getElementById('admin-shortcut-box').classList.remove('hidden');
                 if(btnKeyIcon) btnKeyIcon.classList.add('hidden');
+                if(btnRekapTab) {
+                    btnRekapTab.classList.remove('hidden');
+                    btnRekapTab.classList.add('flex');
+                }
                 setFormEditable(true);
             } else {
                 document.getElementById('admin-shortcut-box').classList.add('hidden');
+                if(btnRekapTab) {
+                    btnRekapTab.classList.add('hidden');
+                    btnRekapTab.classList.remove('flex');
+                }
                 if(btnKeyIcon) {
                     btnKeyIcon.classList.remove('hidden');
                     btnKeyIcon.classList.add('flex');
@@ -1178,7 +1238,7 @@
         function setFormEditable(isEditable) {
             const inputs = document.querySelectorAll('main input, main select, main textarea');
             inputs.forEach(el => {
-                if (el.id !== 'input-username' && el.id !== 'input-password' && el.id !== 'kpi-filter-year' && el.id !== 'leave-input-date' && el.id !== 'leave-input-purpose' && el.id !== 'leave-input-type') {
+                if (el.id !== 'input-username' && el.id !== 'input-password' && el.id !== 'kpi-filter-year' && el.id !== 'leave-input-date' && el.id !== 'leave-input-purpose' && el.id !== 'leave-input-type' && el.id !== 'rekap-search-input') {
                     if (isEditable) {
                         el.removeAttribute('disabled');
                         el.classList.remove('bg-slate-100');
@@ -1718,6 +1778,7 @@
             renderSalesSPTable(u);
             renderKPITable();
             renderLeaveModule(u);
+            renderRekapAkun();
         }
 
         function renderLeaveModule(u) {
@@ -1946,6 +2007,109 @@
             });
         }
 
+        function renderRekapAkun() {
+            let tbody = document.getElementById('rekap-akun-table-body');
+            let totalBadge = document.getElementById('rekap-total-badge');
+            let searchInput = document.getElementById('rekap-search-input');
+            if (!tbody || !activeUser || !dbHC[activeUser]) return;
+
+            let currentUser = dbHC[activeUser];
+            let hasAdminRights = (activeUser === 'irvantuba' || currentUser.role === 'Admin' || currentUser.isSubAdmin);
+            if (!hasAdminRights) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-red-500 font-bold">Akses ditolak. Khusus Administrator.</td></tr>`;
+                return;
+            }
+
+            let keyword = searchInput ? searchInput.value.trim().toLowerCase() : '';
+            tbody.innerHTML = '';
+            let count = 0;
+
+            for (let username in dbHC) {
+                let user = dbHC[username];
+                let isTargetAdmin = (username === 'irvantuba' || user.role === 'Admin' || user.isSubAdmin);
+                if (isTargetAdmin) continue;
+
+                let namaStr = (user.nama || '').toLowerCase();
+                let areaStr = (user.area || '').toLowerCase();
+                let jabatanStr = (user.jabatan || '').toLowerCase();
+                let userStr = username.toLowerCase();
+
+                if (keyword && !namaStr.includes(keyword) && !areaStr.includes(keyword) && !jabatanStr.includes(keyword) && !userStr.includes(keyword)) {
+                    continue;
+                }
+
+                count++;
+                let tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition";
+                tr.innerHTML = `
+                    <td class="p-3 text-center font-bold text-slate-600">${count}</td>
+                    <td class="p-3 font-bold text-navy-900">${user.nama || '-'}</td>
+                    <td class="p-3 text-slate-600 font-semibold">${user.jabatan || 'SPM'} • <span class="uppercase">${user.area || '-'}</span></td>
+                    <td class="p-3"><code class="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-slate-900 font-bold">${username}</code></td>
+                    <td class="p-3">
+                        <div class="flex items-center gap-2">
+                            <code id="rekap-pass-text-${username}" data-visible="false" class="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-slate-900 font-bold tracking-wider">••••••••</code>
+                            <button type="button" onclick="toggleRekapPass('${username}')" title="Tampilkan / Sembunyikan Password" class="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 transition cursor-pointer">
+                                <i id="rekap-eye-icon-${username}" data-lucide="eye" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td class="p-3 text-center">
+                        <button type="button" onclick="copyRekapInfo('${username}', this)" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-[11px] font-bold transition shadow-2xs cursor-pointer inline-flex items-center gap-1">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin Info
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            }
+
+            if (totalBadge) totalBadge.innerText = `Total: ${count} Akun Sales`;
+            if (count === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400 font-semibold">Tidak ada akun sales yang sesuai pencarian.</td></tr>`;
+            }
+            lucide.createIcons();
+        }
+
+        function toggleRekapPass(username) {
+            let passEl = document.getElementById(`rekap-pass-text-${username}`);
+            let iconEl = document.getElementById(`rekap-eye-icon-${username}`);
+            if (!passEl || !dbHC[username]) return;
+
+            let isVisible = passEl.getAttribute('data-visible') === 'true';
+            if (isVisible) {
+                passEl.innerText = '••••••••';
+                passEl.setAttribute('data-visible', 'false');
+                if (iconEl) iconEl.setAttribute('data-lucide', 'eye');
+            } else {
+                passEl.innerText = dbHC[username].pass || '-';
+                passEl.setAttribute('data-visible', 'true');
+                if (iconEl) iconEl.setAttribute('data-lucide', 'eye-off');
+            }
+            lucide.createIcons();
+        }
+
+        function copyRekapInfo(username, btnEl) {
+            let u = dbHC[username];
+            if (!u) return;
+            let textToCopy = `Akun Human Capital PT. Sukun\nNama: ${u.nama}\nUsername: ${username}\nPassword: ${u.pass}`;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                if (btnEl) {
+                    let originalHTML = btnEl.innerHTML;
+                    btnEl.innerHTML = `✔️ Tersalin`;
+                    btnEl.classList.remove('bg-cyan-600', 'hover:bg-cyan-700');
+                    btnEl.classList.add('bg-emerald-600');
+                    setTimeout(() => {
+                        btnEl.innerHTML = originalHTML;
+                        btnEl.classList.remove('bg-emerald-600');
+                        btnEl.classList.add('bg-cyan-600', 'hover:bg-cyan-700');
+                        lucide.createIcons();
+                    }, 1500);
+                }
+            }).catch(() => {
+                alert(`Username: ${username} | Password: ${u.pass}`);
+            });
+        }
+
         async function simpanData() {
             if (!activeUser) return;
             let u = dbHC[activeUser];
@@ -2010,7 +2174,7 @@
         }
 
         function switchTab(tabName) {
-            ['pribadi', 'pekerjaan', 'kendaraan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen', 'kpi', 'cuti'].forEach(t => {
+            ['pribadi', 'pekerjaan', 'kendaraan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen', 'kpi', 'cuti', 'rekap'].forEach(t => {
                 let tabEl = document.getElementById(`tab-${t}`);
                 let btnEl = document.getElementById(`tab-btn-${t}`);
                 if(tabEl) tabEl.classList.add('hidden');
@@ -2025,6 +2189,9 @@
             if(targetBtn) {
                 targetBtn.classList.remove('text-slate-300');
                 targetBtn.classList.add('active');
+            }
+            if (tabName === 'rekap') {
+                renderRekapAkun();
             }
         }
 
