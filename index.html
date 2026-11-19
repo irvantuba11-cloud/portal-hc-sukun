@@ -427,15 +427,13 @@
                 <div id="tab-pribadi" class="bg-white p-8 rounded-2xl shadow-md space-y-6 w-full">
                     <h3 class="text-sm font-bold text-navy-900 border-b pb-3 uppercase tracking-wider">1. Informasi Pribadi & Pas Foto Formal</h3>
                     
-                    <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 p-5 bg-slate-50 border rounded-2xl">
-                        <div class="w-24 h-32 rounded-xl bg-slate-200 border-2 border-navy-900 overflow-hidden flex items-center justify-center shadow-inner shrink-0">
-                            <img id="preview-pasfoto" src="" alt="Pas Foto" class="w-full h-full object-cover hidden">
-                            <span id="placeholder-pasfoto" class="text-xs text-slate-500 font-bold text-center px-2">Pas Foto Formal</span>
+                    <div class="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-6 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+                        <div class="w-36 h-44 rounded-xl bg-slate-200 border-2 border-navy-900 overflow-hidden flex items-center justify-center shadow-md shrink-0">
+                            <img id="preview-pasfoto" src="" alt="Pas Foto" class="w-full h-full object-cover object-top hidden">
+                            <span id="placeholder-pasfoto" class="text-xs text-slate-500 font-bold text-center px-3">Pas Foto Formal</span>
                         </div>
-                        <div class="space-y-2 text-center sm:text-left">
-                            <label class="font-bold text-navy-900 block text-xs">Pas Foto Formal Karyawan</label>
-                            <p class="text-[11px] text-slate-500 font-medium">Unggah foto formal latar belakang bebas/rapi format JPG/PNG.</p>
-                            <input type="file" id="file-pasfoto" accept="image/*" onchange="previewPasFoto(event)" class="text-xs text-slate-600 font-semibold file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800 cursor-pointer">
+                        <div id="pasfoto-upload-wrapper" class="hidden space-y-2 text-center sm:text-left">
+                            <input type="file" id="file-pasfoto" accept="image/*" onchange="previewPasFoto(event)" class="text-xs text-slate-600 font-semibold file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-navy-900 file:text-white hover:file:bg-navy-800 cursor-pointer">
                         </div>
                     </div>
 
@@ -1064,7 +1062,6 @@
         function updateVehicleOptions(selectedMerek = null, selectedModel = null) {
             let jenis = document.getElementById('v-jenis').value;
             let merekSelect = document.getElementById('v-merek');
-            let merekManual = document.getElementById('v-merek-manual');
             merekSelect.innerHTML = '';
 
             let mereks = vehicleOptions[jenis] ? Object.keys(vehicleOptions[jenis]) : ["Lainnya"];
@@ -1367,6 +1364,13 @@
                     }
                 }
             });
+
+            const pasFotoUploadWrapper = document.getElementById('pasfoto-upload-wrapper');
+            if (pasFotoUploadWrapper) {
+                if (isEditable) pasFotoUploadWrapper.classList.remove('hidden');
+                else pasFotoUploadWrapper.classList.add('hidden');
+            }
+
             const saveBtnContainer = document.getElementById('btn-save-container');
             if (isEditable) saveBtnContainer.classList.remove('hidden');
             else saveBtnContainer.classList.add('hidden');
@@ -2189,12 +2193,10 @@
                 let list = groupedByArea[areaKey];
                 if (!list || list.length === 0) return;
 
-                // Urutkan nama abjad A-Z di dalam setiap area
                 list.sort((a, b) => (a.user.nama || '').localeCompare(b.user.nama || '', 'id'));
 
                 let areaLabel = areaKey === "lainnya" ? "AREA LAINNYA / BELUM DIATUR" : areaKey.toUpperCase();
 
-                // Baris Pembatas Area
                 let dividerTr = document.createElement('tr');
                 dividerTr.className = "bg-slate-800 text-white border-y-2 border-slate-900";
                 dividerTr.innerHTML = `
@@ -2211,7 +2213,6 @@
                 `;
                 tbody.appendChild(dividerTr);
 
-                // Baris Petugas di Area tersebut
                 list.forEach((item, idx) => {
                     let { username, user } = item;
                     let tr = document.createElement('tr');
