@@ -1132,6 +1132,25 @@
         const SUPABASE_KEY = "sb_publishable_IuY-pkdnbQDPjk757XG6Xw_8Va1VQhW";
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        const jabatanHierarchyOrder = [
+            "AREA MANAGER",
+            "SALES SUPERVISOR",
+            "ADMIN",
+            "TEAM LEADER",
+            "DROPING",
+            "SDM",
+            "SKM",
+            "SPM",
+            "DRIVER",
+            "OB"
+        ];
+
+        function getJabatanRank(jabatan) {
+            let normalized = (jabatan || '').trim().toUpperCase();
+            let idx = jabatanHierarchyOrder.indexOf(normalized);
+            return idx === -1 ? jabatanHierarchyOrder.length : idx;
+        }
+
         const vehicleOptions = {
             "Motor": {
                 "Honda": ["Beat", "Beat Street", "Vario", "Scoopy", "Genio", "PCX", "ADV", "Revo", "Supra X 125", "Supra GTR", "Sonic 150R", "Stylo", "Verza", "Lainnya"],
@@ -1698,18 +1717,34 @@
             alert("Data pengajuan berhasil diperbarui dari Cloud!");
         }
 
+        function getSortedAccountsByJabatan(excludeActive = true) {
+            let list = [];
+            for (let username in dbHC) {
+                if (excludeActive && username === activeUser) continue;
+                list.push({ username, user: dbHC[username] });
+            }
+            list.sort((a, b) => {
+                let rankDiff = getJabatanRank(a.user.jabatan) - getJabatanRank(b.user.jabatan);
+                if (rankDiff !== 0) return rankDiff;
+                return (a.user.nama || '').localeCompare(b.user.nama || '', 'id');
+            });
+            return list;
+        }
+
         function renderAdminPanel() {
             let select = document.getElementById('admin-select-sales');
             if (select) {
+                let prevSelected = select.value;
                 select.innerHTML = '';
-                for (let username in dbHC) {
-                    let user = dbHC[username];
-                    if (username !== activeUser) {
-                        let opt = document.createElement('option');
-                        opt.value = username;
-                        opt.text = `${user.nama} (${user.jabatan || 'Sales'})`;
-                        select.appendChild(opt);
-                    }
+                let sortedAccounts = getSortedAccountsByJabatan(true);
+                sortedAccounts.forEach(({ username, user }) => {
+                    let opt = document.createElement('option');
+                    opt.value = username;
+                    opt.text = `${user.nama} (${user.jabatan || 'Sales'})`;
+                    select.appendChild(opt);
+                });
+                if (prevSelected && dbHC[prevSelected] && prevSelected !== activeUser) {
+                    select.value = prevSelected;
                 }
             }
 
@@ -1730,9 +1765,9 @@
             if(!container) return;
             container.innerHTML = '';
 
-            for (let username in dbHC) {
-                if (username === 'irvantuba') continue;
-                let user = dbHC[username];
+            let sortedAccounts = getSortedAccountsByJabatan(false);
+            sortedAccounts.forEach(({ username, user }) => {
+                if (username === 'irvantuba') return;
                 let isChecked = user.isSubAdmin ? 'checked' : '';
 
                 let div = document.createElement('div');
@@ -1748,7 +1783,7 @@
                     </label>
                 `;
                 container.appendChild(div);
-            }
+            });
         }
 
         async function saveAdminAccessSettings() {
