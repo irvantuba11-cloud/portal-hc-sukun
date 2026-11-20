@@ -655,13 +655,13 @@
                         <div>
                             <label class="font-bold text-slate-800 block mb-1">Area Penempatan</label>
                             <select id="w-area" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
+                                <option value="PWK">PWK</option>
                                 <option value="jakarta barat">Jakarta Barat</option>
                                 <option value="jakarta utara">Jakarta Utara</option>
                                 <option value="jakarta timur">Jakarta Timur</option>
                                 <option value="jakarta selatan">Jakarta Selatan</option>
                                 <option value="jakarta pusat">Jakarta Pusat</option>
                                 <option value="kota depok">Kota Depok</option>
-                                <option value="PWK">PWK</option>
                             </select>
                         </div>
                         <div><label class="font-bold text-slate-800 block mb-1">Atasan Langsung</label><input type="text" id="w-atasan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" value="Rais Musthofa"></div>
@@ -2416,6 +2416,7 @@
             tbody.innerHTML = '';
 
             const areaOrder = [
+                "PWK",
                 "jakarta barat",
                 "jakarta utara",
                 "jakarta timur",
