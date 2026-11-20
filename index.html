@@ -712,7 +712,6 @@
                             <select id="v-simjenis" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
                                 <option value="SIM C">SIM C</option>
                                 <option value="SIM A">SIM A</option>
-                                <option value="SIM A & C">SIM A & C</option>
                                 <option value="SIM B1">SIM B1</option>
                                 <option value="SIM B2">SIM B2</option>
                             </select>
@@ -732,8 +731,6 @@
                                 <option value="Mandiri">Mandiri</option>
                                 <option value="BNI">BNI</option>
                                 <option value="BRI">BRI</option>
-                                <option value="CIMB Niaga">CIMB Niaga</option>
-                                <option value="Bank Mega">Bank Mega</option>
                                 <option value="Lainnya">Lainnya</option>
                             </select>
                             <input type="text" id="c-namabank-manual" class="hidden mt-2 w-full p-2.5 border border-blue-400 rounded-lg bg-white font-semibold text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ketik nama bank manual...">
@@ -778,7 +775,7 @@
                                 <option value="SMP">SMP</option>
                                 <option value="SMA/SMK">SMA/SMK</option>
                                 <option value="D3">D3</option>
-                                <option value="D4/S1">D4/S1</option>
+                                <option value="S1">S1</option>
                                 <option value="S2">S2</option>
                             </select>
                         </div>
@@ -821,6 +818,7 @@
                             <select id="kpi-filter-year" onchange="renderKPITable()" class="p-2 border rounded-lg bg-slate-50 text-xs font-bold text-slate-900">
                                 <option value="2026">2026</option>
                                 <option value="2027">2027</option>
+                                <option value="2028">2028</option>
                                 <option value="2025">2025</option>
                             </select>
                         </div>
@@ -879,8 +877,8 @@
                             <div>
                                 <label class="font-bold text-slate-800 block mb-1">Jenis Pengajuan</label>
                                 <select id="leave-input-type" class="w-full p-2.5 border rounded-lg bg-white font-bold text-slate-950">
-                                    <option value="Cuti">Cuti (Min H-7, Jatah 12 Hari/Thn)</option>
-                                    <option value="Izin">Izin (Min H-3, Tanpa Syarat Thn Kerja)</option>
+                                    <option value="Cuti">Cuti (Min H-7)</option>
+                                    <option value="Izin">Izin (Min H-3)</option>
                                 </select>
                             </div>
                             <div>
@@ -1136,8 +1134,8 @@
 
         const vehicleOptions = {
             "Motor": {
-                "Honda": ["Beat", "Beat Street", "Vario 110", "Vario 125", "Vario 150", "Vario 160", "Scoopy", "Genio", "PCX 150/160", "ADV 150/160", "Revo", "Supra X 125", "Supra GTR", "Sonic 150R", "CB150R", "CBR150R", "Verza", "Lainnya"],
-                "Yamaha": ["Mio M3 / Z / S", "Gear 125", "Fazzio", "Filano", "Freego", "NMax", "Aerox 155", "Lexi", "XMax", "Vega Force / ZR", "Jupiter Z1", "Jupiter MX / MX King", "Vixion", "R15", "MT-15", "XSR 155", "Lainnya"],
+                "Honda": ["Beat", "Beat Street", "Vario", "Scoopy", "Genio", "PCX", "ADV", "Revo", "Supra X 125", "Supra GTR", "Sonic 150R", "Stylo", "Verza", "Lainnya"],
+                "Yamaha": ["Mio", "Fazzio", "Filano", "Fino", "NMax", "Aerox", "Lexi", "XMax", "Jupiter Z1", "Jupiter MX", "Vixion", "R15", "MT-15", "XSR 155", "Lainnya"],
                 "Suzuki": ["Nex II", "Address", "Burgman Street", "Satria FU 150", "Smash FI", "GSX-R150 / S150", "Lainnya"],
                 "Kawasaki": ["W175", "KLX 150", "D-Tracker", "Ninja 250", "Lainnya"],
                 "Vespa / Piaggio": ["LX 125", "S 125", "Primavera", "Sprint", "Lainnya"],
@@ -1257,12 +1255,12 @@
             "SD": ["Umum", "Lainnya"],
             "SMP": ["Umum", "Lainnya"],
             "SMA/SMK": [
-                "IPA", "IPS", "Bahasa",
+                "IPA", "IPS",
                 "Teknik Kendaraan Ringan (TKR)", "Teknik Bisnis Sepeda Motor (TBSM)",
-                "Teknik Komputer & Jaringan (TKJ)", "Rekayasa Perangkat Lunak (RPL)",
-                "Multimedia / DKV", "Teknik Instalasi Tenaga Listrik",
+                "Teknik Komputer & Jaringan (TKJ)", "Teknik Informatika",
+                "Multimedia", "Teknik Instalasi Tenaga Listrik",
                 "Teknik Mesin", "Teknik Elektronika",
-                "Akuntansi & Keuangan", "Pemasaran / Bisnis Daring",
+                "Akuntansi & Keuangan", "Akuntansi",
                 "Otomatisasi Tata Kelola Perkantoran (OTKP)", "Perhotelan",
                 "Tata Boga", "Farmasi / Keperawatan", "Lainnya"
             ],
@@ -2416,7 +2414,7 @@
             tbody.innerHTML = '';
 
             const areaOrder = [
-                "PWK",
+                "pwk",
                 "jakarta barat",
                 "jakarta utara",
                 "jakarta timur",
