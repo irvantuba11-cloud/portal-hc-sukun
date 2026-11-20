@@ -44,10 +44,11 @@
             box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
         }
         .logo-3d {
-            background: linear-gradient(145deg, #0c1d40, #061024);
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            box-shadow: 0 6px 15px rgba(6, 16, 36, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.25), inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(160deg, #0b1c3d 0%, #07132b 65%, #040b1a 100%);
+            border: 1px solid rgba(212, 175, 55, 0.55);
+            box-shadow: 0 8px 18px rgba(4, 11, 26, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.22), inset 0 -2px 5px rgba(0, 0, 0, 0.55);
             overflow: hidden;
+            position: relative;
         }
         .corporate-hero-bg {
             background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 50%, #172554 100%);
@@ -92,27 +93,30 @@
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center space-x-3">
                     <div class="w-11 h-11 rounded-xl logo-3d flex items-center justify-center p-1 shrink-0">
-                        <svg viewBox="0 0 120 120" class="w-full h-full">
+                        <svg viewBox="0 0 160 120" class="w-full h-full">
                             <defs>
                                 <linearGradient id="hcSilverHdr" x1="0%" y1="0%" x2="100%" y2="100%">
                                     <stop offset="0%" stop-color="#ffffff"/>
-                                    <stop offset="55%" stop-color="#e2e8f0"/>
-                                    <stop offset="100%" stop-color="#94a3b8"/>
+                                    <stop offset="50%" stop-color="#e2e8f0"/>
+                                    <stop offset="100%" stop-color="#8b9bb4"/>
                                 </linearGradient>
                                 <linearGradient id="hcGoldHdr" x1="0%" y1="0%" x2="100%" y2="100%">
                                     <stop offset="0%" stop-color="#fef08a"/>
-                                    <stop offset="50%" stop-color="#eab308"/>
-                                    <stop offset="100%" stop-color="#b45309"/>
+                                    <stop offset="45%" stop-color="#eab308"/>
+                                    <stop offset="100%" stop-color="#92400e"/>
                                 </linearGradient>
                             </defs>
-                            <path d="M 52 34 C 76 14, 108 18, 104 36" fill="none" stroke="url(#hcGoldHdr)" stroke-width="4.5" stroke-linecap="round"/>
-                            <path d="M 18 24 L 33 24 L 33 52 L 50 52 L 50 24 L 65 24 L 65 62 L 50 75 L 50 64 L 33 64 L 33 96 L 18 96 Z" fill="url(#hcSilverHdr)"/>
-                            <path d="M 50 80 L 65 67 L 65 96 L 50 96 Z" fill="url(#hcSilverHdr)"/>
-                            <path d="M 85 24 C 69 24, 61 37, 61 58 L 74 52 C 74 41, 78 37, 85 37 Z" fill="url(#hcSilverHdr)"/>
-                            <path d="M 89 24 C 99 24, 106 31, 108 42 L 94 45 C 93 40, 91 37, 89 37 Z" fill="url(#hcSilverHdr)"/>
-                            <path d="M 61 63 C 62 83, 70 96, 85 96 L 85 83 C 78 83, 74 78, 74 67 Z" fill="url(#hcSilverHdr)"/>
-                            <path d="M 89 83 C 93 83, 95 80, 96 74 L 109 77 C 106 88, 99 96, 89 96 Z" fill="url(#hcSilverHdr)"/>
-                            <path d="M 38 72 C 33 96, 72 94, 103 41" fill="none" stroke="url(#hcGoldHdr)" stroke-width="4.8" stroke-linecap="round"/>
+                            <!-- Huruf H 3D -->
+                            <path d="M 16 18 L 35 18 L 35 51 L 56 51 L 56 18 L 75 18 L 75 64 L 56 77 L 56 64 L 35 64 L 35 102 L 16 102 Z" fill="url(#hcSilverHdr)"/>
+                            <path d="M 56 83 L 75 70 L 75 102 L 56 102 Z" fill="url(#hcSilverHdr)"/>
+                            <!-- Huruf C 3D terbelah -->
+                            <path d="M 122 18 C 98 18, 86 35, 86 60 L 103 52 C 103 39, 110 34, 122 34 Z" fill="url(#hcSilverHdr)"/>
+                            <path d="M 127 18 C 139 18, 148 26, 151 40 L 133 44 C 132 37, 129 34, 127 34 Z" fill="url(#hcSilverHdr)"/>
+                            <path d="M 86 66 C 87 89, 98 102, 122 102 L 122 86 C 110 86, 103 80, 103 68 Z" fill="url(#hcSilverHdr)"/>
+                            <path d="M 127 86 C 131 86, 134 83, 136 76 L 152 80 C 149 94, 139 102, 127 102 Z" fill="url(#hcSilverHdr)"/>
+                            <!-- Cincin orbit emas -->
+                            <path d="M 64 33 C 96 7, 144 12, 140 36" fill="none" stroke="url(#hcGoldHdr)" stroke-width="5.5" stroke-linecap="round"/>
+                            <path d="M 46 76 C 41 105, 96 101, 139 38" fill="none" stroke="url(#hcGoldHdr)" stroke-width="5.5" stroke-linecap="round"/>
                         </svg>
                     </div>
                     <div>
@@ -180,30 +184,45 @@
             <div id="section-login" class="flex-grow flex items-center justify-center p-6 bg-slate-100 w-full">
                 <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full">
                     <div class="flex flex-col items-center justify-center mb-6">
-                        <div class="w-24 h-24 logo-3d rounded-2xl flex flex-col items-center justify-center mb-3 p-2">
-                            <svg viewBox="0 0 120 120" class="w-16 h-16">
+                        <div class="w-44 h-44 logo-3d rounded-2xl flex flex-col justify-between p-2.5 mb-3">
+                            <!-- Lencana SUKUN Mc. WARTONO di pojok kanan atas -->
+                            <div class="flex justify-end z-10">
+                                <div class="bg-[#09152c]/95 border border-amber-400/70 rounded px-1.5 py-0.5 text-center leading-none shadow">
+                                    <span class="text-[7px] font-serif font-black tracking-wider text-white block">SUKUN</span>
+                                    <span class="text-[4.5px] font-sans font-bold tracking-wider text-slate-300 block mt-0.5">Mc. WARTONO</span>
+                                </div>
+                            </div>
+                            <!-- Logo 3D HC & Orbit Emas -->
+                            <svg viewBox="0 0 180 95" class="w-full h-20 z-10 -mt-2">
                                 <defs>
                                     <linearGradient id="hcSilverLogin" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" stop-color="#ffffff"/>
-                                        <stop offset="55%" stop-color="#e2e8f0"/>
-                                        <stop offset="100%" stop-color="#94a3b8"/>
+                                        <stop offset="50%" stop-color="#e2e8f0"/>
+                                        <stop offset="100%" stop-color="#8b9bb4"/>
                                     </linearGradient>
                                     <linearGradient id="hcGoldLogin" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" stop-color="#fef08a"/>
-                                        <stop offset="50%" stop-color="#eab308"/>
-                                        <stop offset="100%" stop-color="#b45309"/>
+                                        <stop offset="45%" stop-color="#eab308"/>
+                                        <stop offset="100%" stop-color="#92400e"/>
                                     </linearGradient>
                                 </defs>
-                                <path d="M 52 34 C 76 14, 108 18, 104 36" fill="none" stroke="url(#hcGoldLogin)" stroke-width="4.5" stroke-linecap="round"/>
-                                <path d="M 18 24 L 33 24 L 33 52 L 50 52 L 50 24 L 65 24 L 65 62 L 50 75 L 50 64 L 33 64 L 33 96 L 18 96 Z" fill="url(#hcSilverLogin)"/>
-                                <path d="M 50 80 L 65 67 L 65 96 L 50 96 Z" fill="url(#hcSilverLogin)"/>
-                                <path d="M 85 24 C 69 24, 61 37, 61 58 L 74 52 C 74 41, 78 37, 85 37 Z" fill="url(#hcSilverLogin)"/>
-                                <path d="M 89 24 C 99 24, 106 31, 108 42 L 94 45 C 93 40, 91 37, 89 37 Z" fill="url(#hcSilverLogin)"/>
-                                <path d="M 61 63 C 62 83, 70 96, 85 96 L 85 83 C 78 83, 74 78, 74 67 Z" fill="url(#hcSilverLogin)"/>
-                                <path d="M 89 83 C 93 83, 95 80, 96 74 L 109 77 C 106 88, 99 96, 89 96 Z" fill="url(#hcSilverLogin)"/>
-                                <path d="M 38 72 C 33 96, 72 94, 103 41" fill="none" stroke="url(#hcGoldLogin)" stroke-width="4.8" stroke-linecap="round"/>
+                                <!-- Huruf H 3D -->
+                                <path d="M 18 14 L 39 14 L 39 48 L 62 48 L 62 14 L 83 14 L 83 60 L 62 74 L 62 60 L 39 60 L 39 92 L 18 92 Z" fill="url(#hcSilverLogin)"/>
+                                <path d="M 62 79 L 83 65 L 83 92 L 62 92 Z" fill="url(#hcSilverLogin)"/>
+                                <!-- Huruf C 3D terbelah -->
+                                <path d="M 134 14 C 108 14, 95 30, 95 54 L 114 46 C 114 34, 121 29, 134 29 Z" fill="url(#hcSilverLogin)"/>
+                                <path d="M 139 14 C 152 14, 161 22, 164 35 L 145 39 C 144 32, 141 29, 139 29 Z" fill="url(#hcSilverLogin)"/>
+                                <path d="M 95 60 C 96 81, 108 92, 134 92 L 134 77 C 121 77, 114 72, 114 62 Z" fill="url(#hcSilverLogin)"/>
+                                <path d="M 139 77 C 143 77, 146 74, 148 68 L 165 72 C 162 84, 152 92, 139 92 Z" fill="url(#hcSilverLogin)"/>
+                                <!-- Cincin orbit emas -->
+                                <path d="M 70 26 C 105 4, 156 9, 152 32" fill="none" stroke="url(#hcGoldLogin)" stroke-width="5" stroke-linecap="round"/>
+                                <path d="M 52 67 C 46 93, 105 90, 151 34" fill="none" stroke="url(#hcGoldLogin)" stroke-width="5" stroke-linecap="round"/>
                             </svg>
-                            <span class="text-[7px] font-black tracking-widest text-amber-300 uppercase mt-0.5">HUMAN CAPITAL</span>
+                            <!-- Siluet Gedung & Teks Perusahaan -->
+                            <div class="text-center leading-tight z-10 border-t border-white/10 pt-1">
+                                <span class="text-[6.5px] font-extrabold italic tracking-wide text-white uppercase block">PT. SUKUN WARTONO INDONESIA</span>
+                                <span class="text-[5px] font-bold tracking-widest text-slate-300 uppercase block text-right pr-2">HUMAN CAPITAL</span>
+                            </div>
                         </div>
                         <span class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full">Cloud Real-Time System</span>
                     </div>
@@ -228,19 +247,19 @@
                 <div class="max-w-6xl mx-auto w-full flex justify-between items-center pb-2">
                     <div class="flex items-center gap-2.5 bg-blue-950/70 px-3 py-1.5 rounded-xl border border-blue-400/30">
                         <div class="w-8 h-8 logo-3d rounded-lg p-0.5 flex items-center justify-center">
-                            <svg viewBox="0 0 120 120" class="w-full h-full">
-                                <path d="M 52 34 C 76 14, 108 18, 104 36" fill="none" stroke="#eab308" stroke-width="4.5" stroke-linecap="round"/>
-                                <path d="M 18 24 L 33 24 L 33 52 L 50 52 L 50 24 L 65 24 L 65 62 L 50 75 L 50 64 L 33 64 L 33 96 L 18 96 Z" fill="#e2e8f0"/>
-                                <path d="M 50 80 L 65 67 L 65 96 L 50 96 Z" fill="#e2e8f0"/>
-                                <path d="M 85 24 C 69 24, 61 37, 61 58 L 74 52 C 74 41, 78 37, 85 37 Z" fill="#e2e8f0"/>
-                                <path d="M 89 24 C 99 24, 106 31, 108 42 L 94 45 C 93 40, 91 37, 89 37 Z" fill="#e2e8f0"/>
-                                <path d="M 61 63 C 62 83, 70 96, 85 96 L 85 83 C 78 83, 74 78, 74 67 Z" fill="#e2e8f0"/>
-                                <path d="M 89 83 C 93 83, 95 80, 96 74 L 109 77 C 106 88, 99 96, 89 96 Z" fill="#e2e8f0"/>
-                                <path d="M 38 72 C 33 96, 72 94, 103 41" fill="none" stroke="#eab308" stroke-width="4.8" stroke-linecap="round"/>
+                            <svg viewBox="0 0 160 120" class="w-full h-full">
+                                <path d="M 16 18 L 35 18 L 35 51 L 56 51 L 56 18 L 75 18 L 75 64 L 56 77 L 56 64 L 35 64 L 35 102 L 16 102 Z" fill="#e2e8f0"/>
+                                <path d="M 56 83 L 75 70 L 75 102 L 56 102 Z" fill="#e2e8f0"/>
+                                <path d="M 122 18 C 98 18, 86 35, 86 60 L 103 52 C 103 39, 110 34, 122 34 Z" fill="#e2e8f0"/>
+                                <path d="M 127 18 C 139 18, 148 26, 151 40 L 133 44 C 132 37, 129 34, 127 34 Z" fill="#e2e8f0"/>
+                                <path d="M 86 66 C 87 89, 98 102, 122 102 L 122 86 C 110 86, 103 80, 103 68 Z" fill="#e2e8f0"/>
+                                <path d="M 127 86 C 131 86, 134 83, 136 76 L 152 80 C 149 94, 139 102, 127 102 Z" fill="#e2e8f0"/>
+                                <path d="M 64 33 C 96 7, 144 12, 140 36" fill="none" stroke="#eab308" stroke-width="5.5" stroke-linecap="round"/>
+                                <path d="M 46 76 C 41 105, 96 101, 139 38" fill="none" stroke="#eab308" stroke-width="5.5" stroke-linecap="round"/>
                             </svg>
                         </div>
                         <div class="leading-tight">
-                            <span class="text-[10px] font-black tracking-wider text-white uppercase block">PT. SUKUN WARTONO INDONESIA</span>
+                            <span class="text-[10px] font-black italic tracking-wider text-white uppercase block">PT. SUKUN WARTONO INDONESIA</span>
                             <span class="text-[9px] font-bold tracking-widest text-amber-300 uppercase block">HUMAN CAPITAL</span>
                         </div>
                     </div>
@@ -319,15 +338,15 @@
                 <div class="max-w-7xl mx-auto w-full flex justify-between items-center pb-2">
                     <div class="flex items-center gap-2 bg-blue-950/70 px-2.5 py-1 rounded-xl border border-blue-400/30">
                         <div class="w-7 h-7 logo-3d rounded-lg p-0.5 flex items-center justify-center">
-                            <svg viewBox="0 0 120 120" class="w-full h-full">
-                                <path d="M 52 34 C 76 14, 108 18, 104 36" fill="none" stroke="#eab308" stroke-width="4.5" stroke-linecap="round"/>
-                                <path d="M 18 24 L 33 24 L 33 52 L 50 52 L 50 24 L 65 24 L 65 62 L 50 75 L 50 64 L 33 64 L 33 96 L 18 96 Z" fill="#e2e8f0"/>
-                                <path d="M 50 80 L 65 67 L 65 96 L 50 96 Z" fill="#e2e8f0"/>
-                                <path d="M 85 24 C 69 24, 61 37, 61 58 L 74 52 C 74 41, 78 37, 85 37 Z" fill="#e2e8f0"/>
-                                <path d="M 89 24 C 99 24, 106 31, 108 42 L 94 45 C 93 40, 91 37, 89 37 Z" fill="#e2e8f0"/>
-                                <path d="M 61 63 C 62 83, 70 96, 85 96 L 85 83 C 78 83, 74 78, 74 67 Z" fill="#e2e8f0"/>
-                                <path d="M 89 83 C 93 83, 95 80, 96 74 L 109 77 C 106 88, 99 96, 89 96 Z" fill="#e2e8f0"/>
-                                <path d="M 38 72 C 33 96, 72 94, 103 41" fill="none" stroke="#eab308" stroke-width="4.8" stroke-linecap="round"/>
+                            <svg viewBox="0 0 160 120" class="w-full h-full">
+                                <path d="M 16 18 L 35 18 L 35 51 L 56 51 L 56 18 L 75 18 L 75 64 L 56 77 L 56 64 L 35 64 L 35 102 L 16 102 Z" fill="#e2e8f0"/>
+                                <path d="M 56 83 L 75 70 L 75 102 L 56 102 Z" fill="#e2e8f0"/>
+                                <path d="M 122 18 C 98 18, 86 35, 86 60 L 103 52 C 103 39, 110 34, 122 34 Z" fill="#e2e8f0"/>
+                                <path d="M 127 18 C 139 18, 148 26, 151 40 L 133 44 C 132 37, 129 34, 127 34 Z" fill="#e2e8f0"/>
+                                <path d="M 86 66 C 87 89, 98 102, 122 102 L 122 86 C 110 86, 103 80, 103 68 Z" fill="#e2e8f0"/>
+                                <path d="M 127 86 C 131 86, 134 83, 136 76 L 152 80 C 149 94, 139 102, 127 102 Z" fill="#e2e8f0"/>
+                                <path d="M 64 33 C 96 7, 144 12, 140 36" fill="none" stroke="#eab308" stroke-width="5.5" stroke-linecap="round"/>
+                                <path d="M 46 76 C 41 105, 96 101, 139 38" fill="none" stroke="#eab308" stroke-width="5.5" stroke-linecap="round"/>
                             </svg>
                         </div>
                         <span class="text-[9px] font-black tracking-wider text-amber-300 uppercase">HUMAN CAPITAL</span>
@@ -1340,7 +1359,7 @@
             "lukmanhakimk": { pass: "lukman123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Lukman Hakim", panggilan: "Lukman", nik: "SKN-S14", androiduser: "lukman_sukun", androidpass: "lukman123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000014", email: "lukman@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 LUK", vstnk: "STNK14", vsimjenis: "SIM C", vsimno: "SIM14", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta timur", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "14xx", namarek: "Lukman Hakim", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "jenalmutakin": { pass: "jenal123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Jenal Mutakin", panggilan: "Jenal", nik: "SKN-S15", androiduser: "jenal_sukun", androidpass: "jenal123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000015", email: "jenal@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 JEN", vstnk: "STNK15", vsimjenis: "SIM C", vsimno: "SIM15", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "15xx", namarek: "Jenal Mutakin", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "arsoramandap": { pass: "arso123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Arso Ramanda P", panggilan: "Arso", nik: "SKN-S16", androiduser: "arso_sukun", androidpass: "arso123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000016", email: "arso@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 ARS", vstnk: "STNK16", vsimjenis: "SIM C", vsimno: "SIM16", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "16xx", namarek: "Arso Ramanda P", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
-            "rifqinurianggi": { pass: "rifqi123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Rifqi Nuri Anggi", panggilan: "Rifqi", nik: "SKN-S17", androiduser: "rifqi_sukun", androidpass: "rifqi123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000017", email: "rifqi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 RIF", vstnk: "STNK17", vsimjenis: "SIM C", vsimno: "SIM17", dnama: "-", d_hub: "Orangtua", d_info: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta timur", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "17xx", namarek: "Rifqi Nuri Anggi", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "rifqinurianggi": { pass: "rifqi123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Rifqi Nuri Anggi", panggilan: "Rifqi", nik: "SKN-S17", androiduser: "rifqi_sukun", androidpass: "rifqi123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000017", email: "rifqi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 RIF", vstnk: "STNK17", vsimjenis: "SIM C", vsimno: "SIM17", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta timur", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "17xx", namarek: "Rifqi Nuri Anggi", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "mramadhannasyiri": { pass: "rama123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "M Ramadhan Nasyiri", panggilan: "Rama", nik: "SKN-S18", androiduser: "rama_sukun", androidpass: "rama123", tmptlahir: "Jakarta", tgllahir: "2000-01-01", gender: "Laki-laki", kontak: "081200000018", email: "rama@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2022", vplat: "B 1234 RAM", vstnk: "STNK18", vsimjenis: "SIM C", vsimno: "SIM18", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "18xx", namarek: "M Ramadhan Nasyiri", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} }
         };
 
