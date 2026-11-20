@@ -50,6 +50,23 @@
             overflow: hidden;
             position: relative;
         }
+        .login-cityscape-bg {
+            background:
+                linear-gradient(180deg, rgba(8, 22, 52, 0.92) 0%, rgba(16, 42, 86, 0.86) 55%, rgba(28, 62, 112, 0.92) 100%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 700' preserveAspectRatio='none'%3E%3Cg fill='%2393c5fd' fill-opacity='0.14'%3E%3Crect x='25' y='340' width='75' height='360' rx='3'/%3E%3Crect x='115' y='230' width='95' height='470' rx='3'/%3E%3Cpolygon points='115,230 162,185 210,230'/%3E%3Crect x='228' y='390' width='80' height='310' rx='3'/%3E%3Crect x='330' y='280' width='88' height='420' rx='3'/%3E%3Crect x='438' y='430' width='70' height='270' rx='3'/%3E%3Crect x='530' y='310' width='85' height='390' rx='3'/%3E%3Crect x='770' y='350' width='82' height='350' rx='3'/%3E%3Crect x='870' y='245' width='100' height='455' rx='3'/%3E%3Cpolygon points='870,245 920,198 970,245'/%3E%3Crect x='990' y='380' width='86' height='320' rx='3'/%3E%3Crect x='1096' y='275' width='92' height='425' rx='3'/%3E%3Crect x='1208' y='360' width='84' height='340' rx='3'/%3E%3Crect x='1312' y='295' width='96' height='405' rx='3'/%3E%3C/g%3E%3Cg fill='%23e2e8f0' fill-opacity='0.12'%3E%3Crect x='132' y='255' width='12' height='18'/%3E%3Crect x='154' y='255' width='12' height='18'/%3E%3Crect x='176' y='255' width='12' height='18'/%3E%3Crect x='132' y='288' width='12' height='18'/%3E%3Crect x='154' y='288' width='12' height='18'/%3E%3Crect x='176' y='288' width='12' height='18'/%3E%3Crect x='890' y='270' width='14' height='20'/%3E%3Crect x='914' y='270' width='14' height='20'/%3E%3Crect x='938' y='270' width='14' height='20'/%3E%3Crect x='1116' y='302' width='14' height='20'/%3E%3Crect x='1140' y='302' width='14' height='20'/%3E%3Crect x='1164' y='302' width='14' height='20'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center bottom;
+            position: relative;
+        }
+        .login-card-3d {
+            background: #ffffff;
+            box-shadow: 0 24px 60px rgba(2, 10, 28, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.25);
+        }
+        .login-emblem-box {
+            background: linear-gradient(155deg, #0b1c3d 0%, #061024 60%, #030917 100%);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 14px 28px rgba(4, 12, 30, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+        }
         .corporate-hero-bg {
             background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 50%, #172554 100%);
             position: relative;
@@ -181,29 +198,29 @@
 
         <main class="flex-grow flex flex-col w-full">
             <!-- HALAMAN LOGIN -->
-            <div id="section-login" class="flex-grow flex items-center justify-center p-6 bg-slate-100 w-full">
-                <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full">
+            <div id="section-login" class="flex-grow flex items-center justify-center px-4 py-8 login-cityscape-bg w-full">
+                <div class="login-card-3d px-8 py-9 rounded-3xl max-w-md w-full">
                     <div class="flex flex-col items-center justify-center mb-6">
-                        <div class="w-44 h-44 logo-3d rounded-2xl flex flex-col justify-between p-2.5 mb-3">
-                            <!-- Lencana SUKUN Mc. WARTONO di pojok kanan atas -->
+                        <div class="w-44 h-44 login-emblem-box rounded-3xl flex flex-col justify-between p-3 mb-2">
+                            <!-- Lencana SUKUN MC. WARTONO di pojok kanan atas -->
                             <div class="flex justify-end z-10">
-                                <div class="bg-[#09152c]/95 border border-amber-400/70 rounded px-1.5 py-0.5 text-center leading-none shadow">
-                                    <span class="text-[7px] font-serif font-black tracking-wider text-white block">SUKUN</span>
-                                    <span class="text-[4.5px] font-sans font-bold tracking-wider text-slate-300 block mt-0.5">Mc. WARTONO</span>
+                                <div class="bg-[#09152c]/95 border border-slate-300/80 rounded-md px-2 py-1 text-center leading-none shadow-md">
+                                    <span class="text-[8px] font-serif font-black tracking-wider text-white block">SUKUN</span>
+                                    <span class="text-[5px] font-sans font-bold tracking-wider text-slate-200 block mt-0.5 uppercase">MC. WARTONO</span>
                                 </div>
                             </div>
                             <!-- Logo 3D HC & Orbit Emas -->
-                            <svg viewBox="0 0 180 95" class="w-full h-20 z-10 -mt-2">
+                            <svg viewBox="0 0 180 95" class="w-full h-24 z-10 my-auto">
                                 <defs>
                                     <linearGradient id="hcSilverLogin" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" stop-color="#ffffff"/>
-                                        <stop offset="50%" stop-color="#e2e8f0"/>
-                                        <stop offset="100%" stop-color="#8b9bb4"/>
+                                        <stop offset="55%" stop-color="#e2e8f0"/>
+                                        <stop offset="100%" stop-color="#94a3b8"/>
                                     </linearGradient>
                                     <linearGradient id="hcGoldLogin" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#fef08a"/>
-                                        <stop offset="45%" stop-color="#eab308"/>
-                                        <stop offset="100%" stop-color="#92400e"/>
+                                        <stop offset="0%" stop-color="#fde047"/>
+                                        <stop offset="50%" stop-color="#eab308"/>
+                                        <stop offset="100%" stop-color="#a16207"/>
                                     </linearGradient>
                                 </defs>
                                 <!-- Huruf H 3D -->
@@ -215,29 +232,30 @@
                                 <path d="M 95 60 C 96 81, 108 92, 134 92 L 134 77 C 121 77, 114 72, 114 62 Z" fill="url(#hcSilverLogin)"/>
                                 <path d="M 139 77 C 143 77, 146 74, 148 68 L 165 72 C 162 84, 152 92, 139 92 Z" fill="url(#hcSilverLogin)"/>
                                 <!-- Cincin orbit emas -->
-                                <path d="M 70 26 C 105 4, 156 9, 152 32" fill="none" stroke="url(#hcGoldLogin)" stroke-width="5" stroke-linecap="round"/>
-                                <path d="M 52 67 C 46 93, 105 90, 151 34" fill="none" stroke="url(#hcGoldLogin)" stroke-width="5" stroke-linecap="round"/>
+                                <path d="M 70 26 C 105 4, 156 9, 152 32" fill="none" stroke="url(#hcGoldLogin)" stroke-width="5.2" stroke-linecap="round"/>
+                                <path d="M 52 67 C 46 93, 105 90, 151 34" fill="none" stroke="url(#hcGoldLogin)" stroke-width="5.2" stroke-linecap="round"/>
                             </svg>
-                            <!-- Siluet Gedung & Teks Perusahaan -->
-                            <div class="text-center leading-tight z-10 border-t border-white/10 pt-1">
-                                <span class="text-[6.5px] font-extrabold italic tracking-wide text-white uppercase block">PT. SUKUN WARTONO INDONESIA</span>
-                                <span class="text-[5px] font-bold tracking-widest text-slate-300 uppercase block text-right pr-2">HUMAN CAPITAL</span>
+                            <!-- Teks Perusahaan -->
+                            <div class="text-center leading-tight z-10 pt-0.5">
+                                <span class="text-[7px] font-extrabold italic tracking-wide text-white uppercase block">PT. SUKUN WARTONO INDONESIA</span>
+                                <span class="text-[5.5px] font-bold tracking-widest text-slate-300 uppercase block text-right pr-2">HUMAN CAPITAL</span>
                             </div>
                         </div>
-                        <span class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full">Cloud Real-Time System</span>
                     </div>
-                    <h2 class="text-xl font-bold text-navy-900 mb-1 text-center">Masuk ke Human Capital</h2>
-                    <p class="text-xs text-slate-500 mb-6 text-center">Masukkan ID dan Password akun Anda.</p>
+
+                    <h2 class="text-2xl font-extrabold text-[#0b1736] mb-1 text-center tracking-tight">Masuk ke Human Capital</h2>
+                    <p class="text-xs text-slate-500 mb-6 text-center font-medium">Masukkan ID dan Password akun Anda.</p>
+
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-800 mb-1">ID Pengguna (Username)</label>
-                            <input type="text" id="input-username" class="w-full p-3 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none font-semibold text-slate-900" placeholder="Contoh: irvantuba">
+                            <label class="block text-xs font-extrabold text-[#0b1736] mb-1.5">ID Pengguna</label>
+                            <input type="text" id="input-username" onkeydown="if(event.key==='Enter') login()" class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl bg-white focus:ring-2 focus:ring-[#0b1c3d] focus:border-[#0b1c3d] focus:outline-none font-semibold text-slate-900 placeholder:text-slate-400 placeholder:font-normal" placeholder="Contoh: Irvantuba">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-800 mb-1">Password</label>
-                            <input type="password" id="input-password" class="w-full p-3 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none font-semibold text-slate-900" placeholder="••••••••">
+                            <label class="block text-xs font-extrabold text-[#0b1736] mb-1.5">Password</label>
+                            <input type="password" id="input-password" onkeydown="if(event.key==='Enter') login()" class="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-xl bg-slate-100/80 focus:bg-white focus:ring-2 focus:ring-[#0b1c3d] focus:border-[#0b1c3d] focus:outline-none font-semibold text-slate-900 placeholder:text-slate-400" placeholder="••••••••">
                         </div>
-                        <button onclick="login()" class="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 rounded-lg text-sm font-bold transition shadow-md cursor-pointer">Masuk Aplikasi</button>
+                        <button onclick="login()" class="w-full bg-[#09152c] hover:bg-[#112347] text-white py-3 rounded-xl text-sm font-bold transition shadow-lg cursor-pointer mt-2">Masuk Aplikasi</button>
                     </div>
                 </div>
             </div>
@@ -1346,7 +1364,7 @@
             "kikinurawaludin": { pass: "kiki123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Kiki Nurawaludin", panggilan: "Kiki", nik: "SKN-S01", androiduser: "kiki_sukun", androidpass: "kiki123", tmptlahir: "Jakarta", tgllahir: "1998-05-12", gender: "Laki-laki", kontak: "081234567890", email: "kiki@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta Pusat", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 5678 KIK", vstnk: "STNK111", vsimjenis: "SIM C", vsimno: "SIM111", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "123456xx", namarek: "Kiki Nurawaludin", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "D4/S1", institusi: "Universitas", jurusan: "Manajemen", pasfoto: "", files: {} },
             "bagusramandhika": { pass: "bagus123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Bagus Ramandhika", panggilan: "Bagus", nik: "SKN-S02", androiduser: "bagus_sukun", androidpass: "bagus123", tmptlahir: "Jakarta", tgllahir: "1999-06-15", gender: "Laki-laki", kontak: "081200000002", email: "bagus@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Vario 125", vtahun: "2022", vplat: "B 9876 BAG", vstnk: "STNK222", vsimjenis: "SIM C", vsimno: "SIM222", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "222333xx", namarek: "Bagus Ramandhika", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "malfainasshidiqi": { pass: "diki123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "M Alfain Asshidiqi", panggilan: "Alfain", nik: "SKN-S03", androiduser: "alfain_sukun", androidpass: "diki123", tmptlahir: "Jakarta", tgllahir: "1998-03-10", gender: "Laki-laki", kontak: "081200000003", email: "alfain@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2020", vplat: "B 1111 ALF", vstnk: "STNK333", vsimjenis: "SIM C", vsimno: "SIM333", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "333444xx", namarek: "M Alfain Asshidiqi", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
-            "andiwirmanto": { pass: "andi123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", androiduser: "andi_sukun", androidpass: "andi123", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 2222 AND", vstnk: "STNK444", vsimjenis: "SIM C", vsimno: "SIM444", dnama: "-", dhub: "Istri", dinfo: "-", font: "bold", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
+            "andiwirmanto": { pass: "andi123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Andi Wirmanto", panggilan: "Andi", nik: "SKN-S04", androiduser: "andi_sukun", androidpass: "andi123", tmptlahir: "Jakarta", tgllahir: "1995-04-05", gender: "Laki-laki", kontak: "081200000004", email: "andi@sukun.com", nikah: "Menikah", tanggungan: "1 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Beat", vtahun: "2021", vplat: "B 2222 AND", vstnk: "STNK444", vsimjenis: "SIM C", vsimno: "SIM444", dnama: "-", dhub: "Istri", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "444555xx", namarek: "Andi Wirmanto", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "dhanitriharto": { pass: "dhani123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Dhani Triharto", panggilan: "Dhani", nik: "SKN-S05", androiduser: "dhani_sukun", androidpass: "dhani123", tmptlahir: "Jakarta", tgllahir: "1997-07-18", gender: "Laki-laki", kontak: "081200000005", email: "dhani@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "Mio M3 / Z / S", vtahun: "2022", vplat: "B 3333 DHA", vstnk: "STNK555", vsimjenis: "SIM C", vsimno: "SIM555", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "555666xx", namarek: "Dhani Triharto", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPA", pasfoto: "", files: {} },
             "mohammaddenisp": { pass: "denis123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Mohammad Denis P", panggilan: "Denis", nik: "SKN-S06", androiduser: "denis_sukun", androidpass: "denis123", tmptlahir: "Jakarta", tgllahir: "1998-09-22", gender: "Laki-laki", kontak: "081200000006", email: "denis@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3171xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Honda", vmodel: "Scoopy", vtahun: "2023", vplat: "B 4444 DEN", vstnk: "STNK666", vsimjenis: "SIM C", vsimno: "SIM666", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta pusat", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-01-01", namabank: "BCA", norek: "666777xx", namarek: "Mohammad Denis P", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Jakarta", jurusan: "IPS", pasfoto: "", files: {} },
             "rafisuandi": { pass: "rafi123", role: "Sales", isSubAdmin: false, accountStatus: "Aktif", nama: "Rafi Suandi", panggilan: "Rafi", nik: "SKN-S07", androiduser: "rafi_sukun", androidpass: "rafi123", tmptlahir: "Bekasi", tgllahir: "1999-08-20", gender: "Laki-laki", kontak: "081298765432", email: "rafi@sukun.com", nikah: "Belum Menikah", tanggungan: "0 Anak", aktp: "Jakarta", ktp: "3172xxxx", npwp: "-", bpjskesehatan: "-", bpjsketenagakerjaan: "-", vjenis: "Motor", vmerek: "Yamaha", vmodel: "NMax", vtahun: "2023", vplat: "B 5555 RAF", vstnk: "STNK777", vsimjenis: "SIM C", vsimno: "SIM777", dnama: "-", dhub: "Orangtua", dinfo: "-", jabatan: "SPM", divisi: "distribusi", area: "jakarta utara", atasan: "Irvan Tuba Jati", status: "tetap", tglgabung: "2024-03-15", namabank: "Mandiri", norek: "777888xx", namarek: "Rafi Suandi", linkmaps: "", spList: [], dailyAttendance: {}, kpiData: {}, leaveList: [], approvedLeaveCount: 0, jenjang: "SMA/SMK", institusi: "SMAN Bekasi", jurusan: "IPA", pasfoto: "", files: {} },
@@ -2494,7 +2512,7 @@
                         <td class="p-3">
                             <div class="flex items-center gap-2">
                                 <code id="rekap-pass-text-${username}" data-visible="false" class="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-slate-900 font-bold tracking-wider">••••••••</code>
-                                <button type="button" onclick="toggleRekapPass('${username}')" title="Tampilkan / Sembunyikan Password" class="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-350 text-slate-705 transition cursor-pointer">
+                                <button type="button" onclick="toggleRekapPass('${username}')" title="Tampilkan / Sembunyikan Password" class="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 transition cursor-pointer">
                                     <i id="rekap-eye-icon-${username}" data-lucide="eye" class="w-3.5 h-3.5"></i>
                                 </button>
                             </div>
