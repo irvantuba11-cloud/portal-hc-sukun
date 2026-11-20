@@ -51,18 +51,17 @@
             position: relative;
         }
         .corporate-hero-bg {
-            background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 50%, #172554 100%);
+            background-color: #0a192f;
+            background-image:
+                radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 420' preserveAspectRatio='xMidYMax slice'%3E%3Cg fill='%2393c5fd' fill-opacity='0.14'%3E%3Crect x='25' y='190' width='65' height='230'/%3E%3Crect x='100' y='130' width='80' height='290'/%3E%3Crect x='114' y='110' width='52' height='20'/%3E%3Crect x='192' y='220' width='70' height='200'/%3E%3Crect x='275' y='95' width='95' height='325'/%3E%3Crect x='382' y='165' width='75' height='255'/%3E%3Crect x='470' y='120' width='85' height='300'/%3E%3Crect x='568' y='210' width='78' height='210'/%3E%3Crect x='660' y='75' width='105' height='345'/%3E%3Crect x='778' y='150' width='82' height='270'/%3E%3Crect x='872' y='185' width='74' height='235'/%3E%3Crect x='958' y='105' width='92' height='315'/%3E%3Crect x='1062' y='170' width='86' height='250'/%3E%3Crect x='1160' y='135' width='90' height='285'/%3E%3Crect x='1262' y='200' width='78' height='220'/%3E%3Crect x='1350' y='155' width='70' height='265'/%3E%3C/g%3E%3Cg fill='%23dbeafe' fill-opacity='0.16'%3E%3Crect x='115' y='150' width='8' height='12'/%3E%3Crect x='130' y='150' width='8' height='12'/%3E%3Crect x='145' y='150' width='8' height='12'/%3E%3Crect x='295' y='120' width='10' height='16'/%3E%3Crect x='315' y='120' width='10' height='16'/%3E%3Crect x='335' y='120' width='10' height='16'/%3E%3Crect x='685' y='105' width='12' height='18'/%3E%3Crect x='710' y='105' width='12' height='18'/%3E%3Crect x='735' y='105' width='12' height='18'/%3E%3Crect x='980' y='135' width='10' height='15'/%3E%3Crect x='1000' y='135' width='10' height='15'/%3E%3Crect x='1020' y='135' width='10' height='15'/%3E%3C/g%3E%3C/svg%3E"),
+                linear-gradient(135deg, #0a192f 0%, #1e3a8a 50%, #172554 100%);
+            background-size: 24px 24px, cover, cover;
+            background-position: 0 0, center bottom, center center;
+            background-repeat: repeat, no-repeat, no-repeat;
+            background-attachment: fixed;
             position: relative;
             overflow: hidden;
-        }
-        .corporate-hero-bg::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 24px 24px;
-            opacity: 0.6;
-            pointer-events: none;
         }
         .corporate-hero-bg::after {
             content: "";
@@ -72,6 +71,38 @@
             background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
+        }
+        .login-stage {
+            min-height: calc(100dvh - 116px);
+        }
+        .login-card-responsive {
+            width: 100%;
+            max-width: 24rem;
+            padding: 1.25rem 1.5rem;
+        }
+        .login-logo-box {
+            width: 6.75rem;
+            height: 6.75rem;
+            padding: 0.5rem;
+            margin-bottom: 0.45rem;
+        }
+        @media (max-width: 640px) {
+            .login-stage {
+                min-height: calc(100dvh - 148px);
+                padding: 0.65rem 0.85rem;
+            }
+            .login-card-responsive {
+                width: 94%;
+                max-width: 22.5rem;
+                padding: 1rem 1.1rem;
+                border-radius: 1rem;
+            }
+            .login-logo-box {
+                width: 5.5rem;
+                height: 5.5rem;
+                padding: 0.4rem;
+                margin-bottom: 0.35rem;
+            }
         }
         .icon-3d-box {
             background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
@@ -87,7 +118,7 @@
     </style>
 </head>
 <body class="bg-slate-100 font-sans antialiased text-slate-800">
-    <div class="min-h-screen flex flex-col justify-between">
+    <div class="min-h-dvh flex flex-col justify-between">
         <!-- HEADER UTAMA STICKY DENGAN MENU 3D -->
         <header class="bg-navy-900 text-white px-6 py-4 shadow-xl w-full border-b border-slate-800 space-y-4 sticky top-0 z-50 backdrop-blur-md bg-navy-900/95">
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
@@ -181,19 +212,19 @@
 
         <main class="flex-grow flex flex-col w-full">
             <!-- HALAMAN LOGIN -->
-            <div id="section-login" class="flex-grow flex items-center justify-center p-6 bg-slate-100 w-full">
-                <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full">
-                    <div class="flex flex-col items-center justify-center mb-6">
-                        <div class="w-44 h-44 logo-3d rounded-2xl flex flex-col justify-between p-2.5 mb-3">
+            <div id="section-login" class="login-stage flex-grow flex items-center justify-center p-4 corporate-hero-bg w-full">
+                <div class="bg-white/95 backdrop-blur-md login-card-responsive rounded-2xl shadow-2xl border border-white/40 z-10">
+                    <div class="flex flex-col items-center justify-center mb-3">
+                        <div class="login-logo-box logo-3d rounded-2xl flex flex-col justify-between">
                             <!-- Lencana SUKUN Mc. WARTONO di pojok kanan atas -->
                             <div class="flex justify-end z-10">
-                                <div class="bg-[#09152c]/95 border border-amber-400/70 rounded px-1.5 py-0.5 text-center leading-none shadow">
-                                    <span class="text-[7px] font-serif font-black tracking-wider text-white block">SUKUN</span>
-                                    <span class="text-[4.5px] font-sans font-bold tracking-wider text-slate-300 block mt-0.5">Mc. WARTONO</span>
+                                <div class="bg-[#09152c]/95 border border-amber-400/70 rounded px-1 py-0.5 text-center leading-none shadow">
+                                    <span class="text-[6px] font-serif font-black tracking-wider text-white block">SUKUN</span>
+                                    <span class="text-[4px] font-sans font-bold tracking-wider text-slate-300 block mt-0.5">Mc. WARTONO</span>
                                 </div>
                             </div>
                             <!-- Logo 3D HC & Orbit Emas -->
-                            <svg viewBox="0 0 180 95" class="w-full h-20 z-10 -mt-2">
+                            <svg viewBox="0 0 180 95" class="w-full h-12 z-10 -mt-1">
                                 <defs>
                                     <linearGradient id="hcSilverLogin" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" stop-color="#ffffff"/>
@@ -219,32 +250,32 @@
                                 <path d="M 52 67 C 46 93, 105 90, 151 34" fill="none" stroke="url(#hcGoldLogin)" stroke-width="5" stroke-linecap="round"/>
                             </svg>
                             <!-- Siluet Gedung & Teks Perusahaan -->
-                            <div class="text-center leading-tight z-10 border-t border-white/10 pt-1">
-                                <span class="text-[6.5px] font-extrabold italic tracking-wide text-white uppercase block">PT. SUKUN WARTONO INDONESIA</span>
-                                <span class="text-[5px] font-bold tracking-widest text-slate-300 uppercase block text-right pr-2">HUMAN CAPITAL</span>
+                            <div class="text-center leading-tight z-10 border-t border-white/10 pt-0.5">
+                                <span class="text-[5.5px] font-extrabold italic tracking-wide text-white uppercase block">PT. SUKUN WARTONO INDONESIA</span>
+                                <span class="text-[4.5px] font-bold tracking-widest text-slate-300 uppercase block text-right pr-1.5">HUMAN CAPITAL</span>
                             </div>
                         </div>
-                        <span class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full">Cloud Real-Time System</span>
+                        <span class="text-[9px] uppercase tracking-widest text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">Cloud Real-Time System</span>
                     </div>
-                    <h2 class="text-xl font-bold text-navy-900 mb-1 text-center">Masuk ke Human Capital</h2>
-                    <p class="text-xs text-slate-500 mb-6 text-center">Masukkan ID dan Password akun Anda.</p>
-                    <div class="space-y-4">
+                    <h2 class="text-lg font-bold text-navy-900 mb-0.5 text-center">Masuk ke Human Capital</h2>
+                    <p class="text-[11px] text-slate-500 mb-3 text-center">Masukkan ID dan Password akun Anda.</p>
+                    <div class="space-y-2.5">
                         <div>
                             <label class="block text-xs font-bold text-slate-800 mb-1">ID Pengguna (Username)</label>
-                            <input type="text" id="input-username" class="w-full p-3 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none font-semibold text-slate-900" placeholder="Contoh: irvantuba">
+                            <input type="text" id="input-username" class="w-full p-2.5 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none font-semibold text-slate-900" placeholder="Contoh: irvantuba">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-800 mb-1">Password</label>
-                            <input type="password" id="input-password" class="w-full p-3 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none font-semibold text-slate-900" placeholder="••••••••">
+                            <input type="password" id="input-password" class="w-full p-2.5 text-sm border rounded-lg border-slate-300 focus:ring-2 focus:ring-navy-900 focus:outline-none font-semibold text-slate-900" placeholder="••••••••">
                         </div>
-                        <button onclick="login()" class="w-full bg-navy-900 hover:bg-navy-800 text-white py-3 rounded-lg text-sm font-bold transition shadow-md cursor-pointer">Masuk Aplikasi</button>
+                        <button onclick="login()" class="w-full bg-navy-900 hover:bg-navy-800 text-white py-2.5 rounded-lg text-sm font-bold transition shadow-md cursor-pointer mt-1">Masuk Aplikasi</button>
                     </div>
                 </div>
             </div>
 
             <!-- HALAMAN PEMBUKA 1: WELCOME BRIEFING -->
             <div id="section-welcome" class="hidden flex-grow corporate-hero-bg flex flex-col justify-between p-4 md:p-8 w-full text-white">
-                <div class="max-w-6xl mx-auto w-full flex justify-between items-center pb-2">
+                <div class="max-w-6xl mx-auto w-full flex justify-between items-center pb-2 z-10">
                     <div class="flex items-center gap-2.5 bg-blue-950/70 px-3 py-1.5 rounded-xl border border-blue-400/30">
                         <div class="w-8 h-8 logo-3d rounded-lg p-0.5 flex items-center justify-center">
                             <svg viewBox="0 0 160 120" class="w-full h-full">
@@ -273,7 +304,7 @@
                     </div>
                 </div>
 
-                <div class="max-w-6xl mx-auto w-full py-2 space-y-4">
+                <div class="max-w-6xl mx-auto w-full py-2 space-y-4 z-10">
                     <div class="text-center space-y-1.5">
                         <h1 class="text-xl md:text-2xl font-black tracking-tight text-white drop-shadow-md uppercase">
                             SELAMAT DATANG DI SISTEM DATABASE INFORMASI KARYAWAN
@@ -325,7 +356,7 @@
                     </div>
                 </div>
 
-                <div class="max-w-6xl mx-auto w-full flex justify-between items-center border-t border-blue-500/30 pt-3">
+                <div class="max-w-6xl mx-auto w-full flex justify-between items-center border-t border-blue-500/30 pt-3 z-10">
                     <span class="text-xs text-blue-200 font-medium">PT. Sukun Wartono Indonesia © 2026</span>
                     <button onclick="goToWelcomeStep2()" class="bg-transparent hover:bg-blue-600/30 text-white px-8 py-2.5 rounded-xl text-sm font-bold transition shadow-xl cursor-pointer flex items-center gap-2 border-2 border-white/80 hover:border-white">
                         Next <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -335,7 +366,7 @@
 
             <!-- HALAMAN PEMBUKA 2: 9 LANGKAH KUNJUNGAN -->
             <div id="section-welcome-step2" class="hidden flex-grow corporate-hero-bg flex flex-col justify-between p-4 md:p-8 w-full text-white">
-                <div class="max-w-7xl mx-auto w-full flex justify-between items-center pb-2">
+                <div class="max-w-7xl mx-auto w-full flex justify-between items-center pb-2 z-10">
                     <div class="flex items-center gap-2 bg-blue-950/70 px-2.5 py-1 rounded-xl border border-blue-400/30">
                         <div class="w-7 h-7 logo-3d rounded-lg p-0.5 flex items-center justify-center">
                             <svg viewBox="0 0 160 120" class="w-full h-full">
@@ -360,7 +391,7 @@
                     </div>
                 </div>
 
-                <div class="max-w-7xl mx-auto w-full py-1 space-y-2">
+                <div class="max-w-7xl mx-auto w-full py-1 space-y-2 z-10">
                     <div class="text-center space-y-0.5">
                         <h1 class="text-xl md:text-2xl font-black tracking-tight text-amber-300 drop-shadow-md uppercase">
                             9 LANGKAH KUNJUNGAN
@@ -416,7 +447,7 @@
                     </div>
                 </div>
 
-                <div class="max-w-7xl mx-auto w-full flex justify-between items-center border-t border-blue-500/30 pt-3">
+                <div class="max-w-7xl mx-auto w-full flex justify-between items-center border-t border-blue-500/30 pt-3 z-10">
                     <span class="text-xs text-blue-200 font-medium">PT. Sukun Wartono Indonesia © 2026</span>
                     <button onclick="proceedToDashboard()" class="bg-transparent hover:bg-blue-600/30 text-white px-8 py-2.5 rounded-xl text-sm font-bold transition shadow-xl cursor-pointer flex items-center gap-2 border-2 border-white/80 hover:border-white">
                         Next <i data-lucide="arrow-right" class="w-4 h-4"></i>
