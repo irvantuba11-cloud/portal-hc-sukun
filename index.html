@@ -44,8 +44,8 @@
             box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
         }
         .logo-3d {
-            background: linear-gradient(145deg, #0b1938, #061024);
-            border: 1px solid rgba(212, 175, 55, 0.45);
+            background: linear-gradient(145deg, #0c1d40, #061024);
+            border: 1px solid rgba(212, 175, 55, 0.5);
             box-shadow: 0 6px 15px rgba(6, 16, 36, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.25), inset 0 -2px 4px rgba(0, 0, 0, 0.5);
             overflow: hidden;
         }
@@ -86,70 +86,34 @@
     </style>
 </head>
 <body class="bg-slate-100 font-sans antialiased text-slate-800">
-    <!-- DEFINISI SVG LOGO HC 3D DENGAN ORBIT EMAS -->
-    <svg width="0" height="0" class="hidden" aria-hidden="true">
-        <defs>
-            <linearGradient id="hcSilverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="45%" stop-color="#e2e8f0"/>
-                <stop offset="75%" stop-color="#94a3b8"/>
-                <stop offset="100%" stop-color="#cbd5e1"/>
-            </linearGradient>
-            <linearGradient id="hcGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#fef08a"/>
-                <stop offset="35%" stop-color="#eab308"/>
-                <stop offset="75%" stop-color="#b45309"/>
-                <stop offset="100%" stop-color="#fde047"/>
-            </linearGradient>
-            <filter id="hcDropShadow" x="-15%" y="-15%" width="130%" height="130%">
-                <feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="#020617" flood-opacity="0.75"/>
-            </filter>
-            <symbol id="hc-custom-logo" viewBox="0 0 120 120">
-                <!-- Background Siluet Gedung Tipis -->
-                <g opacity="0.18" fill="#64748b">
-                    <rect x="10" y="75" width="12" height="45"/>
-                    <rect x="25" y="65" width="14" height="55"/>
-                    <rect x="44" y="80" width="10" height="40"/>
-                    <rect x="68" y="70" width="15" height="50"/>
-                    <rect x="86" y="60" width="14" height="60"/>
-                    <rect x="103" y="78" width="10" height="42"/>
-                </g>
-
-                <g filter="url(#hcDropShadow)">
-                    <!-- Orbit Emas Belakang -->
-                    <path d="M 54 34 C 76 16, 108 18, 104 36" fill="none" stroke="url(#hcGoldGrad)" stroke-width="4.2" stroke-linecap="round"/>
-                    <path d="M 56 37 C 76 22, 102 23, 100 37" fill="none" stroke="#fef08a" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
-
-                    <!-- Huruf H (Terpotong diagonal bawah kanan seperti desain) -->
-                    <path d="M 20 26 L 34 26 L 34 52 L 50 52 L 50 26 L 64 26 L 64 62 L 50 74 L 50 64 L 34 64 L 34 94 L 20 94 Z" fill="url(#hcSilverGrad)" stroke="#475569" stroke-width="0.8"/>
-                    <!-- Potongan Bawah Kanan H -->
-                    <path d="M 50 79 L 64 67 L 64 94 L 50 94 Z" fill="url(#hcSilverGrad)" stroke="#475569" stroke-width="0.8"/>
-
-                    <!-- Huruf C (Terbagi 4 segmen dinamis seperti desain) -->
-                    <!-- Segmen Kiri Atas C -->
-                    <path d="M 84 26 C 69 26, 61 38, 61 58 L 74 52 C 74 42, 78 38, 84 38 Z" fill="url(#hcSilverGrad)" stroke="#475569" stroke-width="0.8"/>
-                    <!-- Segmen Kanan Atas C -->
-                    <path d="M 88 26 C 98 26, 105 32, 107 42 L 94 45 C 93 40, 91 38, 88 38 Z" fill="url(#hcSilverGrad)" stroke="#475569" stroke-width="0.8"/>
-                    <!-- Segmen Kiri Bawah C -->
-                    <path d="M 61 63 C 62 82, 70 94, 84 94 L 84 82 C 78 82, 74 77, 74 67 Z" fill="url(#hcSilverGrad)" stroke="#475569" stroke-width="0.8"/>
-                    <!-- Segmen Kanan Bawah C -->
-                    <path d="M 88 82 C 92 82, 94 79, 95 73 L 108 76 C 105 87, 98 94, 88 94 Z" fill="url(#hcSilverGrad)" stroke="#475569" stroke-width="0.8"/>
-
-                    <!-- Orbit Emas Depan Melingkar -->
-                    <path d="M 38 71 C 34 94, 72 92, 102 41" fill="none" stroke="url(#hcGoldGrad)" stroke-width="4.5" stroke-linecap="round"/>
-                    <path d="M 41 72 C 38 90, 72 88, 99 42" fill="none" stroke="#fef9c3" stroke-width="1.3" stroke-linecap="round" opacity="0.9"/>
-                </g>
-            </symbol>
-        </defs>
-    </svg>
-
     <div class="min-h-screen flex flex-col justify-between">
         <!-- HEADER UTAMA STICKY DENGAN MENU 3D -->
         <header class="bg-navy-900 text-white px-6 py-4 shadow-xl w-full border-b border-slate-800 space-y-4 sticky top-0 z-50 backdrop-blur-md bg-navy-900/95">
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center space-x-3">
                     <div class="w-11 h-11 rounded-xl logo-3d flex items-center justify-center p-1 shrink-0">
-                        <svg class="w-full h-full"><use href="#hc-custom-logo"/></svg>
+                        <svg viewBox="0 0 120 120" class="w-full h-full">
+                            <defs>
+                                <linearGradient id="hcSilverHdr" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="55%" stop-color="#e2e8f0"/>
+                                    <stop offset="100%" stop-color="#94a3b8"/>
+                                </linearGradient>
+                                <linearGradient id="hcGoldHdr" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#fef08a"/>
+                                    <stop offset="50%" stop-color="#eab308"/>
+                                    <stop offset="100%" stop-color="#b45309"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M 52 34 C 76 14, 108 18, 104 36" fill="none" stroke="url(#hcGoldHdr)" stroke-width="4.5" stroke-linecap="round"/>
+                            <path d="M 18 24 L 33 24 L 33 52 L 50 52 L 50 24 L 65 24 L 65 62 L 50 75 L 50 64 L 33 64 L 33 96 L 18 96 Z" fill="url(#hcSilverHdr)"/>
+                            <path d="M 50 80 L 65 67 L 65 96 L 50 96 Z" fill="url(#hcSilverHdr)"/>
+                            <path d="M 85 24 C 69 24, 61 37, 61 58 L 74 52 C 74 41, 78 37, 85 37 Z" fill="url(#hcSilverHdr)"/>
+                            <path d="M 89 24 C 99 24, 106 31, 108 42 L 94 45 C 93 40, 91 37, 89 37 Z" fill="url(#hcSilverHdr)"/>
+                            <path d="M 61 63 C 62 83, 70 96, 85 96 L 85 83 C 78 83, 74 78, 74 67 Z" fill="url(#hcSilverHdr)"/>
+                            <path d="M 89 83 C 93 83, 95 80, 96 74 L 109 77 C 106 88, 99 96, 89 96 Z" fill="url(#hcSilverHdr)"/>
+                            <path d="M 38 72 C 33 96, 72 94, 103 41" fill="none" stroke="url(#hcGoldHdr)" stroke-width="4.8" stroke-linecap="round"/>
+                        </svg>
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
@@ -216,8 +180,29 @@
             <div id="section-login" class="flex-grow flex items-center justify-center p-6 bg-slate-100 w-full">
                 <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full">
                     <div class="flex flex-col items-center justify-center mb-6">
-                        <div class="w-24 h-24 logo-3d rounded-2xl flex flex-col items-center justify-center mb-3 p-2 relative">
-                            <svg class="w-16 h-16"><use href="#hc-custom-logo"/></svg>
+                        <div class="w-24 h-24 logo-3d rounded-2xl flex flex-col items-center justify-center mb-3 p-2">
+                            <svg viewBox="0 0 120 120" class="w-16 h-16">
+                                <defs>
+                                    <linearGradient id="hcSilverLogin" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#ffffff"/>
+                                        <stop offset="55%" stop-color="#e2e8f0"/>
+                                        <stop offset="100%" stop-color="#94a3b8"/>
+                                    </linearGradient>
+                                    <linearGradient id="hcGoldLogin" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#fef08a"/>
+                                        <stop offset="50%" stop-color="#eab308"/>
+                                        <stop offset="100%" stop-color="#b45309"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M 52 34 C 76 14, 108 18, 104 36" fill="none" stroke="url(#hcGoldLogin)" stroke-width="4.5" stroke-linecap="round"/>
+                                <path d="M 18 24 L 33 24 L 33 52 L 50 52 L 50 24 L 65 24 L 65 62 L 50 75 L 50 64 L 33 64 L 33 96 L 18 96 Z" fill="url(#hcSilverLogin)"/>
+                                <path d="M 50 80 L 65 67 L 65 96 L 50 96 Z" fill="url(#hcSilverLogin)"/>
+                                <path d="M 85 24 C 69 24, 61 37, 61 58 L 74 52 C 74 41, 78 37, 85 37 Z" fill="url(#hcSilverLogin)"/>
+                                <path d="M 89 24 C 99 24, 106 31, 108 42 L 94 45 C 93 40, 91 37, 89 37 Z" fill="url(#hcSilverLogin)"/>
+                                <path d="M 61 63 C 62 83, 70 96, 85 96 L 85 83 C 78 83, 74 78, 74 67 Z" fill="url(#hcSilverLogin)"/>
+                                <path d="M 89 83 C 93 83, 95 80, 96 74 L 109 77 C 106 88, 99 96, 89 96 Z" fill="url(#hcSilverLogin)"/>
+                                <path d="M 38 72 C 33 96, 72 94, 103 41" fill="none" stroke="url(#hcGoldLogin)" stroke-width="4.8" stroke-linecap="round"/>
+                            </svg>
                             <span class="text-[7px] font-black tracking-widest text-amber-300 uppercase mt-0.5">HUMAN CAPITAL</span>
                         </div>
                         <span class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full">Cloud Real-Time System</span>
@@ -243,7 +228,16 @@
                 <div class="max-w-6xl mx-auto w-full flex justify-between items-center pb-2">
                     <div class="flex items-center gap-2.5 bg-blue-950/70 px-3 py-1.5 rounded-xl border border-blue-400/30">
                         <div class="w-8 h-8 logo-3d rounded-lg p-0.5 flex items-center justify-center">
-                            <svg class="w-full h-full"><use href="#hc-custom-logo"/></svg>
+                            <svg viewBox="0 0 120 120" class="w-full h-full">
+                                <path d="M 52 34 C 76 14, 108 18, 104 36" fill="none" stroke="#eab308" stroke-width="4.5" stroke-linecap="round"/>
+                                <path d="M 18 24 L 33 24 L 33 52 L 50 52 L 50 24 L 65 24 L 65 62 L 50 75 L 50 64 L 33 64 L 33 96 L 18 96 Z" fill="#e2e8f0"/>
+                                <path d="M 50 80 L 65 67 L 65 96 L 50 96 Z" fill="#e2e8f0"/>
+                                <path d="M 85 24 C 69 24, 61 37, 61 58 L 74 52 C 74 41, 78 37, 85 37 Z" fill="#e2e8f0"/>
+                                <path d="M 89 24 C 99 24, 106 31, 108 42 L 94 45 C 93 40, 91 37, 89 37 Z" fill="#e2e8f0"/>
+                                <path d="M 61 63 C 62 83, 70 96, 85 96 L 85 83 C 78 83, 74 78, 74 67 Z" fill="#e2e8f0"/>
+                                <path d="M 89 83 C 93 83, 95 80, 96 74 L 109 77 C 106 88, 99 96, 89 96 Z" fill="#e2e8f0"/>
+                                <path d="M 38 72 C 33 96, 72 94, 103 41" fill="none" stroke="#eab308" stroke-width="4.8" stroke-linecap="round"/>
+                            </svg>
                         </div>
                         <div class="leading-tight">
                             <span class="text-[10px] font-black tracking-wider text-white uppercase block">PT. SUKUN WARTONO INDONESIA</span>
@@ -325,7 +319,16 @@
                 <div class="max-w-7xl mx-auto w-full flex justify-between items-center pb-2">
                     <div class="flex items-center gap-2 bg-blue-950/70 px-2.5 py-1 rounded-xl border border-blue-400/30">
                         <div class="w-7 h-7 logo-3d rounded-lg p-0.5 flex items-center justify-center">
-                            <svg class="w-full h-full"><use href="#hc-custom-logo"/></svg>
+                            <svg viewBox="0 0 120 120" class="w-full h-full">
+                                <path d="M 52 34 C 76 14, 108 18, 104 36" fill="none" stroke="#eab308" stroke-width="4.5" stroke-linecap="round"/>
+                                <path d="M 18 24 L 33 24 L 33 52 L 50 52 L 50 24 L 65 24 L 65 62 L 50 75 L 50 64 L 33 64 L 33 96 L 18 96 Z" fill="#e2e8f0"/>
+                                <path d="M 50 80 L 65 67 L 65 96 L 50 96 Z" fill="#e2e8f0"/>
+                                <path d="M 85 24 C 69 24, 61 37, 61 58 L 74 52 C 74 41, 78 37, 85 37 Z" fill="#e2e8f0"/>
+                                <path d="M 89 24 C 99 24, 106 31, 108 42 L 94 45 C 93 40, 91 37, 89 37 Z" fill="#e2e8f0"/>
+                                <path d="M 61 63 C 62 83, 70 96, 85 96 L 85 83 C 78 83, 74 78, 74 67 Z" fill="#e2e8f0"/>
+                                <path d="M 89 83 C 93 83, 95 80, 96 74 L 109 77 C 106 88, 99 96, 89 96 Z" fill="#e2e8f0"/>
+                                <path d="M 38 72 C 33 96, 72 94, 103 41" fill="none" stroke="#eab308" stroke-width="4.8" stroke-linecap="round"/>
+                            </svg>
                         </div>
                         <span class="text-[9px] font-black tracking-wider text-amber-300 uppercase">HUMAN CAPITAL</span>
                     </div>
@@ -1106,8 +1109,8 @@
             </table>
             <table style="width: 100%; font-size: 12px; margin-bottom: 25px; border-collapse: collapse;">
                 <tr><td style="width: 160px; padding: 6px 0; font-weight: bold;">Jenis Pengajuan</td><td style="font-weight: bold;" id="print-leave-type-val">: -</td></tr>
-                <tr><td style="width: 160px; padding: 6px 0; font-weight: bold;">Tanggal Pelaksanaan</td><td id="print-leave-date-val">: -</td></tr>
-                <tr><td style="width: 160px; padding: 6px 0; font-weight: bold; vertical-align: top;">Tujuan / Keperluan</td><td id="print-leave-purpose-val">: -</td></tr>
+                <tr><td style="padding: 6px 0; font-weight: bold;">Tanggal Pelaksanaan</td><td id="print-leave-date-val">: -</td></tr>
+                <tr><td style="padding: 6px 0; font-weight: bold; vertical-align: top;">Tujuan / Keperluan</td><td id="print-leave-purpose-val">: -</td></tr>
             </table>
             <p style="font-size: 12px; line-height: 1.6; margin-bottom: 40px;">Demikian permohonan ini diajukan untuk dapat diperiksa dan mendapat persetujuan lebih lanjut.</p>
             <table style="width: 100%; margin-top: 40px; font-size: 12px; border-collapse: collapse;">
