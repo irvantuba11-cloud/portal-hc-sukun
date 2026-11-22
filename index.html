@@ -1041,7 +1041,12 @@
                             </h3>
                             <p id="rekap-subtitle-desc" class="text-[11px] text-slate-500 font-medium">Direktori ID Pengguna, Password & Status Keaktifan dikelompokkan berdasarkan Area Penempatan.</p>
                         </div>
-                        <span id="rekap-total-badge" class="px-3 py-1.5 bg-cyan-50 border border-cyan-200 text-cyan-900 rounded-xl text-xs font-bold shrink-0">Total: 0 Akun</span>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button type="button" onclick="openAddPetugasModal()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer flex items-center gap-1.5">
+                                <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> + Tambah Petugas
+                            </button>
+                            <span id="rekap-total-badge" class="px-3 py-1.5 bg-cyan-50 border border-cyan-200 text-cyan-900 rounded-xl text-xs font-bold">Total: 0 Akun</span>
+                        </div>
                     </div>
 
                     <div class="flex flex-col sm:flex-row items-center gap-3">
@@ -1080,6 +1085,95 @@
             </div>
         </main>
         <footer class="bg-slate-200 text-center p-4 text-xs text-slate-600 font-bold w-full">PT. Sukun Wartono Indonesia Perwakilan Jakarta © 2026</footer>
+    </div>
+
+    <!-- MODAL TAMBAH PETUGAS BARU -->
+    <div id="modal-add-petugas" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 space-y-4 border border-slate-200 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3">
+                <div>
+                    <h3 class="text-sm font-black text-navy-900 uppercase flex items-center gap-2">
+                        <i data-lucide="user-plus" class="w-4 h-4 text-emerald-600"></i> Daftarkan Petugas / Karyawan Baru
+                    </h3>
+                    <p class="text-[11px] text-slate-500 font-medium">Akun langsung tersimpan ke database dan aktif digunakan login.</p>
+                </div>
+                <button type="button" onclick="closeAddPetugasModal()" class="text-slate-400 hover:text-slate-700 font-bold text-base cursor-pointer">✕</button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div class="sm:col-span-2">
+                    <label class="font-bold text-slate-800 block mb-1">Nama Lengkap *</label>
+                    <input type="text" id="new-p-nama" oninput="suggestNewUsername()" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Contoh: Budi Santoso">
+                </div>
+
+                <div>
+                    <label class="font-bold text-slate-800 block mb-1">Username (ID Login) *</label>
+                    <input type="text" id="new-p-username" oninput="this.dataset.manualEdited='true'" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Contoh: budisantoso">
+                </div>
+
+                <div>
+                    <label class="font-bold text-slate-800 block mb-1">Password Akun *</label>
+                    <input type="text" id="new-p-pass" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Contoh: budi123">
+                </div>
+
+                <div>
+                    <label class="font-bold text-slate-800 block mb-1">Jabatan *</label>
+                    <select id="new-p-jabatan" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
+                        <option value="SPM">SPM</option>
+                        <option value="TEAM LEADER">TEAM LEADER</option>
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="SALES SUPERVISOR">SALES SUPERVISOR</option>
+                        <option value="AREA MANAGER">AREA MANAGER</option>
+                        <option value="DRIVER">DRIVER</option>
+                        <option value="DROPING">DROPING</option>
+                        <option value="SDM">SDM</option>
+                        <option value="SKM">SKM</option>
+                        <option value="OB">OB</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="font-bold text-slate-800 block mb-1">Area Penempatan *</label>
+                    <select id="new-p-area" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
+                        <option value="pwk">PWK</option>
+                        <option value="jakarta pusat">Jakarta Pusat</option>
+                        <option value="jakarta utara">Jakarta Utara</option>
+                        <option value="jakarta timur">Jakarta Timur</option>
+                        <option value="jakarta barat">Jakarta Barat</option>
+                        <option value="jakarta selatan">Jakarta Selatan</option>
+                        <option value="kota depok">Kota Depok</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="font-bold text-slate-800 block mb-1">NIK / ID Karyawan</label>
+                    <input type="text" id="new-p-nik" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="Contoh: SKN-S22">
+                </div>
+
+                <div>
+                    <label class="font-bold text-slate-800 block mb-1">No. Kontak (WA)</label>
+                    <input type="text" id="new-p-kontak" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900" placeholder="0812xxxxxxxx">
+                </div>
+
+                <div>
+                    <label class="font-bold text-slate-800 block mb-1">Tanggal Bergabung</label>
+                    <input type="date" id="new-p-tglgabung" class="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold text-slate-900">
+                </div>
+
+                <div>
+                    <label class="font-bold text-slate-800 block mb-1">Status Keaktifan</label>
+                    <select id="new-p-status" class="w-full p-2.5 border rounded-lg bg-slate-50 font-bold text-slate-900">
+                        <option value="Aktif">Aktif</option>
+                        <option value="Tidak Aktif">Tidak Aktif</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-3 border-t">
+                <button type="button" onclick="closeAddPetugasModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-xl text-xs font-bold cursor-pointer">Batal</button>
+                <button type="button" id="btn-submit-new-petugas" onclick="createNewPetugas()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow cursor-pointer">💾 Simpan & Aktifkan Akun</button>
+            </div>
+        </div>
     </div>
 
     <!-- MODAL LIHAT ID CARD -->
@@ -1498,6 +1592,147 @@
             if (!userId || !dbHC[userId]) return false;
             let u = dbHC[userId];
             return (userId === 'irvantuba' || u.role === 'Admin' || Boolean(u.isSubAdmin));
+        }
+
+        function openAddPetugasModal() {
+            if (!hasAdminPrivilege(activeUser)) {
+                return alert("Akses ditolak. Hanya Administrator yang dapat menambah petugas baru.");
+            }
+            let userInput = document.getElementById('new-p-username');
+            if (userInput) userInput.dataset.manualEdited = 'false';
+
+            document.getElementById('new-p-nama').value = '';
+            document.getElementById('new-p-username').value = '';
+            document.getElementById('new-p-pass').value = '';
+            document.getElementById('new-p-jabatan').value = 'SPM';
+            document.getElementById('new-p-area').value = 'jakarta pusat';
+            document.getElementById('new-p-nik').value = '';
+            document.getElementById('new-p-kontak').value = '';
+            document.getElementById('new-p-tglgabung').value = new Date().toISOString().split('T')[0];
+            document.getElementById('new-p-status').value = 'Aktif';
+
+            document.getElementById('modal-add-petugas').classList.remove('hidden');
+            if (window.lucide) lucide.createIcons();
+            document.getElementById('new-p-nama').focus();
+        }
+
+        function closeAddPetugasModal() {
+            document.getElementById('modal-add-petugas').classList.add('hidden');
+        }
+
+        function suggestNewUsername() {
+            let namaInput = document.getElementById('new-p-nama');
+            let userInput = document.getElementById('new-p-username');
+            if (!namaInput || !userInput) return;
+            if (userInput.dataset.manualEdited === 'true') return;
+
+            userInput.value = namaInput.value.toLowerCase().replace(/[^a-z0-9]/g, '');
+        }
+
+        async function createNewPetugas() {
+            if (!hasAdminPrivilege(activeUser)) {
+                return alert("Akses ditolak.");
+            }
+
+            let nama = document.getElementById('new-p-nama').value.trim();
+            let username = document.getElementById('new-p-username').value.trim().toLowerCase().replace(/\s+/g, '');
+            let pass = document.getElementById('new-p-pass').value.trim();
+            let jabatan = document.getElementById('new-p-jabatan').value;
+            let area = document.getElementById('new-p-area').value;
+            let nik = document.getElementById('new-p-nik').value.trim() || '-';
+            let kontak = document.getElementById('new-p-kontak').value.trim() || '-';
+            let tglgabung = document.getElementById('new-p-tglgabung').value || new Date().toISOString().split('T')[0];
+            let accountStatus = document.getElementById('new-p-status').value || 'Aktif';
+
+            if (!nama || !username || !pass) {
+                return alert("Nama Lengkap, Username, dan Password wajib diisi!");
+            }
+
+            if (dbHC[username]) {
+                return alert(`Username "${username}" sudah digunakan. Silakan gunakan ID login lain.`);
+            }
+
+            let firstName = nama.split(' ')[0] || nama;
+            let btn = document.getElementById('btn-submit-new-petugas');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerText = "Menyimpan...";
+            }
+
+            dbHC[username] = normalizeUserRecord(username, {
+                pass: pass,
+                role: "Sales",
+                isSubAdmin: false,
+                accountStatus: accountStatus,
+                nama: nama,
+                panggilan: firstName,
+                nik: nik,
+                androiduser: `${username}_sukun`,
+                androidpass: pass,
+                tmptlahir: "-",
+                tgllahir: "",
+                gender: "Laki-laki",
+                kontak: kontak,
+                email: `${username}@sukun.com`,
+                nikah: "Belum Menikah",
+                tanggungan: "0 Anak",
+                aktp: "-",
+                ktp: "-",
+                npwp: "-",
+                bpjskesehatan: "-",
+                bpjsketenagakerjaan: "-",
+                vjenis: "Motor",
+                vmerek: "Honda",
+                vmodel: "Beat",
+                vtahun: "",
+                vplat: "-",
+                vstnk: "-",
+                vsimjenis: "SIM C",
+                vsimno: "-",
+                dnama: "-",
+                dhub: "Orangtua",
+                dinfo: "-",
+                jabatan: jabatan,
+                divisi: "distribusi",
+                area: area,
+                atasan: dbHC[activeUser]?.nama || "Irvan Tuba Jati",
+                status: "kontrak",
+                tglgabung: tglgabung,
+                namabank: "BCA",
+                norek: "-",
+                namarek: nama,
+                linkmaps: "",
+                spList: [],
+                dailyAttendance: {},
+                kpiData: {},
+                leaveList: [],
+                changeNoteList: [],
+                approvedLeaveCount: 0,
+                jenjang: "SMA/SMK",
+                institusi: "-",
+                jurusan: "Umum",
+                pasfoto: "",
+                files: {}
+            });
+
+            try {
+                let { error } = await _supabase.from('hc_database').upsert({ id: username, data: dbHC[username] });
+                if (error) {
+                    delete dbHC[username];
+                    alert("Gagal menyimpan akun baru ke Cloud: " + error.message);
+                    return;
+                }
+
+                closeAddPetugasModal();
+                renderRekapAkun();
+                renderAdminPanel();
+                alert(`Akun petugas "${nama}" (${username}) berhasil didaftarkan dan langsung bisa digunakan!`);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerText = "💾 Simpan & Aktifkan Akun";
+                }
+            }
         }
 
         function configureSessionHeaderAndAccess() {
@@ -2890,8 +3125,8 @@
                             </div>
                         </td>
                         <td class="p-3 text-center">
-                            <button type="button" onclick="copyRekapInfo('${username}', this)" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-[11px] font-bold transition shadow-2xs cursor-pointer inline-flex items-center gap-1">
-                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin Info
+                            <button type="button" onclick="copyRekapInfo('${username}', this)" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-[11px] font-bold transition cursor-pointer shadow-2xs">
+                                Salin ID & Pass
                             </button>
                         </td>
                     `;
@@ -2899,151 +3134,172 @@
                 });
             });
 
-            if (totalBadge) totalBadge.innerText = isSuperAdmin ? `Total: ${totalFiltered} Akun Karyawan` : `Total: ${totalFiltered} Akun SPM`;
-            if (totalFiltered === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400 font-semibold">Tidak ada akun yang sesuai pencarian.</td></tr>`;
+            if (totalBadge) {
+                totalBadge.innerText = `Total: ${totalFiltered} Akun`;
             }
+
+            if (totalFiltered === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400 font-semibold">Tidak ada akun yang cocok dengan pencarian.</td></tr>`;
+            }
+
             lucide.createIcons();
         }
 
         function toggleRekapPass(username) {
-            let passEl = document.getElementById(`rekap-pass-text-${username}`);
+            let codeEl = document.getElementById(`rekap-pass-text-${username}`);
             let iconEl = document.getElementById(`rekap-eye-icon-${username}`);
-            if (!passEl || !dbHC[username]) return;
+            let user = dbHC[username];
+            if (!codeEl || !user) return;
 
-            let isVisible = passEl.getAttribute('data-visible') === 'true';
+            let isVisible = codeEl.dataset.visible === 'true';
             if (isVisible) {
-                passEl.innerText = '••••••••';
-                passEl.setAttribute('data-visible', 'false');
+                codeEl.innerText = '••••••••';
+                codeEl.dataset.visible = 'false';
                 if (iconEl) iconEl.setAttribute('data-lucide', 'eye');
             } else {
-                passEl.innerText = dbHC[username].pass || '-';
-                passEl.setAttribute('data-visible', 'true');
+                codeEl.innerText = user.pass || '-';
+                codeEl.dataset.visible = 'true';
                 if (iconEl) iconEl.setAttribute('data-lucide', 'eye-off');
             }
             lucide.createIcons();
         }
 
         function copyRekapInfo(username, btnEl) {
-            let u = dbHC[username];
-            if (!u) return;
-            let textToCopy = `Akun Human Capital PT. Sukun\nNama: ${u.nama}\nArea: ${(u.area || '-').toUpperCase()}\nUsername: ${username}\nPassword: ${u.pass}`;
+            let user = dbHC[username];
+            if (!user) return;
+            let textToCopy = `Nama: ${user.nama}\nUsername: ${username}\nPassword: ${user.pass}`;
             navigator.clipboard.writeText(textToCopy).then(() => {
                 if (btnEl) {
-                    let originalHTML = btnEl.innerHTML;
-                    btnEl.innerHTML = `✔️ Tersalin`;
-                    btnEl.classList.remove('bg-cyan-600', 'hover:bg-cyan-700');
-                    btnEl.classList.add('bg-emerald-600');
-                    setTimeout(() => {
-                        btnEl.innerHTML = originalHTML;
-                        btnEl.classList.remove('bg-emerald-600');
-                        btnEl.classList.add('bg-cyan-600', 'hover:bg-cyan-700');
-                        lucide.createIcons();
-                    }, 1500);
+                    let original = btnEl.innerText;
+                    btnEl.innerText = "✔️ Tersalin";
+                    setTimeout(() => { btnEl.innerText = original; }, 1500);
                 }
             }).catch(() => {
-                alert(`Username: ${username} | Password: ${u.pass}`);
+                alert(textToCopy);
             });
-        }
-
-        async function simpanData() {
-            if (!activeUser) return;
-            let u = normalizeUserRecord(activeUser, dbHC[activeUser]);
-            dbHC[activeUser] = u;
-
-            u.nama = document.getElementById('p-nama').value;
-            u.panggilan = document.getElementById('p-panggilan').value;
-            u.nik = document.getElementById('p-nik').value;
-            u.androiduser = document.getElementById('p-androiduser').value;
-            u.androidpass = document.getElementById('p-androidpass').value;
-            u.tmptlahir = document.getElementById('p-tmptlahir').value;
-            u.tgllahir = document.getElementById('p-tgllahir').value;
-            u.gender = document.getElementById('p-gender').value;
-            u.kontak = document.getElementById('p-kontak').value;
-            u.email = document.getElementById('p-email').value;
-            u.nikah = document.getElementById('p-nikah').value;
-            u.tanggungan = document.getElementById('p-tanggungan').value;
-            u.ktp = document.getElementById('p-ktp').value;
-            u.npwp = document.getElementById('p-npwp').value;
-            u.bpjskesehatan = document.getElementById('p-bpjskesehatan').value;
-            u.bpjsketenagakerjaan = document.getElementById('p-bpjsketenagakerjaan').value;
-            
-            u.jabatan = document.getElementById('w-jabatan').value;
-            u.divisi = document.getElementById('w-divisi').value;
-            u.area = document.getElementById('w-area').value;
-            u.atasan = document.getElementById('w-atasan').value;
-            u.status = document.getElementById('w-status').value;
-            u.tglgabung = document.getElementById('w-tglgabung').value;
-            u.linkmaps = document.getElementById('w-linkmaps').value;
-
-            u.vjenis = document.getElementById('v-jenis').value;
-            let merekVal = document.getElementById('v-merek').value;
-            let merekManualVal = document.getElementById('v-merek-manual').value.trim();
-            u.vmerek = (merekVal === 'Lainnya' && merekManualVal) ? merekManualVal : merekVal;
-
-            let modelVal = document.getElementById('v-model').value;
-            let modelManualVal = document.getElementById('v-model-manual').value.trim();
-            u.vmodel = (modelVal === 'Lainnya' && modelManualVal) ? modelManualVal : modelVal;
-
-            u.vtahun = document.getElementById('v-tahun').value;
-            u.vplat = document.getElementById('v-plat').value;
-            u.vstnk = document.getElementById('v-stnk').value;
-            u.vsimjenis = document.getElementById('v-simjenis').value;
-            u.vsimno = document.getElementById('v-simno').value;
-
-            u.dnama = document.getElementById('p-dnama').value;
-            u.dhub = document.getElementById('p-dhub').value;
-            u.dinfo = document.getElementById('p-dinfo').value;
-            u.aktp = document.getElementById('p-aktp').value;
-
-            let bankVal = document.getElementById('c-namabank').value;
-            let bankManualVal = document.getElementById('c-namabank-manual').value.trim();
-            u.namabank = (bankVal === 'Lainnya' && bankManualVal) ? bankManualVal : bankVal;
-            u.norek = document.getElementById('c-norek').value;
-            u.namarek = document.getElementById('c-namarek').value;
-
-            u.jenjang = document.getElementById('e-jenjang').value;
-            u.institusi = document.getElementById('e-institusi').value;
-            let jurVal = document.getElementById('e-jurusan').value;
-            let jurManualVal = document.getElementById('e-jurusan-manual').value.trim();
-            u.jurusan = (jurVal === 'Lainnya' && jurManualVal) ? jurManualVal : jurVal;
-
-            let previewImg = document.getElementById('preview-pasfoto');
-            if(!previewImg.classList.contains('hidden')) u.pasfoto = previewImg.src;
-
-            if(!u.files) u.files = {};
-            let fileKtp = document.getElementById('file-ktp').files[0];
-            let fileIjazah = document.getElementById('file-ijazah').files[0];
-            if(fileKtp) u.files.ktp = fileKtp.name;
-            if(fileIjazah) u.files.ijazah = fileIjazah.name;
-
-            await syncToCloud(activeUser);
-            loadDataToForm();
         }
 
         function switchTab(tabName) {
             ['pribadi', 'pekerjaan', 'kendaraan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen', 'kpi', 'cuti', 'rekap'].forEach(t => {
-                let tabEl = document.getElementById(`tab-${t}`);
-                let btnEl = document.getElementById(`tab-btn-${t}`);
-                if(tabEl) tabEl.classList.add('hidden');
-                if(btnEl) {
-                    btnEl.classList.remove('active');
-                    btnEl.classList.add('text-slate-300');
+                let el = document.getElementById(`tab-${t}`);
+                if(el) el.classList.add('hidden');
+
+                let btn = document.getElementById(`tab-btn-${t}`);
+                if(btn) {
+                    btn.classList.remove('active', 'text-white', 'font-bold');
+                    btn.classList.add('text-slate-300', 'font-semibold');
                 }
             });
-            let targetTab = document.getElementById(`tab-${tabName}`);
-            let targetBtn = document.getElementById(`tab-btn-${tabName}`);
-            if(targetTab) targetTab.classList.remove('hidden');
-            if(targetBtn) {
-                targetBtn.classList.remove('text-slate-300');
-                targetBtn.classList.add('active');
+
+            let targetEl = document.getElementById(`tab-${tabName}`);
+            if(targetEl) targetEl.classList.remove('hidden');
+
+            let activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            if(activeBtn) {
+                activeBtn.classList.add('active', 'text-white', 'font-bold');
+                activeBtn.classList.remove('text-slate-300', 'font-semibold');
             }
+
             if (tabName === 'rekap') {
                 renderRekapAkun();
             }
+            if (tabName === 'cuti') {
+                loadDataToForm();
+            }
+            lucide.createIcons();
         }
 
-        initApp();
+        async function simpanData() {
+            let u = dbHC[activeUser];
+            if (!u) return;
+
+            u.nama = document.getElementById('p-nama').value.trim();
+            u.panggilan = document.getElementById('p-panggilan').value.trim();
+            u.nik = document.getElementById('p-nik').value.trim();
+            u.androiduser = document.getElementById('p-androiduser').value.trim();
+            u.androidpass = document.getElementById('p-androidpass').value.trim();
+            u.tmptlahir = document.getElementById('p-tmptlahir').value.trim();
+            u.tgllahir = document.getElementById('p-tgllahir').value;
+            u.gender = document.getElementById('p-gender').value;
+            u.kontak = document.getElementById('p-kontak').value.trim();
+            u.email = document.getElementById('p-email').value.trim();
+            u.nikah = document.getElementById('p-nikah').value;
+            u.tanggungan = document.getElementById('p-tanggungan').value.trim();
+            u.ktp = document.getElementById('p-ktp').value.trim();
+            u.npwp = document.getElementById('p-npwp').value.trim();
+            u.bpjskesehatan = document.getElementById('p-bpjskesehatan').value.trim();
+            u.bpjsketenagakerjaan = document.getElementById('p-bpjsketenagakerjaan').value.trim();
+            
+            u.vjenis = document.getElementById('v-jenis').value;
+
+            let merekSel = document.getElementById('v-merek').value;
+            let merekMan = document.getElementById('v-merek-manual').value.trim();
+            u.vmerek = merekSel === 'Lainnya' ? (merekMan || 'Lainnya') : merekSel;
+
+            let modelSel = document.getElementById('v-model').value;
+            let modelMan = document.getElementById('v-model-manual').value.trim();
+            u.vmodel = modelSel === 'Lainnya' ? (modelMan || 'Lainnya') : modelSel;
+
+            u.vtahun = document.getElementById('v-tahun').value.trim();
+            u.vplat = document.getElementById('v-plat').value.trim();
+            u.vstnk = document.getElementById('v-stnk').value.trim();
+            u.vsimjenis = document.getElementById('v-simjenis').value;
+            u.vsimno = document.getElementById('v-simno').value.trim();
+
+            u.dnama = document.getElementById('p-dnama').value.trim();
+            u.dhub = document.getElementById('p-dhub').value;
+            u.dinfo = document.getElementById('p-dinfo').value.trim();
+            u.aktp = document.getElementById('p-aktp').value.trim();
+
+            u.jabatan = document.getElementById('w-jabatan').value;
+            u.divisi = document.getElementById('w-divisi').value;
+            u.area = document.getElementById('w-area').value;
+            u.atasan = document.getElementById('w-atasan').value.trim();
+            u.status = document.getElementById('w-status').value;
+            u.tglgabung = document.getElementById('w-tglgabung').value;
+            u.linkmaps = document.getElementById('w-linkmaps').value.trim();
+
+            let bankSel = document.getElementById('c-namabank').value;
+            let bankMan = document.getElementById('c-namabank-manual').value.trim();
+            u.namabank = bankSel === 'Lainnya' ? (bankMan || 'Lainnya') : bankSel;
+
+            u.norek = document.getElementById('c-norek').value.trim();
+            u.namarek = document.getElementById('c-namarek').value.trim();
+
+            u.jenjang = document.getElementById('e-jenjang').value;
+
+            let jurSel = document.getElementById('e-jurusan').value;
+            let jurMan = document.getElementById('e-jurusan-manual').value.trim();
+            u.jurusan = jurSel === 'Lainnya' ? (jurMan || 'Lainnya') : jurSel;
+
+            u.institusi = document.getElementById('e-institusi').value.trim();
+
+            let pasFotoInput = document.getElementById('file-pasfoto');
+            if(pasFotoInput && pasFotoInput.files && pasFotoInput.files[0]) {
+                let reader = new FileReader();
+                reader.onload = async function(e) {
+                    u.pasfoto = e.target.result;
+                    await finishSave(u);
+                };
+                reader.readAsDataURL(pasFotoInput.files[0]);
+            } else {
+                await finishSave(u);
+            }
+        }
+
+        async function finishSave(u) {
+            if (!u.files) u.files = {};
+            let ktpFile = document.getElementById('file-ktp');
+            let ijazahFile = document.getElementById('file-ijazah');
+            if(ktpFile && ktpFile.files && ktpFile.files[0]) u.files.ktp = ktpFile.files[0].name;
+            if(ijazahFile && ijazahFile.files && ijazahFile.files[0]) u.files.ijazah = ijazahFile.files[0].name;
+
+            await syncToCloud(activeUser);
+            configureSessionHeaderAndAccess();
+            loadDataToForm();
+        }
+
+        window.onload = initApp;
     </script>
 </body>
 </html>
