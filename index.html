@@ -1054,7 +1054,7 @@
                             <input type="text" id="rekap-search-input" oninput="renderRekapAkun()" placeholder="Cari nama, username, jabatan, area, atau status..." class="w-full p-2.5 pl-9 border border-slate-300 rounded-xl text-xs font-semibold text-slate-900 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-navy-900 focus:outline-none">
                             <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
                         </div>
-                        <span class="text-[11px] text-slate-500 font-medium">Ubah dropdown pada kolom <span class="font-bold text-slate-700">Status</span> untuk memperbarui keaktifan secara langsung.</span>
+                        <span class="text-[11px] text-slate-500 font-medium">Ubah status langsung dari dropdown atau klik ikon pensil pada kolom <span class="font-bold text-slate-700">Password</span> untuk mengubah password.</span>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -1576,6 +1576,7 @@
         const newSeedAccounts = ["muhammadarif", "heniprihatiningsih", "gilangvitowidodo"];
 
         let activeUser = localStorage.getItem('hc_active_user_cloud') || null;
+        let editingPassUser = null;
 
         function normalizeUserRecord(userId, rawData) {
             let d = rawData || {};
@@ -1940,6 +1941,7 @@
 
             if (dbHC[u] && String(dbHC[u].pass).trim() === String(p)) {
                 activeUser = u;
+                editingPassUser = null;
                 dbHC[u] = normalizeUserRecord(u, dbHC[u]);
                 localStorage.setItem('hc_active_user_cloud', u);
                 
@@ -1985,7 +1987,8 @@
                     el.id !== 'rekap-search-input' &&
                     el.id !== 'admin-select-sales' &&
                     el.id !== 'admin-select-account-status' &&
-                    !el.classList.contains('rekap-status-select')
+                    !el.classList.contains('rekap-status-select') &&
+                    !el.classList.contains('rekap-pass-edit-input')
                 ) {
                     if (isEditable) {
                         el.removeAttribute('disabled');
@@ -2124,6 +2127,7 @@
 
         function logout() {
             activeUser = null;
+            editingPassUser = null;
             localStorage.removeItem('hc_active_user_cloud');
             initApp();
         }
@@ -3010,6 +3014,46 @@
             }
         }
 
+        function startEditRekapPass(username) {
+            if (!hasAdminPrivilege(activeUser) || !dbHC[username]) return;
+            editingPassUser = username;
+            renderRekapAkun();
+            let inputEl = document.getElementById(`rekap-pass-input-${username}`);
+            if (inputEl) {
+                inputEl.focus();
+                inputEl.select();
+            }
+        }
+
+        function cancelEditRekapPass() {
+            editingPassUser = null;
+            renderRekapAkun();
+        }
+
+        async function saveRekapPass(username, btnEl) {
+            if (!hasAdminPrivilege(activeUser) || !dbHC[username]) return;
+            let inputEl = document.getElementById(`rekap-pass-input-${username}`);
+            if (!inputEl) return;
+
+            let newPass = inputEl.value.trim();
+            if (!newPass) {
+                alert("Password tidak boleh kosong!");
+                inputEl.focus();
+                return;
+            }
+
+            if (btnEl) {
+                btnEl.disabled = true;
+                btnEl.innerText = "...";
+            }
+
+            dbHC[username].pass = newPass;
+            editingPassUser = null;
+
+            await syncToCloud(username);
+            renderRekapAkun();
+        }
+
         function renderRekapAkun() {
             let tbody = document.getElementById('rekap-akun-table-body');
             let totalBadge = document.getElementById('rekap-total-badge');
@@ -3093,30 +3137,50 @@
                     let selectStyle = accStatus === 'Tidak Aktif'
                         ? 'bg-red-50 text-red-800 border-red-300'
                         : 'bg-emerald-50 text-emerald-800 border-emerald-300';
+                    let isEditingThisPass = (editingPassUser === username);
+                    let safePassAttr = String(user.pass || '').replace(/"/g, '&quot;');
+
+                    let passCellHtml = isEditingThisPass
+                        ? `
+                            <div class="flex items-center gap-1.5">
+                                <input type="text" id="rekap-pass-input-${username}" value="${safePassAttr}" onkeydown="if(event.key==='Enter'){saveRekapPass('${username}', this.nextElementSibling);}else if(event.key==='Escape'){cancelEditRekapPass();}" class="rekap-pass-edit-input w-28 px-2 py-1 border border-cyan-500 rounded bg-white text-slate-900 font-bold text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                <button type="button" onclick="saveRekapPass('${username}', this)" title="Simpan Password" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[10px] font-bold cursor-pointer">Simpan</button>
+                                <button type="button" onclick="cancelEditRekapPass()" title="Batal" class="px-1.5 py-1 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded text-[10px] font-bold cursor-pointer">✕</button>
+                            </div>
+                        `
+                        : `
+                            <div class="flex items-center gap-2">
+                                <span id="rekap-pass-text-${username}" class="font-mono font-bold text-slate-800 tracking-wider select-none" data-pass="${safePassAttr}">••••••••</span>
+                                <button type="button" onclick="toggleRekapPass('${username}', this)" title="Tampilkan / Sembunyikan Password" class="text-slate-400 hover:text-navy-900 cursor-pointer">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <button type="button" onclick="startEditRekapPass('${username}')" title="Ubah Password Akun" class="text-cyan-600 hover:text-cyan-800 cursor-pointer">
+                                    <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+                        `;
+
                     let tr = document.createElement('tr');
                     tr.className = "hover:bg-slate-50 transition";
                     tr.innerHTML = `
-                        <td class="p-3 text-center font-bold text-slate-600">${idx + 1}</td>
-                        <td class="p-3 font-bold text-navy-900">${user.nama || '-'}${username === 'irvantuba' ? ' <span class="ml-1 px-1.5 py-0.5 text-[9px] rounded bg-indigo-100 text-indigo-800 font-black">ADMIN UTAMA</span>' : ''}</td>
-                        <td class="p-3 text-slate-600 font-semibold">${user.jabatan || '-'} • <span class="uppercase">${user.area || '-'}</span></td>
+                        <td class="p-3 text-center font-bold text-slate-500">${idx + 1}</td>
+                        <td class="p-3 font-bold text-navy-900">
+                            ${user.nama}
+                            ${username === activeUser ? '<span class="ml-1.5 px-1.5 py-0.5 rounded bg-navy-900 text-white text-[9px] font-bold uppercase">Anda</span>' : ''}
+                            ${user.isSubAdmin && username !== 'irvantuba' ? '<span class="ml-1.5 px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[9px] font-bold">Sub-Admin</span>' : ''}
+                        </td>
+                        <td class="p-3 text-slate-700 font-semibold">${user.jabatan || 'Sales'} <span class="text-slate-400">•</span> <span class="uppercase text-[11px]">${user.area || '-'}</span></td>
                         <td class="p-3">
-                            <select onchange="changeRekapStatus('${username}', this)" class="rekap-status-select px-2.5 py-1 rounded-lg border text-[11px] font-extrabold cursor-pointer focus:outline-none focus:ring-2 focus:ring-navy-900 transition ${selectStyle}">
+                            <select onchange="changeRekapStatus('${username}', this)" class="rekap-status-select px-2.5 py-1 rounded-lg text-[11px] font-bold border cursor-pointer focus:outline-none ${selectStyle}">
                                 <option value="Aktif" ${accStatus === 'Aktif' ? 'selected' : ''}>Aktif</option>
                                 <option value="Tidak Aktif" ${accStatus === 'Tidak Aktif' ? 'selected' : ''}>Tidak Aktif</option>
                             </select>
                         </td>
-                        <td class="p-3"><code class="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-slate-900 font-bold">${username}</code></td>
-                        <td class="p-3">
-                            <div class="flex items-center gap-2">
-                                <code id="rekap-pass-text-${username}" data-visible="false" class="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-slate-900 font-bold tracking-wider">••••••••</code>
-                                <button type="button" onclick="toggleRekapPass('${username}')" title="Tampilkan / Sembunyikan Password" class="p-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 transition cursor-pointer">
-                                    <i id="rekap-eye-icon-${username}" data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                </button>
-                            </div>
-                        </td>
+                        <td class="p-3 font-mono font-bold text-cyan-800">${username}</td>
+                        <td class="p-3">${passCellHtml}</td>
                         <td class="p-3 text-center">
-                            <button type="button" onclick="copyRekapInfo('${username}', this)" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-[11px] font-bold transition cursor-pointer shadow-2xs">
-                                Salin ID & Pass
+                            <button type="button" onclick="copyCredential('${username}', this)" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-lg text-[11px] font-bold transition cursor-pointer inline-flex items-center gap-1">
+                                <i data-lucide="copy" class="w-3 h-3"></i> Salin ID & Pass
                             </button>
                         </td>
                     `;
@@ -3124,9 +3188,7 @@
                 });
             });
 
-            if (totalBadge) {
-                totalBadge.innerText = `Total: ${totalFiltered} Akun`;
-            }
+            if (totalBadge) totalBadge.innerText = `Total: ${totalFiltered} Akun`;
 
             if (totalFiltered === 0) {
                 tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400 font-semibold">Tidak ada akun yang cocok dengan pencarian.</td></tr>`;
@@ -3135,110 +3197,142 @@
             lucide.createIcons();
         }
 
-        function toggleRekapPass(username) {
-            let codeEl = document.getElementById(`rekap-pass-text-${username}`);
-            let iconEl = document.getElementById(`rekap-eye-icon-${username}`);
-            if (!codeEl || !dbHC[username]) return;
-
-            let isVisible = codeEl.getAttribute('data-visible') === 'true';
-            if (!isVisible) {
-                codeEl.innerText = dbHC[username].pass || '-';
-                codeEl.setAttribute('data-visible', 'true');
-                if (iconEl) iconEl.setAttribute('data-lucide', 'eye-off');
+        function toggleRekapPass(username, btnEl) {
+            let span = document.getElementById(`rekap-pass-text-${username}`);
+            if (!span) return;
+            let actualPass = span.getAttribute('data-pass') || '';
+            if (span.innerText === '••••••••') {
+                span.innerText = actualPass;
+                span.classList.remove('select-none');
+                btnEl.innerHTML = `<i data-lucide="eye-off" class="w-3.5 h-3.5 text-cyan-700"></i>`;
             } else {
-                codeEl.innerText = '••••••••';
-                codeEl.setAttribute('data-visible', 'false');
-                if (iconEl) iconEl.setAttribute('data-lucide', 'eye');
+                span.innerText = '••••••••';
+                span.classList.add('select-none');
+                btnEl.innerHTML = `<i data-lucide="eye" class="w-3.5 h-3.5"></i>`;
             }
             lucide.createIcons();
         }
 
-        function copyRekapInfo(username, btnEl) {
+        function copyCredential(username, btnEl) {
             let user = dbHC[username];
             if (!user) return;
-            let text = `Nama: ${user.nama}\nJabatan: ${user.jabatan || '-'}\nArea: ${user.area || '-'}\nStatus: ${user.accountStatus || 'Aktif'}\nUsername: ${username}\nPassword: ${user.pass}`;
+            let textToCopy = `Nama: ${user.nama}\nID Login: ${username}\nPassword: ${user.pass}`;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(textToCopy).catch(() => fallbackCopy(textToCopy));
+            } else {
+                fallbackCopy(textToCopy);
+            }
+            let originalHtml = btnEl.innerHTML;
+            btnEl.innerHTML = `✔️ Tersalin`;
+            btnEl.classList.add('bg-emerald-100', 'text-emerald-800', 'border-emerald-300');
+            setTimeout(() => {
+                btnEl.innerHTML = originalHtml;
+                btnEl.classList.remove('bg-emerald-100', 'text-emerald-800', 'border-emerald-300');
+                lucide.createIcons();
+            }, 1500);
+        }
 
-            navigator.clipboard.writeText(text).then(() => {
-                if (btnEl) {
-                    let oldText = btnEl.innerText;
-                    btnEl.innerText = 'Tersalin!';
-                    btnEl.classList.remove('bg-cyan-600', 'hover:bg-cyan-700');
-                    btnEl.classList.add('bg-emerald-600');
-                    setTimeout(() => {
-                        btnEl.innerText = oldText;
-                        btnEl.classList.remove('bg-emerald-600');
-                        btnEl.classList.add('bg-cyan-600', 'hover:bg-cyan-700');
-                    }, 1500);
-                }
-            }).catch(() => {
-                alert(text);
+        function fallbackCopy(text) {
+            let ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+        }
+
+        function switchTab(tabName) {
+            editingPassUser = null;
+            const tabs = ['pribadi', 'pekerjaan', 'kendaraan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen', 'kpi', 'cuti', 'rekap'];
+            tabs.forEach(t => {
+                let el = document.getElementById(`tab-${t}`);
+                if(el) el.classList.add('hidden');
+
+                let btn = document.getElementById(`tab-btn-${t}`);
+                if(btn) btn.classList.remove('active');
             });
+
+            let activeContent = document.getElementById(`tab-${tabName}`);
+            if(activeContent) activeContent.classList.remove('hidden');
+
+            let activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            if(activeBtn) activeBtn.classList.add('active');
+
+            if (tabName === 'rekap') {
+                renderRekapAkun();
+            }
+
+            lucide.createIcons();
         }
 
         async function simpanData() {
-            let u = dbHC[activeUser];
-            if (!u) return;
+            let u = normalizeUserRecord(activeUser, dbHC[activeUser]);
+            dbHC[activeUser] = u;
 
-            u.nama = document.getElementById('p-nama').value;
-            u.panggilan = document.getElementById('p-panggilan').value;
-            u.nik = document.getElementById('p-nik').value;
-            u.androiduser = document.getElementById('p-androiduser').value;
-            u.androidpass = document.getElementById('p-androidpass').value;
-            u.tmptlahir = document.getElementById('p-tmptlahir').value;
+            u.nama = document.getElementById('p-nama').value.trim();
+            u.panggilan = document.getElementById('p-panggilan').value.trim();
+            u.nik = document.getElementById('p-nik').value.trim();
+            u.androiduser = document.getElementById('p-androiduser').value.trim();
+            u.androidpass = document.getElementById('p-androidpass').value.trim();
+            u.tmptlahir = document.getElementById('p-tmptlahir').value.trim();
             u.tgllahir = document.getElementById('p-tgllahir').value;
             u.gender = document.getElementById('p-gender').value;
-            u.kontak = document.getElementById('p-kontak').value;
-            u.email = document.getElementById('p-email').value;
+            u.kontak = document.getElementById('p-kontak').value.trim();
+            u.email = document.getElementById('p-email').value.trim();
             u.nikah = document.getElementById('p-nikah').value;
-            u.tanggungan = document.getElementById('p-tanggungan').value;
-            u.ktp = document.getElementById('p-ktp').value;
-            u.npwp = document.getElementById('p-npwp').value;
-            u.bpjskesehatan = document.getElementById('p-bpjskesehatan').value;
-            u.bpjsketenagakerjaan = document.getElementById('p-bpjsketenagakerjaan').value;
+            u.tanggungan = document.getElementById('p-tanggungan').value.trim();
+            u.ktp = document.getElementById('p-ktp').value.trim();
+            u.npwp = document.getElementById('p-npwp').value.trim();
+            u.bpjskesehatan = document.getElementById('p-bpjskesehatan').value.trim();
+            u.bpjsketenagakerjaan = document.getElementById('p-bpjsketenagakerjaan').value.trim();
             
             u.vjenis = document.getElementById('v-jenis').value;
-            let merekSel = document.getElementById('v-merek').value;
-            let merekMan = document.getElementById('v-merek-manual').value.trim();
-            u.vmerek = (merekSel === 'Lainnya' && merekMan) ? merekMan : merekSel;
+            let merekSelVal = document.getElementById('v-merek').value;
+            u.vmerek = merekSelVal === 'Lainnya'
+                ? (document.getElementById('v-merek-manual').value.trim() || 'Lainnya')
+                : merekSelVal;
 
-            let modelSel = document.getElementById('v-model').value;
-            let modelMan = document.getElementById('v-model-manual').value.trim();
-            u.vmodel = (modelSel === 'Lainnya' && modelMan) ? modelMan : modelSel;
+            let modelSelVal = document.getElementById('v-model').value;
+            u.vmodel = modelSelVal === 'Lainnya'
+                ? (document.getElementById('v-model-manual').value.trim() || 'Lainnya')
+                : modelSelVal;
 
-            u.vtahun = document.getElementById('v-tahun').value;
-            u.vplat = document.getElementById('v-plat').value;
-            u.vstnk = document.getElementById('v-stnk').value;
+            u.vtahun = document.getElementById('v-tahun').value.trim();
+            u.vplat = document.getElementById('v-plat').value.trim();
+            u.vstnk = document.getElementById('v-stnk').value.trim();
             u.vsimjenis = document.getElementById('v-simjenis').value;
-            u.vsimno = document.getElementById('v-simno').value;
+            u.vsimno = document.getElementById('v-simno').value.trim();
 
-            u.dnama = document.getElementById('p-dnama').value;
+            u.dnama = document.getElementById('p-dnama').value.trim();
             u.dhub = document.getElementById('p-dhub').value;
-            u.dinfo = document.getElementById('p-dinfo').value;
-            u.aktp = document.getElementById('p-aktp').value;
+            u.dinfo = document.getElementById('p-dinfo').value.trim();
+            u.aktp = document.getElementById('p-aktp').value.trim();
 
             u.jabatan = document.getElementById('w-jabatan').value;
             u.divisi = document.getElementById('w-divisi').value;
             u.area = document.getElementById('w-area').value;
-            u.atasan = document.getElementById('w-atasan').value;
+            u.atasan = document.getElementById('w-atasan').value.trim();
             u.status = document.getElementById('w-status').value;
             u.tglgabung = document.getElementById('w-tglgabung').value;
-            u.linkmaps = document.getElementById('w-linkmaps').value;
+            u.linkmaps = document.getElementById('w-linkmaps').value.trim();
 
-            let bankSel = document.getElementById('c-namabank').value;
-            let bankMan = document.getElementById('c-namabank-manual').value.trim();
-            u.namabank = (bankSel === 'Lainnya' && bankMan) ? bankMan : bankSel;
-            u.norek = document.getElementById('c-norek').value;
-            u.namarek = document.getElementById('c-namarek').value;
+            let bankSelVal = document.getElementById('c-namabank').value;
+            u.namabank = bankSelVal === 'Lainnya'
+                ? (document.getElementById('c-namabank-manual').value.trim() || 'Lainnya')
+                : bankSelVal;
+            u.norek = document.getElementById('c-norek').value.trim();
+            u.namarek = document.getElementById('c-namarek').value.trim();
 
             u.jenjang = document.getElementById('e-jenjang').value;
-            let jurSel = document.getElementById('e-jurusan').value;
-            let jurMan = document.getElementById('e-jurusan-manual').value.trim();
-            u.jurusan = (jurSel === 'Lainnya' && jurMan) ? jurMan : jurSel;
-            u.institusi = document.getElementById('e-institusi').value;
+            let jurSelVal = document.getElementById('e-jurusan').value;
+            u.jurusan = jurSelVal === 'Lainnya'
+                ? (document.getElementById('e-jurusan-manual').value.trim() || 'Lainnya')
+                : jurSelVal;
+            u.institusi = document.getElementById('e-institusi').value.trim();
 
-            let pasfotoInput = document.getElementById('preview-pasfoto');
-            if (pasfotoInput && pasfotoInput.src && !pasfotoInput.classList.contains('hidden')) {
-                u.pasfoto = pasfotoInput.src;
+            let imgEl = document.getElementById('preview-pasfoto');
+            if(imgEl && imgEl.src && !imgEl.classList.contains('hidden') && imgEl.src.startsWith('data:image')) {
+                u.pasfoto = imgEl.src;
             }
 
             if(!u.files) u.files = {};
@@ -3248,41 +3342,15 @@
             if(fIjazah) u.files.ijazah = fIjazah.name;
 
             await syncToCloud(activeUser);
-            loadDataToForm();
-            configureSessionHeaderAndAccess();
-        }
 
-        function switchTab(tabName) {
-            const tabs = ['pribadi', 'pekerjaan', 'kendaraan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen', 'kpi', 'cuti', 'rekap'];
-            tabs.forEach(t => {
-                let el = document.getElementById('tab-' + t);
-                let btn = document.getElementById('tab-btn-' + t);
-                if (el) {
-                    if (t === tabName) el.classList.remove('hidden');
-                    else el.classList.add('hidden');
-                }
-                if (btn) {
-                    if (t === tabName) {
-                        btn.classList.add('active');
-                        btn.classList.remove('text-slate-300');
-                        btn.classList.add('text-white');
-                    } else {
-                        btn.classList.remove('active');
-                        btn.classList.remove('text-white');
-                        btn.classList.add('text-slate-300');
-                    }
-                }
-            });
-            if(tabName === 'kpi') renderKPITable();
-            if(tabName === 'cuti' && dbHC[activeUser]) {
-                renderLeaveModule(dbHC[activeUser]);
-                renderChangeNoteHistory(dbHC[activeUser]);
+            if (!hasAdminPrivilege(activeUser)) {
+                setFormEditable(false);
             }
-            if(tabName === 'rekap') renderRekapAkun();
-            renderAdminNotifications();
+            configureSessionHeaderAndAccess();
+            loadDataToForm();
         }
 
-        window.onload = initApp;
+        window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
