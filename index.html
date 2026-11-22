@@ -1037,9 +1037,9 @@
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-3 gap-3">
                         <div>
                             <h3 class="text-sm font-bold text-navy-900 uppercase tracking-wider flex items-center gap-2">
-                                <i data-lucide="shield-check" class="w-4 h-4 text-cyan-600"></i> 10. Rekap Akun Petugas & Karyawan (PWK Jakarta)
+                                <i data-lucide="shield-check" class="w-4 h-4 text-cyan-600"></i> 10. Rekap Akun Petugas & Karyawan
                             </h3>
-                            <p id="rekap-subtitle-desc" class="text-[11px] text-slate-500 font-medium">Direktori ID Pengguna, Password & Status Keaktifan dikelompokkan berdasarkan Area Penempatan.</p>
+                            <p id="rekap-subtitle-desc" class="text-[11px] text-slate-500 font-medium">Direktori ID Pengguna, Password & Status Keaktifan diurutkan berdasarkan Jabatan / Posisi.</p>
                         </div>
                         <div class="flex items-center gap-2 shrink-0">
                             <button type="button" onclick="openAddPetugasModal()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer flex items-center gap-1.5">
@@ -3025,26 +3025,16 @@
 
             if (subtitleDesc) {
                 subtitleDesc.innerText = isSuperAdmin
-                    ? "Mode Admin Utama: Menampilkan seluruh akun karyawan & petugas termasuk akun Anda sendiri, dikelompokkan per Area."
-                    : "Mode Sub-Admin: Menampilkan akun petugas SPM dikelompokkan berdasarkan Area Penempatan.";
+                    ? "Mode Admin Utama: Menampilkan seluruh akun karyawan & petugas termasuk akun Anda sendiri, diurutkan berdasarkan Jabatan / Posisi."
+                    : "Mode Sub-Admin: Menampilkan akun petugas SPM diurutkan berdasarkan Jabatan / Posisi.";
             }
 
             let keyword = searchInput ? searchInput.value.trim().toLowerCase() : '';
             tbody.innerHTML = '';
 
-            const areaOrder = [
-                "pwk",
-                "jakarta barat",
-                "jakarta utara",
-                "jakarta timur",
-                "jakarta pusat",
-                "jakarta selatan",
-                "kota depok"
-            ];
-
-            let groupedByArea = {};
-            areaOrder.forEach(a => { groupedByArea[a] = []; });
-            groupedByArea["lainnya"] = [];
+            let groupedByJabatan = {};
+            jabatanHierarchyOrder.forEach(j => { groupedByJabatan[j] = []; });
+            groupedByJabatan["LAINNYA"] = [];
 
             let totalFiltered = 0;
 
@@ -3058,7 +3048,7 @@
 
                 let namaStr = (user.nama || '').toLowerCase();
                 let areaStr = (user.area || '').trim().toLowerCase();
-                let jabatanStr = (user.jabatan || '').toLowerCase();
+                let jabatanStr = jabatanUpper.toLowerCase();
                 let userStr = username.toLowerCase();
                 let statusStr = (user.accountStatus || 'Aktif').toLowerCase();
 
@@ -3067,19 +3057,19 @@
                 }
 
                 totalFiltered++;
-                let bucketKey = areaOrder.includes(areaStr) ? areaStr : "lainnya";
-                groupedByArea[bucketKey].push({ username, user });
+                let bucketKey = jabatanHierarchyOrder.includes(jabatanUpper) ? jabatanUpper : "LAINNYA";
+                groupedByJabatan[bucketKey].push({ username, user });
             }
 
-            let renderSequence = [...areaOrder, "lainnya"];
+            let renderSequence = [...jabatanHierarchyOrder, "LAINNYA"];
 
-            renderSequence.forEach(areaKey => {
-                let list = groupedByArea[areaKey];
+            renderSequence.forEach(jabKey => {
+                let list = groupedByJabatan[jabKey];
                 if (!list || list.length === 0) return;
 
                 list.sort((a, b) => (a.user.nama || '').localeCompare(b.user.nama || '', 'id'));
 
-                let areaLabel = areaKey === "lainnya" ? "AREA LAINNYA / BELUM DIATUR" : areaKey.toUpperCase();
+                let jabLabel = jabKey === "LAINNYA" ? "JABATAN LAINNYA / BELUM DIATUR" : jabKey;
 
                 let dividerTr = document.createElement('tr');
                 dividerTr.className = "bg-slate-800 text-white border-y-2 border-slate-900";
@@ -3087,7 +3077,7 @@
                     <td colspan="7" class="px-4 py-2.5">
                         <div class="flex items-center justify-between">
                             <span class="font-black text-[11px] tracking-wider uppercase flex items-center gap-2 text-cyan-300">
-                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400"></i> AREA: ${areaLabel}
+                                <i data-lucide="briefcase" class="w-3.5 h-3.5 text-amber-400"></i> JABATAN: ${jabLabel}
                             </span>
                             <span class="text-[10px] font-bold bg-slate-700 text-slate-200 px-2.5 py-0.5 rounded-full border border-slate-600">
                                 ${list.length} Akun
@@ -3148,18 +3138,17 @@
         function toggleRekapPass(username) {
             let codeEl = document.getElementById(`rekap-pass-text-${username}`);
             let iconEl = document.getElementById(`rekap-eye-icon-${username}`);
-            let user = dbHC[username];
-            if (!codeEl || !user) return;
+            if (!codeEl || !dbHC[username]) return;
 
-            let isVisible = codeEl.dataset.visible === 'true';
-            if (isVisible) {
-                codeEl.innerText = '••••••••';
-                codeEl.dataset.visible = 'false';
-                if (iconEl) iconEl.setAttribute('data-lucide', 'eye');
-            } else {
-                codeEl.innerText = user.pass || '-';
-                codeEl.dataset.visible = 'true';
+            let isVisible = codeEl.getAttribute('data-visible') === 'true';
+            if (!isVisible) {
+                codeEl.innerText = dbHC[username].pass || '-';
+                codeEl.setAttribute('data-visible', 'true');
                 if (iconEl) iconEl.setAttribute('data-lucide', 'eye-off');
+            } else {
+                codeEl.innerText = '••••••••';
+                codeEl.setAttribute('data-visible', 'false');
+                if (iconEl) iconEl.setAttribute('data-lucide', 'eye');
             }
             lucide.createIcons();
         }
@@ -3167,136 +3156,130 @@
         function copyRekapInfo(username, btnEl) {
             let user = dbHC[username];
             if (!user) return;
-            let textToCopy = `Nama: ${user.nama}\nUsername: ${username}\nPassword: ${user.pass}`;
-            navigator.clipboard.writeText(textToCopy).then(() => {
+            let text = `Nama: ${user.nama}\nJabatan: ${user.jabatan || '-'}\nArea: ${user.area || '-'}\nStatus: ${user.accountStatus || 'Aktif'}\nUsername: ${username}\nPassword: ${user.pass}`;
+
+            navigator.clipboard.writeText(text).then(() => {
                 if (btnEl) {
-                    let original = btnEl.innerText;
-                    btnEl.innerText = "✔️ Tersalin";
-                    setTimeout(() => { btnEl.innerText = original; }, 1500);
+                    let oldText = btnEl.innerText;
+                    btnEl.innerText = 'Tersalin!';
+                    btnEl.classList.remove('bg-cyan-600', 'hover:bg-cyan-700');
+                    btnEl.classList.add('bg-emerald-600');
+                    setTimeout(() => {
+                        btnEl.innerText = oldText;
+                        btnEl.classList.remove('bg-emerald-600');
+                        btnEl.classList.add('bg-cyan-600', 'hover:bg-cyan-700');
+                    }, 1500);
                 }
             }).catch(() => {
-                alert(textToCopy);
+                alert(text);
             });
-        }
-
-        function switchTab(tabName) {
-            ['pribadi', 'pekerjaan', 'kendaraan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen', 'kpi', 'cuti', 'rekap'].forEach(t => {
-                let el = document.getElementById(`tab-${t}`);
-                if(el) el.classList.add('hidden');
-
-                let btn = document.getElementById(`tab-btn-${t}`);
-                if(btn) {
-                    btn.classList.remove('active', 'text-white', 'font-bold');
-                    btn.classList.add('text-slate-300', 'font-semibold');
-                }
-            });
-
-            let targetEl = document.getElementById(`tab-${tabName}`);
-            if(targetEl) targetEl.classList.remove('hidden');
-
-            let activeBtn = document.getElementById(`tab-btn-${tabName}`);
-            if(activeBtn) {
-                activeBtn.classList.add('active', 'text-white', 'font-bold');
-                activeBtn.classList.remove('text-slate-300', 'font-semibold');
-            }
-
-            if (tabName === 'rekap') {
-                renderRekapAkun();
-            }
-            if (tabName === 'cuti') {
-                loadDataToForm();
-            }
-            lucide.createIcons();
         }
 
         async function simpanData() {
             let u = dbHC[activeUser];
             if (!u) return;
 
-            u.nama = document.getElementById('p-nama').value.trim();
-            u.panggilan = document.getElementById('p-panggilan').value.trim();
-            u.nik = document.getElementById('p-nik').value.trim();
-            u.androiduser = document.getElementById('p-androiduser').value.trim();
-            u.androidpass = document.getElementById('p-androidpass').value.trim();
-            u.tmptlahir = document.getElementById('p-tmptlahir').value.trim();
+            u.nama = document.getElementById('p-nama').value;
+            u.panggilan = document.getElementById('p-panggilan').value;
+            u.nik = document.getElementById('p-nik').value;
+            u.androiduser = document.getElementById('p-androiduser').value;
+            u.androidpass = document.getElementById('p-androidpass').value;
+            u.tmptlahir = document.getElementById('p-tmptlahir').value;
             u.tgllahir = document.getElementById('p-tgllahir').value;
             u.gender = document.getElementById('p-gender').value;
-            u.kontak = document.getElementById('p-kontak').value.trim();
-            u.email = document.getElementById('p-email').value.trim();
+            u.kontak = document.getElementById('p-kontak').value;
+            u.email = document.getElementById('p-email').value;
             u.nikah = document.getElementById('p-nikah').value;
-            u.tanggungan = document.getElementById('p-tanggungan').value.trim();
-            u.ktp = document.getElementById('p-ktp').value.trim();
-            u.npwp = document.getElementById('p-npwp').value.trim();
-            u.bpjskesehatan = document.getElementById('p-bpjskesehatan').value.trim();
-            u.bpjsketenagakerjaan = document.getElementById('p-bpjsketenagakerjaan').value.trim();
+            u.tanggungan = document.getElementById('p-tanggungan').value;
+            u.ktp = document.getElementById('p-ktp').value;
+            u.npwp = document.getElementById('p-npwp').value;
+            u.bpjskesehatan = document.getElementById('p-bpjskesehatan').value;
+            u.bpjsketenagakerjaan = document.getElementById('p-bpjsketenagakerjaan').value;
             
             u.vjenis = document.getElementById('v-jenis').value;
-
             let merekSel = document.getElementById('v-merek').value;
             let merekMan = document.getElementById('v-merek-manual').value.trim();
-            u.vmerek = merekSel === 'Lainnya' ? (merekMan || 'Lainnya') : merekSel;
+            u.vmerek = (merekSel === 'Lainnya' && merekMan) ? merekMan : merekSel;
 
             let modelSel = document.getElementById('v-model').value;
             let modelMan = document.getElementById('v-model-manual').value.trim();
-            u.vmodel = modelSel === 'Lainnya' ? (modelMan || 'Lainnya') : modelSel;
+            u.vmodel = (modelSel === 'Lainnya' && modelMan) ? modelMan : modelSel;
 
-            u.vtahun = document.getElementById('v-tahun').value.trim();
-            u.vplat = document.getElementById('v-plat').value.trim();
-            u.vstnk = document.getElementById('v-stnk').value.trim();
+            u.vtahun = document.getElementById('v-tahun').value;
+            u.vplat = document.getElementById('v-plat').value;
+            u.vstnk = document.getElementById('v-stnk').value;
             u.vsimjenis = document.getElementById('v-simjenis').value;
-            u.vsimno = document.getElementById('v-simno').value.trim();
+            u.vsimno = document.getElementById('v-simno').value;
 
-            u.dnama = document.getElementById('p-dnama').value.trim();
+            u.dnama = document.getElementById('p-dnama').value;
             u.dhub = document.getElementById('p-dhub').value;
-            u.dinfo = document.getElementById('p-dinfo').value.trim();
-            u.aktp = document.getElementById('p-aktp').value.trim();
+            u.dinfo = document.getElementById('p-dinfo').value;
+            u.aktp = document.getElementById('p-aktp').value;
 
             u.jabatan = document.getElementById('w-jabatan').value;
             u.divisi = document.getElementById('w-divisi').value;
             u.area = document.getElementById('w-area').value;
-            u.atasan = document.getElementById('w-atasan').value.trim();
+            u.atasan = document.getElementById('w-atasan').value;
             u.status = document.getElementById('w-status').value;
             u.tglgabung = document.getElementById('w-tglgabung').value;
-            u.linkmaps = document.getElementById('w-linkmaps').value.trim();
+            u.linkmaps = document.getElementById('w-linkmaps').value;
 
             let bankSel = document.getElementById('c-namabank').value;
             let bankMan = document.getElementById('c-namabank-manual').value.trim();
-            u.namabank = bankSel === 'Lainnya' ? (bankMan || 'Lainnya') : bankSel;
-
-            u.norek = document.getElementById('c-norek').value.trim();
-            u.namarek = document.getElementById('c-namarek').value.trim();
+            u.namabank = (bankSel === 'Lainnya' && bankMan) ? bankMan : bankSel;
+            u.norek = document.getElementById('c-norek').value;
+            u.namarek = document.getElementById('c-namarek').value;
 
             u.jenjang = document.getElementById('e-jenjang').value;
-
             let jurSel = document.getElementById('e-jurusan').value;
             let jurMan = document.getElementById('e-jurusan-manual').value.trim();
-            u.jurusan = jurSel === 'Lainnya' ? (jurMan || 'Lainnya') : jurSel;
+            u.jurusan = (jurSel === 'Lainnya' && jurMan) ? jurMan : jurSel;
+            u.institusi = document.getElementById('e-institusi').value;
 
-            u.institusi = document.getElementById('e-institusi').value.trim();
-
-            let pasFotoInput = document.getElementById('file-pasfoto');
-            if(pasFotoInput && pasFotoInput.files && pasFotoInput.files[0]) {
-                let reader = new FileReader();
-                reader.onload = async function(e) {
-                    u.pasfoto = e.target.result;
-                    await finishSave(u);
-                };
-                reader.readAsDataURL(pasFotoInput.files[0]);
-            } else {
-                await finishSave(u);
+            let pasfotoInput = document.getElementById('preview-pasfoto');
+            if (pasfotoInput && pasfotoInput.src && !pasfotoInput.classList.contains('hidden')) {
+                u.pasfoto = pasfotoInput.src;
             }
-        }
 
-        async function finishSave(u) {
-            if (!u.files) u.files = {};
-            let ktpFile = document.getElementById('file-ktp');
-            let ijazahFile = document.getElementById('file-ijazah');
-            if(ktpFile && ktpFile.files && ktpFile.files[0]) u.files.ktp = ktpFile.files[0].name;
-            if(ijazahFile && ijazahFile.files && ijazahFile.files[0]) u.files.ijazah = ijazahFile.files[0].name;
+            if(!u.files) u.files = {};
+            let fKtp = document.getElementById('file-ktp').files[0];
+            let fIjazah = document.getElementById('file-ijazah').files[0];
+            if(fKtp) u.files.ktp = fKtp.name;
+            if(fIjazah) u.files.ijazah = fIjazah.name;
 
             await syncToCloud(activeUser);
-            configureSessionHeaderAndAccess();
             loadDataToForm();
+            configureSessionHeaderAndAccess();
+        }
+
+        function switchTab(tabName) {
+            const tabs = ['pribadi', 'pekerjaan', 'kendaraan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen', 'kpi', 'cuti', 'rekap'];
+            tabs.forEach(t => {
+                let el = document.getElementById('tab-' + t);
+                let btn = document.getElementById('tab-btn-' + t);
+                if (el) {
+                    if (t === tabName) el.classList.remove('hidden');
+                    else el.classList.add('hidden');
+                }
+                if (btn) {
+                    if (t === tabName) {
+                        btn.classList.add('active');
+                        btn.classList.remove('text-slate-300');
+                        btn.classList.add('text-white');
+                    } else {
+                        btn.classList.remove('active');
+                        btn.classList.remove('text-white');
+                        btn.classList.add('text-slate-300');
+                    }
+                }
+            });
+            if(tabName === 'kpi') renderKPITable();
+            if(tabName === 'cuti' && dbHC[activeUser]) {
+                renderLeaveModule(dbHC[activeUser]);
+                renderChangeNoteHistory(dbHC[activeUser]);
+            }
+            if(tabName === 'rekap') renderRekapAkun();
+            renderAdminNotifications();
         }
 
         window.onload = initApp;
