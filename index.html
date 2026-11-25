@@ -260,7 +260,6 @@
 
                     <rect x="0" y="90" width="1440" height="130" fill="url(#horizonGlow)"/>
 
-                    <!-- Lapisan Gedung Belakang (Jauh / Atmosferik) -->
                     <path d="
                         M 0 220 L 0 148 L 42 148 L 42 126 L 86 126 L 86 156
                         L 124 156 L 124 104 L 168 104 L 168 134
@@ -274,7 +273,6 @@
                         L 1356 136 L 1356 98 L 1402 98 L 1402 142 L 1440 142 L 1440 220 Z
                     " fill="url(#skylineFarGrad)"/>
 
-                    <!-- Lapisan Gedung Depan (Skyline Kota Perkantoran) -->
                     <g fill="url(#skylineNearGrad)">
                         <rect x="14" y="152" width="44" height="68" rx="1"/>
                         <rect x="64" y="122" width="38" height="98" rx="1"/>
@@ -298,7 +296,6 @@
                         <rect x="1388" y="132" width="52" height="88" rx="1"/>
                     </g>
 
-                    <!-- Garis jendela & pencahayaan halus gedung -->
                     <g fill="#bae6fd" fill-opacity="0.22">
                         <rect x="72" y="132" width="4" height="5"/><rect x="81" y="132" width="4" height="5"/><rect x="90" y="132" width="4" height="5"/>
                         <rect x="72" y="144" width="4" height="5"/><rect x="81" y="144" width="4" height="5"/><rect x="90" y="144" width="4" height="5"/>
@@ -1162,7 +1159,7 @@
                             <input type="text" id="rekap-search-input" oninput="renderRekapAkun()" placeholder="Cari nama, username, jabatan, area, atau status..." class="w-full p-2.5 pl-9 border border-slate-300 rounded-xl text-xs font-semibold text-slate-900 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-navy-900 focus:outline-none">
                             <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
                         </div>
-                        <span class="text-[11px] text-slate-500 font-medium">Ubah status langsung dari dropdown, klik ikon pensil pada <span class="font-bold text-slate-700">Username (ID)</span> atau <span class="font-bold text-slate-700">Password</span>, atau hapus akun jika diperlukan.</span>
+                        <span class="text-[11px] text-slate-500 font-medium">Ubah status langsung dari dropdown, klik ikon mata untuk <span class="font-bold text-slate-700">Lihat/Sembunyikan Password</span>, klik pensil untuk mengedit, atau hapus akun jika diperlukan.</span>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -1690,6 +1687,7 @@
         let activeUser = localStorage.getItem('hc_active_user_cloud') || null;
         let editingPassUser = null;
         let editingUsernameUser = null;
+        let revealedPassUsers = new Set();
 
         function normalizeUserRecord(userId, rawData) {
             let d = rawData || {};
@@ -1713,6 +1711,19 @@
             if (activeUser === 'irvantuba') return false;
             if (username === activeUser) return false;
             return (username === 'irvantuba' || userObj.role === 'Admin' || Boolean(userObj.isSubAdmin));
+        }
+
+        function toggleRevealAccountPassword(username) {
+            if (!hasAdminPrivilege(activeUser)) return;
+            let user = dbHC[username];
+            if (!user || isOtherAdminAccount(username, user)) return;
+
+            if (revealedPassUsers.has(username)) {
+                revealedPassUsers.delete(username);
+            } else {
+                revealedPassUsers.add(username);
+            }
+            renderRekapAkun();
         }
 
         function openAddPetugasModal() {
@@ -2070,6 +2081,7 @@
                 activeUser = u;
                 editingPassUser = null;
                 editingUsernameUser = null;
+                revealedPassUsers.clear();
                 dbHC[u] = normalizeUserRecord(u, dbHC[u]);
                 localStorage.setItem('hc_active_user_cloud', u);
                 
@@ -2258,6 +2270,7 @@
             activeUser = null;
             editingPassUser = null;
             editingUsernameUser = null;
+            revealedPassUsers.clear();
             localStorage.removeItem('hc_active_user_cloud');
             initApp();
         }
@@ -3061,50 +3074,56 @@
                 }
                 mainTr.appendChild(td);
             });
-
             tbody.appendChild(mainTr);
 
             let avgEl = document.getElementById('kpi-avg-result');
             let quickKpiEl = document.getElementById('quick-metric-kpi');
-            if (countValid === 0) {
-                avgEl.innerText = "Belum ada data penilaian";
-                quickKpiEl.innerText = "-";
+            if (countValid > 0) {
+                let avgNum = Math.round(totalScore / countValid);
+                let avgGrade = valueToGrade[avgNum] || "-";
+                avgEl.innerText = `${avgGrade} (Rata-rata dari ${countValid} bulan terisi)`;
+                quickKpiEl.innerText = lastSubmittedPredikat;
             } else {
-                let avgScore = Math.round(totalScore / countValid);
-                let finalGrade = valueToGrade[avgScore] || "-";
-                avgEl.innerText = `${finalGrade} (Rata-rata skor: ${(totalScore / countValid).toFixed(2)} dari ${countValid} bulan)`;
-                quickKpiEl.innerText = `${lastSubmittedPredikat} (Avg: ${finalGrade})`;
+                avgEl.innerText = "- (Belum ada penilaian)";
+                quickKpiEl.innerText = "-";
             }
         }
 
         function renderSalesCalendar(u) {
-            let daily = u.dailyAttendance || {}, cH = 0, cI = 0, cS = 0, cA = 0;
-            Object.values(daily).forEach(st => { if(st==='Hadir')cH++; if(st==='Izin')cI++; if(st==='Sakit')cS++; if(st==='Alpha')cA++; });
-            document.getElementById('stat-hadir').innerText = cH; document.getElementById('stat-izin').innerText = cI;
-            document.getElementById('stat-sakit').innerText = cS; document.getElementById('stat-alpha').innerText = cA;
-
             let grid = document.getElementById('sales-calendar-grid');
-            if(!grid) return;
+            if (!grid) return;
             grid.innerHTML = '';
             let now = new Date(), year = now.getFullYear(), month = now.getMonth();
             let monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            document.getElementById('sales-cal-title').innerText = `Kalender Kehadiran: ${monthNames[month]} ${year}`;
+            let title = document.getElementById('sales-cal-title');
+            if(title) title.innerText = `Kalender Kehadiran: ${monthNames[month]} ${year}`;
 
             ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].forEach(d => {
                 let h = document.createElement('div'); h.className = "font-bold text-[10px] text-slate-700 py-1"; h.innerText = d;
                 grid.appendChild(h);
             });
 
-            let firstDay = new Date(year, month, 1).getDay(), totalDays = new Date(year, month + 1, 0).getDate();
+            let firstDay = new Date(year, month, 1).getDay();
+            let totalDays = new Date(year, month + 1, 0).getDate();
             for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
+
+            let hCount = 0, iCount = 0, sCount = 0, aCount = 0;
+            let daily = u.dailyAttendance || {};
+
             for (let day = 1; day <= totalDays; day++) {
                 let dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                 let status = daily[dateKey] || '-';
+                if (status === 'Hadir') hCount++; else if (status === 'Izin') iCount++; else if (status === 'Sakit') sCount++; else if (status === 'Alpha') aCount++;
+
                 let cell = document.createElement('div');
                 cell.className = "p-1.5 border rounded text-[11px] font-bold flex flex-col items-center justify-center h-14 bg-white shadow-sm";
                 cell.innerHTML = `<span class="text-[10px] text-slate-500 font-bold">${day}</span><span class="mt-0.5 px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${status === 'Hadir' ? 'bg-emerald-600 text-white' : status === 'Izin' ? 'bg-amber-600 text-white' : status === 'Sakit' ? 'bg-blue-600 text-white' : status === 'Alpha' ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-400'}">${status}</span>`;
                 grid.appendChild(cell);
             }
+            document.getElementById('stat-hadir').innerText = hCount;
+            document.getElementById('stat-izin').innerText = iCount;
+            document.getElementById('stat-sakit').innerText = sCount;
+            document.getElementById('stat-alpha').innerText = aCount;
         }
 
         function renderSalesSPTable(u) {
@@ -3118,260 +3137,99 @@
             }
             spList.forEach(sp => {
                 let tr = document.createElement('tr'); tr.className = "border-b";
-                tr.innerHTML = `<td class="p-2 font-semibold">${sp.date}</td><td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] bg-amber-100 text-amber-800 font-bold">${sp.type}</span></td><td class="p-2 font-semibold text-indigo-700">${sp.period || '-'}</td><td class="p-2 font-semibold">${sp.desc}</td>`;
+                tr.innerHTML = `<td class="p-2.5 font-semibold">${sp.date}</td><td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] bg-amber-100 text-amber-800 font-bold">${sp.type}</span></td><td class="p-2.5 font-semibold text-indigo-700">${sp.period || '-'}</td><td class="p-2.5 font-semibold">${sp.desc}</td>`;
                 tbody.appendChild(tr);
             });
-        }
-
-        function startEditAccountUsername(username) {
-            if (!hasAdminPrivilege(activeUser)) return;
-            let user = dbHC[username];
-            if (!user) return;
-            if (isOtherAdminAccount(username, user)) {
-                return alert("Password dan akses akun Administrator lain dilindungi dan tidak dapat dilihat atau diubah.");
-            }
-            editingUsernameUser = username;
-            editingPassUser = null;
-            renderRekapAkun();
-            setTimeout(() => {
-                let inp = document.getElementById(`rekap-user-input-${username}`);
-                if (inp) {
-                    inp.focus();
-                    inp.select();
-                }
-            }, 30);
-        }
-
-        function cancelEditAccountUsername() {
-            editingUsernameUser = null;
-            renderRekapAkun();
-        }
-
-        async function saveAccountUsername(oldUsername) {
-            if (!hasAdminPrivilege(activeUser) || !dbHC[oldUsername]) return;
-            if (isOtherAdminAccount(oldUsername, dbHC[oldUsername])) {
-                return alert("Akun Administrator lain tidak dapat diubah.");
-            }
-
-            let inp = document.getElementById(`rekap-user-input-${oldUsername}`);
-            if (!inp) return;
-
-            let newUsername = inp.value.trim().toLowerCase().replace(/\s+/g, '');
-            if (!newUsername) {
-                return alert("Username (ID) tidak boleh kosong!");
-            }
-
-            if (newUsername === oldUsername) {
-                editingUsernameUser = null;
-                renderRekapAkun();
-                return;
-            }
-
-            if (dbHC[newUsername]) {
-                return alert(`Username "${newUsername}" sudah terdaftar pada akun lain. Silakan pilih username berbeda.`);
-            }
-
-            let userDataCopy = JSON.parse(JSON.stringify(dbHC[oldUsername]));
-
-            try {
-                let { error: upsertErr } = await _supabase.from('hc_database').upsert({ id: newUsername, data: userDataCopy });
-                if (upsertErr) {
-                    return alert("Gagal menyimpan Username baru ke Cloud: " + upsertErr.message);
-                }
-
-                let { error: delErr } = await _supabase.from('hc_database').delete().eq('id', oldUsername);
-                if (delErr) {
-                    console.warn("Peringatan hapus ID lama:", delErr.message);
-                }
-
-                dbHC[newUsername] = normalizeUserRecord(newUsername, userDataCopy);
-                delete dbHC[oldUsername];
-
-                if (activeUser === oldUsername) {
-                    activeUser = newUsername;
-                    localStorage.setItem('hc_active_user_cloud', newUsername);
-                    configureSessionHeaderAndAccess();
-                }
-
-                editingUsernameUser = null;
-                renderRekapAkun();
-                renderAdminPanel();
-                alert(`Username (ID Login) untuk "${userDataCopy.nama}" berhasil diubah menjadi "${newUsername}"!`);
-            } catch (e) {
-                alert("Terjadi kesalahan saat mengubah username: " + e.message);
-            }
-        }
-
-        function startEditAccountPassword(username) {
-            if (!hasAdminPrivilege(activeUser)) return;
-            let user = dbHC[username];
-            if (!user) return;
-            if (isOtherAdminAccount(username, user)) {
-                return alert("Password akun Administrator lain tidak dapat dilihat atau diubah.");
-            }
-            editingPassUser = username;
-            editingUsernameUser = null;
-            renderRekapAkun();
-            setTimeout(() => {
-                let inp = document.getElementById(`rekap-pass-input-${username}`);
-                if (inp) {
-                    inp.focus();
-                    inp.select();
-                }
-            }, 30);
-        }
-
-        function cancelEditAccountPassword() {
-            editingPassUser = null;
-            renderRekapAkun();
-        }
-
-        async function saveAccountPassword(username) {
-            if (!hasAdminPrivilege(activeUser) || !dbHC[username]) return;
-            if (isOtherAdminAccount(username, dbHC[username])) {
-                return alert("Password akun Administrator lain tidak dapat dilihat atau diubah.");
-            }
-            let inp = document.getElementById(`rekap-pass-input-${username}`);
-            if (!inp) return;
-            let newPass = inp.value.trim();
-            if (!newPass) {
-                return alert("Password baru tidak boleh kosong!");
-            }
-
-            dbHC[username].pass = newPass;
-            editingPassUser = null;
-            await syncToCloud(username, true);
-            renderRekapAkun();
-            alert(`Password untuk akun ${dbHC[username].nama} berhasil diperbarui!`);
-        }
-
-        async function updateAccountStatusFromRekap(username, newStatus) {
-            if (!hasAdminPrivilege(activeUser) || !dbHC[username]) return;
-            if (isOtherAdminAccount(username, dbHC[username])) {
-                return alert("Status akun Administrator lain tidak dapat diubah.");
-            }
-            dbHC[username].accountStatus = newStatus;
-            await syncToCloud(username, true);
-
-            if (username === activeUser) {
-                loadDataToForm();
-            } else {
-                renderRekapAkun();
-                let adminSelect = document.getElementById('admin-select-sales');
-                if (adminSelect && adminSelect.value === username) {
-                    let adminStatusSelect = document.getElementById('admin-select-account-status');
-                    if (adminStatusSelect) adminStatusSelect.value = newStatus;
-                }
-            }
-        }
-
-        async function deletePetugasAccount(username) {
-            if (!hasAdminPrivilege(activeUser) || !dbHC[username]) return;
-            let targetUser = dbHC[username];
-
-            if (username === activeUser) {
-                return alert("Anda tidak dapat menghapus akun Anda sendiri yang sedang login.");
-            }
-            if (isOtherAdminAccount(username, targetUser)) {
-                return alert("Akun Administrator lain tidak dapat dihapus.");
-            }
-
-            let confirmDelete = confirm(`Apakah Anda yakin ingin menghapus akun "${targetUser.nama}" (${username}) secara permanen?\n\nData yang dihapus tidak dapat dikembalikan.`);
-            if (!confirmDelete) return;
-
-            try {
-                let { error } = await _supabase.from('hc_database').delete().eq('id', username);
-                if (error) {
-                    return alert("Gagal menghapus akun dari database Cloud: " + error.message);
-                }
-
-                delete dbHC[username];
-                if (editingPassUser === username) editingPassUser = null;
-                if (editingUsernameUser === username) editingUsernameUser = null;
-
-                renderRekapAkun();
-                renderAdminPanel();
-                alert(`Akun "${targetUser.nama}" (${username}) berhasil dihapus.`);
-            } catch (e) {
-                alert("Terjadi kesalahan saat menghapus akun: " + e.message);
-            }
         }
 
         function renderRekapAkun() {
             let tbody = document.getElementById('rekap-akun-table-body');
             let badge = document.getElementById('rekap-total-badge');
-            let subDesc = document.getElementById('rekap-subtitle-desc');
+            let subtitle = document.getElementById('rekap-subtitle-desc');
             if (!tbody) return;
 
-            if (!hasAdminPrivilege(activeUser)) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-red-500 font-bold">Akses ditolak. Menu ini khusus untuk Administrator.</td></tr>`;
+            let canViewRekap = hasAdminPrivilege(activeUser);
+            if (!canViewRekap) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400 font-semibold">Akses Rekap Akun hanya tersedia untuk Administrator.</td></tr>`;
+                if (badge) badge.innerText = "Total: 0 Akun";
                 return;
             }
 
-            if (subDesc) {
-                subDesc.innerText = activeUser === 'irvantuba'
-                    ? "Direktori ID Pengguna, Password & Status Keaktifan diurutkan berdasarkan Jabatan / Posisi (Akses penuh Admin Utama)."
-                    : "Direktori seluruh akun petugas diurutkan berdasarkan Jabatan / Posisi (Password & edit akun Administrator lain disembunyikan).";
+            if (subtitle) {
+                subtitle.innerText = activeUser === 'irvantuba'
+                    ? "Mode Admin Utama: Akses penuh lihat/sembunyikan, edit, tambah & hapus akun diurutkan berdasarkan Jabatan / Posisi."
+                    : "Mode Administrator: Password akun administrator lain disembunyikan; password akun selain admin tersembunyi default dan bisa dilihat/edit.";
             }
 
-            let keyword = (document.getElementById('rekap-search-input')?.value || '').trim().toLowerCase();
-            let accounts = getSortedAccountsByJabatan(false);
+            let searchInput = document.getElementById('rekap-search-input');
+            let keyword = (searchInput ? searchInput.value : '').trim().toLowerCase();
 
-            let filtered = accounts.filter(({ username, user }) => {
+            let accounts = getSortedAccountsByJabatan(false).filter(({ username, user }) => {
                 if (!keyword) return true;
-                let nama = (user.nama || '').toLowerCase();
-                let jab = (user.jabatan || '').toLowerCase();
-                let area = (user.area || '').toLowerCase();
-                let st = (user.accountStatus || 'Aktif').toLowerCase();
-                return nama.includes(keyword) || username.toLowerCase().includes(keyword) || jab.includes(keyword) || area.includes(keyword) || st.includes(keyword);
+                let accStatus = (user.accountStatus || 'Aktif').toLowerCase();
+                let jabatanStr = (user.jabatan || '').toLowerCase();
+                let areaStr = (user.area || '').toLowerCase();
+                return (
+                    (user.nama || '').toLowerCase().includes(keyword) ||
+                    username.toLowerCase().includes(keyword) ||
+                    jabatanStr.includes(keyword) ||
+                    areaStr.includes(keyword) ||
+                    accStatus.includes(keyword)
+                );
             });
 
-            if (badge) badge.innerText = `Total: ${filtered.length} Akun`;
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400 font-semibold">Tidak ada akun yang cocok dengan pencarian.</td></tr>`;
-                return;
+            if (badge) {
+                badge.innerText = `Total: ${accounts.length} Akun`;
             }
 
             tbody.innerHTML = '';
-            filtered.forEach(({ username, user }, index) => {
-                let isProtectedAdmin = isOtherAdminAccount(username, user);
-                let isAdminRole = (username === 'irvantuba' || user.role === 'Admin' || Boolean(user.isSubAdmin));
-                let roleBadge = isAdminRole
-                    ? `<span class="ml-1.5 px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[9px] font-black uppercase">Admin</span>`
-                    : '';
+            if (accounts.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400 font-semibold">Tidak ada akun yang cocok dengan pencarian "${keyword}".</td></tr>`;
+                return;
+            }
 
+            accounts.forEach(({ username, user }, idx) => {
                 let accStatus = user.accountStatus || 'Aktif';
                 let isInactive = accStatus === 'Tidak Aktif';
-                let isSelf = username === activeUser;
+                let isProtectedAdmin = isOtherAdminAccount(username, user);
+                let isSelfMainAdmin = (username === 'irvantuba' && activeUser === 'irvantuba');
+                let isSubAdminBadge = Boolean(user.isSubAdmin);
+
+                let roleBadge = isSelfMainAdmin
+                    ? `<span class="ml-1.5 px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[9px] font-black uppercase">ADMIN UTAMA</span>`
+                    : isSubAdminBadge
+                    ? `<span class="ml-1.5 px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[9px] font-black uppercase">ADMIN</span>`
+                    : '';
 
                 let statusCellHtml = isProtectedAdmin
-                    ? `<span class="px-2.5 py-1 rounded-lg text-[11px] font-bold ${isInactive ? 'bg-red-100 text-red-800' : 'bg-emerald-100 text-emerald-800'}">${accStatus}</span>`
-                    : `<select onchange="updateAccountStatusFromRekap('${username}', this.value)" class="rekap-status-select px-2 py-1 rounded-lg text-[11px] font-bold border cursor-pointer focus:outline-none ${
-                        isInactive
-                            ? 'bg-red-50 text-red-700 border-red-300'
-                            : 'bg-emerald-50 text-emerald-700 border-emerald-300'
-                    }">
-                        <option value="Aktif" ${!isInactive ? 'selected' : ''}>Aktif</option>
-                        <option value="Tidak Aktif" ${isInactive ? 'selected' : ''}>Tidak Aktif</option>
-                    </select>`;
+                    ? `<span class="px-2.5 py-1 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800">${accStatus}</span>`
+                    : `
+                        <select onchange="quickUpdateRekapStatus('${username}', this.value)" class="rekap-status-select px-2.5 py-1 rounded-full text-[10px] font-black cursor-pointer border focus:outline-none ${
+                            isInactive
+                                ? 'bg-red-100 text-red-800 border-red-300'
+                                : 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                        }">
+                            <option value="Aktif" ${!isInactive ? 'selected' : ''}>Aktif</option>
+                            <option value="Tidak Aktif" ${isInactive ? 'selected' : ''}>Tidak Aktif</option>
+                        </select>
+                    `;
 
                 let usernameCellHtml = '';
-                if (isProtectedAdmin) {
-                    usernameCellHtml = `<span class="px-2 py-1 bg-slate-100 border border-slate-200 rounded-md font-mono font-bold text-slate-800">${username}</span>`;
+                if (isProtectedAdmin || isSelfMainAdmin) {
+                    usernameCellHtml = `<span class="font-mono font-bold text-slate-800">${username}</span>`;
                 } else if (editingUsernameUser === username) {
                     usernameCellHtml = `
                         <div class="flex items-center gap-1">
                             <input type="text" id="rekap-user-input-${username}" value="${username}" onkeydown="if(event.key==='Enter') saveAccountUsername('${username}'); if(event.key==='Escape') cancelEditAccountUsername();" class="rekap-user-edit-input w-28 px-2 py-1 border border-blue-500 rounded font-mono text-xs font-bold text-slate-900 bg-white focus:outline-none">
-                            <button type="button" onclick="saveAccountUsername('${username}')" title="Simpan Username" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[10px] font-bold cursor-pointer">✓</button>
+                            <button type="button" onclick="saveAccountUsername('${username}')" title="Simpan ID" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[10px] font-bold cursor-pointer">✓</button>
                             <button type="button" onclick="cancelEditAccountUsername()" title="Batal" class="px-2 py-1 bg-slate-300 hover:bg-slate-400 text-slate-800 rounded text-[10px] font-bold cursor-pointer">✕</button>
                         </div>
                     `;
                 } else {
                     usernameCellHtml = `
                         <div class="flex items-center gap-1.5">
-                            <span class="px-2 py-1 bg-slate-100 border border-slate-200 rounded-md font-mono font-bold text-slate-800">${username}</span>
-                            <button type="button" onclick="startEditAccountUsername('${username}')" title="Edit Username (ID Login)" class="p-1 text-slate-500 hover:text-blue-700 hover:bg-blue-50 rounded transition cursor-pointer">
+                            <span class="font-mono font-bold text-slate-800">${username}</span>
+                            <button type="button" onclick="startEditAccountUsername('${username}')" title="Edit Username (ID)" class="p-1 text-slate-500 hover:text-blue-700 hover:bg-blue-50 rounded transition cursor-pointer">
                                 <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                             </button>
                         </div>
@@ -3394,9 +3252,17 @@
                         </div>
                     `;
                 } else {
+                    let isRevealed = revealedPassUsers.has(username);
+                    let displayPass = isRevealed ? (user.pass || '-') : '••••••••';
+                    let eyeIcon = isRevealed ? 'eye-off' : 'eye';
+                    let eyeTitle = isRevealed ? 'Sembunyikan Password' : 'Lihat Password';
+
                     passCellHtml = `
                         <div class="flex items-center gap-1.5">
-                            <span class="px-2 py-1 bg-amber-50 border border-amber-200 rounded-md font-mono font-bold text-amber-900">${user.pass || '-'}</span>
+                            <span class="px-2 py-1 bg-amber-50 border border-amber-200 rounded-md font-mono font-bold text-amber-900">${displayPass}</span>
+                            <button type="button" onclick="toggleRevealAccountPassword('${username}')" title="${eyeTitle}" class="p-1 text-slate-500 hover:text-amber-700 hover:bg-amber-50 rounded transition cursor-pointer">
+                                <i data-lucide="${eyeIcon}" class="w-3.5 h-3.5"></i>
+                            </button>
                             <button type="button" onclick="startEditAccountPassword('${username}')" title="Edit Password" class="p-1 text-slate-500 hover:text-blue-700 hover:bg-blue-50 rounded transition cursor-pointer">
                                 <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                             </button>
@@ -3405,13 +3271,11 @@
                 }
 
                 let actionCellHtml = '';
-                if (isProtectedAdmin) {
-                    actionCellHtml = `<span class="text-[10px] font-bold text-slate-400 uppercase">Dilindungi</span>`;
-                } else if (isSelf) {
-                    actionCellHtml = `<span class="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-1 rounded-md border border-indigo-200">Akun Aktif</span>`;
+                if (isProtectedAdmin || isSelfMainAdmin) {
+                    actionCellHtml = `<span class="text-[10px] font-bold text-slate-400 uppercase">DILINDUNGI</span>`;
                 } else {
                     actionCellHtml = `
-                        <button type="button" onclick="deletePetugasAccount('${username}')" title="Hapus Akun Petugas" class="px-2.5 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg text-[10px] font-bold inline-flex items-center gap-1 transition shadow-2xs cursor-pointer">
+                        <button type="button" onclick="deleteAccountRecord('${username}')" title="Hapus Akun" class="inline-flex items-center gap-1 px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-[10px] font-bold transition cursor-pointer shadow-2xs">
                             <i data-lucide="trash-2" class="w-3 h-3"></i> Hapus
                         </button>
                     `;
@@ -3420,9 +3284,9 @@
                 let tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 transition";
                 tr.innerHTML = `
-                    <td class="p-3 text-center font-bold text-slate-500">${index + 1}</td>
+                    <td class="p-3 text-center font-bold text-slate-500">${idx + 1}</td>
                     <td class="p-3 font-bold text-slate-900">${user.nama || '-'}${roleBadge}</td>
-                    <td class="p-3 font-semibold text-slate-700">${user.jabatan || '-'} • <span class="uppercase text-indigo-800">${user.area || '-'}</span></td>
+                    <td class="p-3 font-semibold text-slate-700">${user.jabatan || '-'} <span class="text-slate-400">•</span> <span class="uppercase text-[11px] text-indigo-800">${user.area || '-'}</span></td>
                     <td class="p-3">${statusCellHtml}</td>
                     <td class="p-3">${usernameCellHtml}</td>
                     <td class="p-3">${passCellHtml}</td>
@@ -3430,89 +3294,270 @@
                 `;
                 tbody.appendChild(tr);
             });
-            lucide.createIcons();
+
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }
+
+        async function deleteAccountRecord(username) {
+            if (!hasAdminPrivilege(activeUser)) return alert("Akses ditolak.");
+            if (username === 'irvantuba' || username === activeUser) {
+                return alert("Akun administrator utama atau akun yang sedang aktif digunakan tidak dapat dihapus.");
+            }
+            let target = dbHC[username];
+            if (!target) return;
+            if (isOtherAdminAccount(username, target)) {
+                return alert("Akun administrator lain tidak dapat dihapus.");
+            }
+
+            let confirmDelete = confirm(`Yakin ingin menghapus akun "${target.nama}" (${username})? Tindakan ini tidak dapat dibatalkan.`);
+            if (!confirmDelete) return;
+
+            let backup = dbHC[username];
+            delete dbHC[username];
+            revealedPassUsers.delete(username);
+            if (editingPassUser === username) editingPassUser = null;
+            if (editingUsernameUser === username) editingUsernameUser = null;
+
+            try {
+                let { error } = await _supabase.from('hc_database').delete().eq('id', username);
+                if (error) {
+                    dbHC[username] = backup;
+                    return alert("Gagal menghapus akun di Cloud: " + error.message);
+                }
+                renderRekapAkun();
+                renderAdminPanel();
+                alert(`Akun "${target.nama}" (${username}) berhasil dihapus.`);
+            } catch (err) {
+                dbHC[username] = backup;
+                alert("Terjadi kesalahan saat menghapus akun.");
+            }
+        }
+
+        function startEditAccountUsername(username) {
+            if (!hasAdminPrivilege(activeUser)) return alert("Akses ditolak.");
+            if (isOtherAdminAccount(username, dbHC[username]) || username === 'irvantuba') {
+                return alert("Username akun administrator dilindungi.");
+            }
+            editingUsernameUser = username;
+            renderRekapAkun();
+            let inputEl = document.getElementById(`rekap-user-input-${username}`);
+            if (inputEl) {
+                inputEl.focus();
+                inputEl.select();
+            }
+        }
+
+        function cancelEditAccountUsername() {
+            editingUsernameUser = null;
+            renderRekapAkun();
+        }
+
+        async function saveAccountUsername(oldUsername) {
+            if (!hasAdminPrivilege(activeUser)) return;
+            let inputEl = document.getElementById(`rekap-user-input-${oldUsername}`);
+            if (!inputEl) return;
+
+            let newUsername = inputEl.value.trim().toLowerCase().replace(/\s+/g, '');
+            if (!newUsername) {
+                return alert("Username (ID) tidak boleh kosong!");
+            }
+
+            if (newUsername === oldUsername) {
+                editingUsernameUser = null;
+                renderRekapAkun();
+                return;
+            }
+
+            if (dbHC[newUsername]) {
+                return alert(`ID "${newUsername}" sudah digunakan akun lain. Pilih ID yang berbeda.`);
+            }
+
+            let userRecord = dbHC[oldUsername];
+            if (!userRecord) return;
+
+            dbHC[newUsername] = userRecord;
+            delete dbHC[oldUsername];
+
+            if (revealedPassUsers.has(oldUsername)) {
+                revealedPassUsers.delete(oldUsername);
+                revealedPassUsers.add(newUsername);
+            }
+
+            editingUsernameUser = null;
+
+            try {
+                let { error: upsertErr } = await _supabase.from('hc_database').upsert({ id: newUsername, data: dbHC[newUsername] });
+                if (upsertErr) {
+                    dbHC[oldUsername] = userRecord;
+                    delete dbHC[newUsername];
+                    return alert("Gagal memperbarui ID di Cloud: " + upsertErr.message);
+                }
+                await _supabase.from('hc_database').delete().eq('id', oldUsername);
+
+                renderRekapAkun();
+                renderAdminPanel();
+                alert(`ID akun berhasil diubah dari "${oldUsername}" menjadi "${newUsername}".`);
+            } catch (err) {
+                alert("Terjadi kesalahan saat memperbarui ID akun.");
+            }
+        }
+
+        function startEditAccountPassword(username) {
+            if (!hasAdminPrivilege(activeUser)) return alert("Akses ditolak.");
+            if (isOtherAdminAccount(username, dbHC[username])) {
+                return alert("Password akun administrator lain tidak dapat diubah.");
+            }
+            editingPassUser = username;
+            renderRekapAkun();
+            let inputEl = document.getElementById(`rekap-pass-input-${username}`);
+            if (inputEl) {
+                inputEl.focus();
+                inputEl.select();
+            }
+        }
+
+        function cancelEditAccountPassword() {
+            editingPassUser = null;
+            renderRekapAkun();
+        }
+
+        async function saveAccountPassword(username) {
+            if (!hasAdminPrivilege(activeUser)) return;
+            let inputEl = document.getElementById(`rekap-pass-input-${username}`);
+            if (!inputEl) return;
+
+            let newPass = inputEl.value.trim();
+            if (!newPass) {
+                return alert("Password tidak boleh kosong!");
+            }
+
+            dbHC[username].pass = newPass;
+            editingPassUser = null;
+            await syncToCloud(username);
+            renderRekapAkun();
+        }
+
+        async function quickUpdateRekapStatus(username, newStatus) {
+            if (!dbHC[username]) return;
+            if (isOtherAdminAccount(username, dbHC[username])) {
+                renderRekapAkun();
+                return alert("Status akun administrator lain tidak dapat diubah.");
+            }
+            dbHC[username].accountStatus = newStatus;
+            await syncToCloud(username, true);
+            if (username === activeUser) {
+                loadDataToForm();
+            }
+            renderRekapAkun();
         }
 
         function switchTab(tabName) {
-            ['pribadi', 'pekerjaan', 'kendaraan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen', 'kpi', 'cuti', 'rekap'].forEach(t => {
-                let sec = document.getElementById(`tab-${t}`);
-                if(sec) sec.classList.add('hidden');
+            let tabs = ['pribadi', 'pekerjaan', 'kendaraan', 'kompensasi', 'kinerja', 'pendidikan', 'dokumen', 'kpi', 'cuti', 'rekap'];
+            tabs.forEach(t => {
+                let el = document.getElementById(`tab-${t}`);
                 let btn = document.getElementById(`tab-btn-${t}`);
-                if (btn) {
-                    btn.classList.remove('active', 'text-white', 'font-bold');
-                    btn.classList.add('text-slate-300', 'font-semibold');
-                }
+                if(el) el.classList.add('hidden');
+                if(btn) btn.classList.remove('active');
             });
-            let activeSec = document.getElementById(`tab-${tabName}`);
-            if(activeSec) activeSec.classList.remove('hidden');
+
+            let activeEl = document.getElementById(`tab-${tabName}`);
             let activeBtn = document.getElementById(`tab-btn-${tabName}`);
-            if(activeBtn) {
-                activeBtn.classList.add('active', 'text-white', 'font-bold');
-                activeBtn.classList.remove('text-slate-300', 'font-semibold');
-            }
+            if(activeEl) activeEl.classList.remove('hidden');
+            if(activeBtn) activeBtn.classList.add('active');
+
             if (tabName === 'rekap') {
                 renderRekapAkun();
             }
-            lucide.createIcons();
         }
 
         async function simpanData() {
             let u = dbHC[activeUser];
-            u.nama = document.getElementById('p-nama').value; u.panggilan = document.getElementById('p-panggilan').value;
+            if (!u) return;
+
+            u.nama = document.getElementById('p-nama').value;
+            u.panggilan = document.getElementById('p-panggilan').value;
             u.nik = document.getElementById('p-nik').value;
             u.androiduser = document.getElementById('p-androiduser').value;
             u.androidpass = document.getElementById('p-androidpass').value;
             u.tmptlahir = document.getElementById('p-tmptlahir').value;
-            u.tgllahir = document.getElementById('p-tgllahir').value; u.gender = document.getElementById('p-gender').value;
-            u.kontak = document.getElementById('p-kontak').value; u.email = document.getElementById('p-email').value;
-            u.nikah = document.getElementById('p-nikah').value; u.tanggungan = document.getElementById('p-tanggungan').value;
-            u.ktp = document.getElementById('p-ktp').value; u.npwp = document.getElementById('p-npwp').value;
-            u.bpjskesehatan = document.getElementById('p-bpjskesehatan').value; u.bpjsketenagakerjaan = document.getElementById('p-bpjsketenagakerjaan').value;
+            u.tgllahir = document.getElementById('p-tgllahir').value;
+            u.gender = document.getElementById('p-gender').value;
+            u.kontak = document.getElementById('p-kontak').value;
+            u.email = document.getElementById('p-email').value;
+            u.nikah = document.getElementById('p-nikah').value;
+            u.tanggungan = document.getElementById('p-tanggungan').value;
+            u.ktp = document.getElementById('p-ktp').value;
+            u.npwp = document.getElementById('p-npwp').value;
+            u.bpjskesehatan = document.getElementById('p-bpjskesehatan').value;
+            u.bpjsketenagakerjaan = document.getElementById('p-bpjsketenagakerjaan').value;
             
             u.vjenis = document.getElementById('v-jenis').value;
-            let merekVal = document.getElementById('v-merek').value;
-            u.vmerek = merekVal === 'Lainnya' ? (document.getElementById('v-merek-manual').value.trim() || 'Lainnya') : merekVal;
-            let modelVal = document.getElementById('v-model').value;
-            u.vmodel = modelVal === 'Lainnya' ? (document.getElementById('v-model-manual').value.trim() || 'Lainnya') : modelVal;
-            u.vtahun = document.getElementById('v-tahun').value; u.vplat = document.getElementById('v-plat').value;
-            u.vstnk = document.getElementById('v-stnk').value; u.vsimjenis = document.getElementById('v-simjenis').value;
+
+            let merekSelVal = document.getElementById('v-merek').value;
+            let merekManVal = document.getElementById('v-merek-manual').value.trim();
+            u.vmerek = merekSelVal === 'Lainnya' ? (merekManVal || 'Lainnya') : merekSelVal;
+
+            let modelSelVal = document.getElementById('v-model').value;
+            let modelManVal = document.getElementById('v-model-manual').value.trim();
+            u.vmodel = modelSelVal === 'Lainnya' ? (modelManVal || 'Lainnya') : modelSelVal;
+
+            u.vtahun = document.getElementById('v-tahun').value;
+            u.vplat = document.getElementById('v-plat').value;
+            u.vstnk = document.getElementById('v-stnk').value;
+            u.vsimjenis = document.getElementById('v-simjenis').value;
             u.vsimno = document.getElementById('v-simno').value;
 
-            u.dnama = document.getElementById('p-dnama').value; u.dhub = document.getElementById('p-dhub').value;
-            u.dinfo = document.getElementById('p-dinfo').value; u.aktp = document.getElementById('p-aktp').value;
-            u.jabatan = document.getElementById('w-jabatan').value; u.divisi = document.getElementById('w-divisi').value;
-            u.area = document.getElementById('w-area').value; u.atasan = document.getElementById('w-atasan').value;
-            u.status = document.getElementById('w-status').value; u.tglgabung = document.getElementById('w-tglgabung').value;
+            u.dnama = document.getElementById('p-dnama').value;
+            u.dhub = document.getElementById('p-dhub').value;
+            u.dinfo = document.getElementById('p-dinfo').value;
+            u.aktp = document.getElementById('p-aktp').value;
+
+            u.jabatan = document.getElementById('w-jabatan').value;
+            u.divisi = document.getElementById('w-divisi').value;
+            u.area = document.getElementById('w-area').value;
+            u.atasan = document.getElementById('w-atasan').value;
+            u.status = document.getElementById('w-status').value;
+            u.tglgabung = document.getElementById('w-tglgabung').value;
             u.linkmaps = document.getElementById('w-linkmaps').value.trim();
 
-            let bankVal = document.getElementById('c-namabank').value;
-            u.namabank = bankVal === 'Lainnya' ? (document.getElementById('c-namabank-manual').value.trim() || 'Lainnya') : bankVal;
-            u.norek = document.getElementById('c-norek').value; u.namarek = document.getElementById('c-namarek').value;
-            u.jenjang = document.getElementById('e-jenjang').value; u.institusi = document.getElementById('e-institusi').value;
-            let jurVal = document.getElementById('e-jurusan').value;
-            u.jurusan = jurVal === 'Lainnya' ? (document.getElementById('e-jurusan-manual').value.trim() || 'Lainnya') : jurVal;
+            let bankSelVal = document.getElementById('c-namabank').value;
+            let bankManVal = document.getElementById('c-namabank-manual').value.trim();
+            u.namabank = bankSelVal === 'Lainnya' ? (bankManVal || 'Lainnya') : bankSelVal;
+            u.norek = document.getElementById('c-norek').value;
+            u.namarek = document.getElementById('c-namarek').value;
 
-            let fPasFoto = document.getElementById('file-pasfoto').files[0];
-            if(fPasFoto) {
-                let imgData = document.getElementById('preview-pasfoto').src;
-                if(imgData) u.pasfoto = imgData;
+            u.jenjang = document.getElementById('e-jenjang').value;
+            let jurSelVal = document.getElementById('e-jurusan').value;
+            let jurManVal = document.getElementById('e-jurusan-manual').value.trim();
+            u.jurusan = jurSelVal === 'Lainnya' ? (jurManVal || 'Lainnya') : jurSelVal;
+            u.institusi = document.getElementById('e-institusi').value;
+
+            let fotoInput = document.getElementById('file-pasfoto');
+            if (fotoInput && fotoInput.files[0]) {
+                let reader = new FileReader();
+                reader.onload = async function(e) {
+                    u.pasfoto = e.target.result;
+                    await syncToCloud(activeUser);
+                    loadDataToForm();
+                };
+                reader.readAsDataURL(fotoInput.files[0]);
+                return;
             }
 
-            if(!u.files) u.files = {};
-            let fKtp = document.getElementById('file-ktp').files[0];
-            let fIjazah = document.getElementById('file-ijazah').files[0];
-            if(fKtp) u.files.ktp = fKtp.name;
-            if(fIjazah) u.files.ijazah = fIjazah.name;
+            let fileKtp = document.getElementById('file-ktp').files[0];
+            let fileIjazah = document.getElementById('file-ijazah').files[0];
+            if (!u.files) u.files = {};
+            if (fileKtp) u.files.ktp = fileKtp.name;
+            if (fileIjazah) u.files.ijazah = fileIjazah.name;
 
             await syncToCloud(activeUser);
-            loadDataToForm();
             configureSessionHeaderAndAccess();
+            loadDataToForm();
         }
 
-        window.onload = function() {
-            initApp();
-            lucide.createIcons();
-        };
+        window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
